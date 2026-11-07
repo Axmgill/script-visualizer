@@ -2,6 +2,35 @@
 
 An Agent Skill that turns pre-recorded audio/video material into a complete, timecoded visual edit plan — so you can see the finished video before you build it.
 
+## Install
+
+**Latest release:** [v1.0.0](https://github.com/Axmgill/script-visualizer/releases/tag/v1.0.0)
+
+**Installation URL** (versioned source archive):
+
+```
+https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.0.0.zip
+```
+
+Install for all projects (Claude Code):
+
+```bash
+curl -L https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.0.0.zip -o sv.zip
+unzip -q sv.zip
+mkdir -p ~/.claude/skills
+cp -r script-visualizer-*/.claude/skills/pre-recorded-video-visualization-director ~/.claude/skills/
+```
+
+Or with git (no curl/unzip needed):
+
+```bash
+git clone --branch v1.0.0 --depth 1 https://github.com/Axmgill/script-visualizer.git
+mkdir -p ~/.claude/skills
+cp -r script-visualizer/.claude/skills/pre-recorded-video-visualization-director ~/.claude/skills/
+```
+
+For a single project, copy into that project's `.claude/skills/` instead. For claude.ai, zip just the `pre-recorded-video-visualization-director/` folder and upload it under Settings → Capabilities → Skills. Full instructions are in the [release notes](https://github.com/Axmgill/script-visualizer/releases/tag/v1.0.0).
+
 ## The skill
 
 **`pre-recorded-video-visualization-director`** lives at:
