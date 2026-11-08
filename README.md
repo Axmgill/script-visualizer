@@ -55,7 +55,10 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
     ├── worked-example.md                 # Input → output demonstration (Short Mode)
     └── mindmap/
         ├── napkin-proof.json             # Example node graph
-        └── napkin-proof.html             # Built board — open it in a browser
+        ├── napkin-proof.html             # Built board — open it in a browser
+        ├── abstract-to-anchor.json       # Abstract lines, anchored vs unresolved
+        ├── abstract-to-anchor.html       # Built board for the above
+        └── abstract-script.txt           # The transcript those anchors come from
 ```
 
 It follows the [Agent Skills](https://agentskills.io) format: a `SKILL.md` with YAML frontmatter (`name` + `description`), progressive disclosure into `references/`, and a bundled helper script. Only the name and description load at startup; the full workflow loads when a matching task appears.
@@ -75,12 +78,17 @@ The skill writes that graph to JSON and builds a real board — one self-contain
 - drag nodes, pan and zoom an infinite canvas; click a node to inspect its function, emotion and visual idea
 - connections are colored by relation, so the argument's shape is visible at a glance
 - the timecode track under the canvas puts every beat on the timeline
-- **numbers become shapes, not numerals.** "10 out of 100" renders as 100 dots with 10 filled; "three weeks vs forty minutes" renders as two bars. Captions, accent color and the reveal timing live in the node.
+- **numbers become shapes, not numerals** — and the shape is chosen from this script, not from a template. A script that counts people can use 100 dots with 10 filled; one that names jars counts jars; one that names mornings shows mornings. Captions, accent color and the reveal timing live in the node.
+- **abstract lines never borrow imagery.** A line like "consistency compounds" has no picture in it. The node carries an `anchor` quoted from the script — the 6am alarm the speaker actually mentions — and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays visibly **unresolved** instead of being handed a lightbulb or a seedling.
 
 ```bash
 cd .claude/skills/pre-recorded-video-visualization-director
 python3 scripts/build_mindmap.py examples/mindmap/napkin-proof.json --check
 python3 scripts/build_mindmap.py examples/mindmap/napkin-proof.json -o previz/mindmap.html
+
+# check that abstract lines are anchored to the transcript, not invented
+python3 scripts/build_mindmap.py examples/mindmap/abstract-to-anchor.json \
+  --script examples/mindmap/abstract-script.txt --check
 ```
 
 Open `examples/mindmap/napkin-proof.html` to see a finished board. This phase is on `main` and ships in the next release; the install links above point at v1.0.0.

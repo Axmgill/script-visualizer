@@ -130,6 +130,8 @@ Shot 02:
 
 Every shot needs an alternative that is achievable with existing assets or a simple graphic. Prefer existing recording first; escalate to b-roll, graphics, archive, screen capture, AI footage, or stock only when the existing material cannot carry the moment.
 
+For any shot covering an abstract line, the visual must be the thing named by that node's `anchor` in Phase 4. If the node is unresolved, do not invent an image here — carry the beat with the speaker, with type from the line's own words, or leave it as a held shot, and repeat the unresolved note from section 4. A shot that needs a metaphor the script never contained is out of scope.
+
 ## Phase 9 — Text Storyboard for the Edit
 
 Since images may not be generated, create a text storyboard detailed enough for an editor or motion designer to build from without further questions.

@@ -8,6 +8,8 @@ Editors and motion designers rarely start a previz with a shot list. They dump t
 
 Section 4 is that board. It is **not** a summary of the script and **not** decoration — it is the non-linear view of the same material the Narrative Spine (Phase 3) shows linearly. Every node should be able to change an edit decision.
 
+It also has to survive the hardest case in previz: a script full of lines that have no real-world image. The board resolves those **only** with material the script already contains, and marks the rest unresolved rather than borrowing a metaphor from outside. See section 5.
+
 The deliverable is two things:
 
 1. a real, interactive board — a single self-contained `.html` file the user can open, pan, zoom, drag, and inspect;
@@ -27,6 +29,8 @@ Read the transcript (and Phase 3's beats) and pull out:
 - the emotion carried by each beat
 - visual motifs the story already contains (an object, a place, a gesture)
 - objections the viewer will raise
+- lines with no literal image — abstractions, principles, feelings — and whether the script
+  contains a concrete thing that could carry each one
 - production risks and constraints
 - the call to action or payoff
 
@@ -46,6 +50,7 @@ If the script has no numbers, do not invent any. A board with no `stat` nodes is
 | `visual` | A motif, object, or device that recurs visually | "The napkin is the hero object" |
 | `objection` | The viewer's resistance, named out loud | "Stop waiting to look professional" |
 | `cta` | What the viewer should do or feel at the end | "Start showing people you can solve their problem" |
+| `abstract` | A line with no literal image — an idea, principle, or feeling with nothing to point a camera at. Always carries an `anchor`. | "Consistency compounds" |
 | `risk` | Something that would break the edit if mishandled | "Stock hands would kill the argument" |
 | `note` | Production constraint, crew, gear, budget, access | "One 10-minute phone session, hands only" |
 
@@ -66,38 +71,91 @@ Every node except a deliberate island needs at least one connection. Prefer a fe
 
 `contrasts`, `callback`, and `blocks` are the three that earn their keep: they show the editor where the tension and the loops are. Use them only when the script really does one of those things.
 
-### 4. Turn every number into a shape
+### 4. Turn every number into a shape — taken from this script
 
-This is the part that separates a previz board from a transcript with boxes. Motion designers never leave a statistic as a numeral — they give it a physical form the viewer can count, feel, or compare at a glance.
+Never leave a statistic as a numeral. Give it a physical form the viewer can count, feel, or compare. But the form is not a template: **choose the one this script justifies.** If the script names jars, count jars. If it names receipts, show receipts. If it names mornings, show mornings.
 
-Give each `stat` node a `stat` object. Available displays:
+The displays below are a vocabulary, not a default. Dots are one option among many — use them when the script gives a countable mass of identical, undifferentiated things ("a hundred small decisions", "10 of 100 people"), and use something with more of the script's own texture when it gives you one.
 
-| `display` | Use for | Fields |
-|-----------|---------|--------|
-| `dotgrid` | "X out of Y" where Y is countable (unit chart) | `total`, `filled`, `caption`, `accent` |
-| `bars` | Values over categories or time | `values`, `labels`, `highlight`, `caption` |
-| `proportion` | A single percentage | `percent`, `caption` |
-| `fraction` | A bare ratio shown as a fraction | `part`, `whole`, `caption` |
-| `compare` | Two or a few magnitudes against each other | `values` as `{label, value, accent}` |
-| `steps` | A process or progression | `steps`, `active` |
-| `counter` | A single number with no natural visual unit | `value`, `prefix`, `suffix`, `caption` |
+| `display` | A reasonable choice when | Fields |
+|-----------|--------------------------|--------|
+| `dotgrid` | The script counts identical units: people, decisions, days, messages | `total`, `filled`, `caption`, `accent` |
+| `bars` | The script compares amounts across named categories or points in time | `values`, `labels`, `highlight`, `caption` |
+| `proportion` | The script states a share of a whole and the whole has no other identity | `percent`, `caption` |
+| `fraction` | A bare ratio, said as a fraction | `part`, `whole`, `caption` |
+| `compare` | Two or three magnitudes set against each other | `values` as `{label, value, accent}` |
+| `steps` | The script describes a sequence or progression | `steps`, `active` |
+| `counter` | A single number with no natural unit, where scale is the point | `value`, `prefix`, `suffix`, `caption` |
 
-Translation rules:
+Choosing well:
 
-- **One dot = one real thing.** "10 out of 100" becomes 100 dots with 10 filled — not a pie chart, not a gauge. The viewer counts the highlighted cluster without reading a number.
-- **Keep the scale honest.** If 10 of 100 is highlighted, the other 90 must still be visible. Never crop the remainder to make the point louder.
+- **Look for the unit before the chart.** A number is almost always a number of *something* the script named. Render that something.
+- **Real objects beat chart shapes** when the script has them: three of twelve jars, one closed door out of five, a stack of unpaid invoices, a calendar with two marked days.
+- **Keep the scale honest.** If 10 of 100 is highlighted, the other 90 stay visible. Never crop the remainder to make the point louder.
 - **Highlight only what the script stresses.** One accent colour, on the part the voiceover names.
-- **Reveal on the spoken beat.** Note in `metaphor` how the shape builds: dots arriving, bars growing, the one-in-three landing early. Timing belongs in the node, not in the graphic file.
-- **Prefer objects when the subject is physical.** 3 of 12 jars, 1 of 5 doors, 10 of 100 people — a real object beats a chart shape if it exists in the footage.
-- **Under 400 dots.** Above that, use `bars` or `proportion`; a 10,000-dot grid is noise.
-- **If fewer than ~3% of units are highlighted**, a `counter` reads better than an almost-empty grid.
-- **Never fake a dashboard.** No invented axes, no 3D pies, no gauges, no "growth" arrows the script never claimed.
-- **Label the unit.** The caption says what one dot is ("1 dot = 1 person") whenever it is not obvious.
-- **State the source when the script states it.** If the number came from a study, the node summary carries the attribution; if the script gave no source, do not imply one.
+- **Reveal on the spoken beat.** Note in `metaphor` how the shape builds — units arriving, bars growing, the odd one landing early.
+- **Above ~400 units, change shape.** A 10,000-dot grid is noise; a bar or a proportion carries the same fact.
+- **If under ~3% is highlighted**, a `counter` reads better than an almost-empty grid.
+- **Never fake a dashboard.** No invented axes, no 3D pies, no gauges, no growth arrows the script never claimed.
+- **Label the unit** whenever it is not obvious: "1 dot = 1 person", "1 receipt = 1 client".
+- **State the source when the script states it.** If the script gave no source, do not imply one.
 
-Non-numeric claims get the same treatment through the `visual` field: describe the shape, not the shot. "A portfolio is a presentation, not a proof" might become *a glossy frame that gets lifted away to reveal a bare napkin underneath.* That sentence is more useful to an editor than "cut to laptop".
+If the script names no physical thing at all — no unit, no object, no place — the number is not a stats problem, it is an abstraction problem. Go to the next section rather than defaulting to dots.
 
-### 5. Write the JSON, then build the board
+### 5. When the script has no picture
+
+Some lines are pure abstraction: "consistency compounds", "trust takes time", "value is invisible at first", "you have to become the person who does the work". Nothing in them can be pointed at with a camera.
+
+Most previz work fails here by reaching for a stock metaphor — a lightbulb, gears, dominoes, a road to the horizon, a seedling. That imagery comes from outside the script, so it argues something the script never said, in a visual language every viewer has already seen and stopped believing.
+
+**Rule: an abstract line may only become visible through something the script already contains. Never import.**
+
+Protocol:
+
+1. **Write the abstraction as it is spoken.** Use the speaker's own words as the label.
+2. **Apply the literal test.** If this were true in the world, what would be different, and what would you see? "Consistency compounds" → something that visibly accumulates because it was repeated.
+3. **Search the script for an anchor**, in this order:
+   - an object it names
+   - a place or time it names
+   - an action or body part it names
+   - a number it names
+   - a phrase it repeats (repetition is an anchor — the same line can come back later)
+4. **Write the anchor into `anchor`, quoting the script.** Then `visual` describes how *that* anchor is treated on screen. The anchor is not illustration; it is the piece of the script that carries the meaning.
+5. **If nothing exists, set `"anchor": ""` explicitly.** That is a decision, not an omission — the builder only warns when the field is missing entirely, and the board marks the node unresolved. Then choose one of these, and say which you chose:
+   - keep the beat image-free — hold, let the voice and captions carry the line
+   - set the line's own language in type (the word repeated, the sentence struck through)
+   - ask the writer one question: "what do you actually see when you say this?"
+
+   Never fill the gap with an outside metaphor.
+
+**The in-context test:** a stranger should be able to point at the line in the script that justifies the visual. If they can't, it was imported.
+
+| Abstract line | Anchor from the script | Treatment | Why it holds |
+|---|---|---|---|
+| "Consistency compounds" | "I still show up at 6am" | The same 6:00 alarm, same frame, three mornings in a row | The anchor is a time the speaker actually names; the repetition is the argument |
+| "Trust takes time" | "She paid me before I got home" | The payment notification, no metaphor, cut hard on the resolution | The script's own proof does the work; adding imagery would dilute it |
+| "Value is invisible at first" | *(nothing in the script)* | Unresolved: hold on the speaker, captions carry the line, or ask the writer | There is no honest anchor, so no image is invented |
+
+Two guardrails:
+
+- **Do not dress up an abstraction in another abstraction.** "Consistency compounds" over drifting particles is still nothing. The anchor must be a thing, a place, a time, an action, or a number.
+- **Watch the ratio.** If more than about a quarter of the nodes are abstract, the script itself is the problem — say so in section 4, suggest a concrete example the writer could add, and do not paper over it with graphics.
+
+In the JSON, an anchored and an unresolved abstract line look like this:
+
+```json
+{ "id": "consistency", "label": "Consistency compounds", "type": "abstract",
+  "time": "0:06–0:09", "function": "Claim",
+  "anchor": "I still show up at 6am",
+  "visual": "Same alarm clock, same framing, three consecutive mornings; only the date changes." }
+
+{ "id": "invisible_value", "label": "Value is invisible at first", "type": "abstract",
+  "time": "0:14–0:17", "function": "Objection handled",
+  "anchor": "",
+  "summary": "No anchor in the script. Hold on the speaker or ask the writer; do not invent imagery." }
+```
+
+### 6. Write the JSON, then build the board
 
 Write the graph to `<project>/previz/mindmap.json`, then run the bundled builder. It validates the graph, checks for dangling references and floating nodes, and writes a single self-contained HTML board:
 
@@ -135,17 +193,21 @@ A complete, realistic board — every node type, cross-links, a dot grid and a c
 
 If Python is unavailable, copy `assets/mindmap-board.template.html` and replace the `__BOARD_DATA_JSON__` marker inside `<script id="board-data">` with the graph JSON by hand.
 
-### 6. Verify the board before handing it over
+### 7. Verify the board before handing it over
 
 - exactly one `core` node, and it is the actual argument
 - no floating nodes unless the isolation is intentional (`risk`, `note`)
 - every number in the script appears as a `stat` node with a shape, or is deliberately left as speech
+- every `abstract` node either quotes an anchor that appears in the script, or is left unresolved on
+  purpose — and unresolved ones are called out in section 4, not quietly filled later
+- run the builder with `--script transcript.txt` when you have the text: it flags anchors that do not
+  appear in the script, which is the fastest way to catch an imported metaphor
 - labels are the spoken idea, not a topic ("She paid me before I got home", not "Payment")
 - timecodes agree with Phase 1 and are marked estimated when they are
 - node ids are short, lowercase, stable — later phases reference them (`Shot 03 → node stat_ten`)
 - if the board is large, the `visual` field is what keeps it useful; do not let it become a word cloud
 
-### 7. Write section 4 of the plan
+### 8. Write section 4 of the plan
 
 ````
 PREVISUALIZATION MIND MAP
@@ -158,6 +220,12 @@ PREVISUALIZATION MIND MAP
 - Data points and their shapes:
   | Spoken number | Node | Shape | Build note |
   |---|---|---|---|
+- Abstract lines and their anchors:
+  | Spoken line | Node | Anchor from the script | Treatment |
+  |---|---|---|---|
+- Unresolved lines (no visual chosen):
+  - <line> — why nothing in the script carries it, and the option taken
+    (image-free beat / type from the line / one question to the writer)
 - Cross-links that matter:
 - Nodes carrying no timecode:
 - Risks and constraints on the board:
@@ -169,7 +237,9 @@ core: <core message>
 │  └─ claim: <line>
 ├─ proof: <line>
 │  ├─ example: <line>
-│  └─ stat: <number> → 100 dots, 10 filled
+│  └─ stat: <number> → <shape this script justifies, e.g. 100 dots if it counts units>
+├─ abstract: <line>
+│  └─ anchor: "<words already in the script>"     ⚠ or "unresolved — no picture yet"
 └─ cta: <line>  ↩ callback → hook
 ````
 
@@ -179,6 +249,10 @@ The text sketch matters: some readers never open the HTML. Keep it to one screen
 
 - The board is reasoning, not decoration. If a node does not change an edit decision, cut it.
 - Never fabricate a statistic, source, or quote to fill a `stat` node.
+- Never import imagery, objects, or metaphor vocabulary from outside the script's world. If it is not
+  in the script, it is not available — not a lightbulb, not gears, not a seedling, not a stock road.
+- An unresolved abstract line stays unresolved in the output. Later phases must not quietly resolve it
+  by inventing a picture; they may only reuse an anchor the script actually contains.
 - The board and the Narrative Spine must agree. The spine is the line; the board is the map of it.
 - Fewer nodes with real visual ideas beat many nodes with topic labels.
 - Keep node ids stable once written: Phase 8 (Shot Plan) and Phase 9 (Storyboard) reference them.

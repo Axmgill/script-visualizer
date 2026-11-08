@@ -1,6 +1,6 @@
 ---
 name: pre-recorded-video-visualization-director
-description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board, visual concept, emotional arc, scene map, shot and b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
+description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board that resolves abstract lines against the script's own material, visual concept, emotional arc, scene map, shot and b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
 ---
 
 # Pre-Recorded Video Visualization Director
@@ -132,10 +132,18 @@ python3 scripts/build_mindmap.py previz/mindmap.json -o previz/mindmap.html
 
 The output is a single self-contained HTML file — nodes drag, the canvas pans and zooms, connections are drawn as curves, and numbers render as their metaphor graphic (`10 in 100` becomes 100 dots with 10 filled). It has no dependencies and makes no network requests.
 
-Node types: `core`, `hook`, `claim`, `proof`, `stat`, `example`, `emotion`, `visual`, `objection`, `cta`, `risk`, `note`.
+Node types: `core`, `hook`, `claim`, `proof`, `stat`, `example`, `emotion`, `visual`, `objection`, `cta`, `risk`, `note`, `abstract`.
 Relations: `supports`, `proves`, `expands`, `contrasts`, `callback`, `blocks`, `flows`, `inspires`.
 
-The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must be given a shape an editor can build in twenty minutes. A worked board lives at `examples/mindmap/`.
+The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must be given a shape an editor can build in twenty minutes — a shape drawn from the script's own world, not a chart template.
+
+Abstract lines are the test case. A line like "consistency compounds" has no image in it, and the fix is never a lightbulb or a seedling: the node carries an `anchor` quoted from the script (the 6am alarm the speaker mentions, the receipt, the napkin), and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays **unresolved** on the board and section 4 says which option was taken — an image-free beat, the line set in type, or one question to the writer. The builder can check the claim:
+
+```bash
+python3 scripts/build_mindmap.py previz/mindmap.json --script transcript.txt --check
+```
+
+It flags any anchor whose words do not appear in the transcript, which is how imported metaphors get caught. A worked board lives at `examples/mindmap/`.
 
 ## Final instruction
 

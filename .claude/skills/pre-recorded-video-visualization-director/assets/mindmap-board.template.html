@@ -163,6 +163,24 @@
   }
   .node-visual b{font-weight:600;color:var(--ink);font-size:10px;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:2px}
   .node-viz{margin-top:7px}
+  .node.is-unanchored{border-style:dashed;border-left-style:solid;box-shadow:0 0 0 1px #f59e0b66,var(--shadow)}
+  .node-anchor{
+    margin-top:7px;padding:5px 7px;border-radius:6px;background:var(--chip);
+    font-size:10.5px;line-height:1.4;color:var(--ink-soft);
+  }
+  .node-anchor b{
+    display:block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:1px;
+  }
+  .node-alert{
+    margin-top:7px;padding:5px 7px;border-radius:6px;
+    background:#f59e0b14;border:1px dashed #f59e0b66;color:#b45309;
+    font-size:10.5px;line-height:1.4;display:flex;gap:5px;align-items:flex-start;
+  }
+  body[data-theme="dark"] .node-alert{color:#fbbf24;background:#f59e0b1a;border-color:#f59e0b55}
+  .node-alert span:first-child{font-size:11px;line-height:1.2}
+  .anchor-warn{color:#b45309;font-size:12px}
+  body[data-theme="dark"] .anchor-warn{color:#fbbf24}
 
   /* ---------- metaphor graphics ---------- */
   .viz{--viz-accent:#7c3aed}
@@ -430,6 +448,7 @@
     visual:    { label: "Visual motif", color: "#ea580c" },
     objection: { label: "Objection",    color: "#b45309" },
     cta:       { label: "Call to action", color: "#16a34a" },
+    abstract:  { label: "Abstract idea",  color: "#4f46e5" },
     risk:      { label: "Risk",         color: "#dc2626" },
     note:      { label: "Note",         color: "#64748b" }
   };
@@ -501,12 +520,14 @@
         emotion: n.emotion || "",
         visual: n.visual || n.visualIdea || "",
         summary: n.summary || n.context || n.note || "",
+        anchor: typeof n.anchor === "string" ? n.anchor : "",
         stat: (n.stat && typeof n.stat === "object") ? n.stat : null,
         cluster: n.cluster || "",
         x: Number.isFinite(n.x) ? +n.x : null,
         y: Number.isFinite(n.y) ? +n.y : null
       };
       if (node.type === "core" && !node.fn) node.fn = "Core message";
+      node.unresolved = (node.type === "abstract" && !node.anchor.trim());
       nodes.push(node);
       byId[node.id] = node;
     });
@@ -732,6 +753,21 @@
       card.appendChild(head);
 
       card.appendChild(el("div", "node-label", n.label));
+
+      if (n.type === "abstract"){
+        if (n.anchor){
+          var anch = el("div", "node-anchor");
+          anch.appendChild(el("b", "", "Anchored to"));
+          anch.appendChild(document.createTextNode(n.anchor));
+          card.appendChild(anch);
+        } else {
+          card.classList.add("is-unanchored");
+          var alert = el("div", "node-alert");
+          alert.appendChild(el("span", "", "\u26a0"));
+          alert.appendChild(el("span", "", "No anchor yet \u2014 needs a concrete thing already in the script"));
+          card.appendChild(alert);
+        }
+      }
 
       if (n.emotion){
         var meta = el("div", "node-meta");
@@ -1003,6 +1039,13 @@
 
     var kv = el("dl", "kv");
     if (n.fn){ kv.appendChild(el("dt", "", "Function")); kv.appendChild(el("dd", "", n.fn)); }
+    if (n.anchor){
+      kv.appendChild(el("dt", "", "Anchor"));
+      var anchorDd = el("dd", "", n.anchor);
+      anchorDd.style.fontWeight = "600";
+      anchorDd.style.color = "var(--ink)";
+      kv.appendChild(anchorDd);
+    }
     if (n.emotion){ kv.appendChild(el("dt", "", "Emotion")); kv.appendChild(el("dd", "", n.emotion)); }
     if (n.summary){ kv.appendChild(el("dt", "", "Context")); kv.appendChild(el("dd", "", n.summary)); }
     if (kv.children.length){
@@ -1013,6 +1056,17 @@
 
     if (n.visual){
       inspectorBody.appendChild(block("Visual idea", n.visual));
+    }
+
+    if (n.type === "abstract"){
+      if (n.anchor){
+        inspectorBody.appendChild(block("Why this anchor", n.summary ||
+          "The anchor is a thing this script already contains. The visual must be a treatment of that thing — not a metaphor imported from outside."));
+      } else {
+        var warn = el("p", "anchor-warn",
+          "No picture yet. This line has no concrete anchor in the script, so no visual should be invented. Either name a thing from the script that carries it, or keep the beat image-free and let the voice and captions carry the line.");
+        inspectorBody.appendChild(block("Unresolved", warn));
+      }
     }
 
     if (n.stat){
@@ -1247,7 +1301,7 @@
 
     nodes.forEach(function(n){
       var hidden = !!hiddenTypes[n.type];
-      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary).toLowerCase().indexOf(q) !== -1;
+      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary + " " + n.anchor).toLowerCase().indexOf(q) !== -1;
       if (q && hit) anyMatch = true;
       var dim = (q && !hit);
       n.hidden = hidden;
@@ -1346,6 +1400,7 @@
         return {
           id: n.id, label: n.label, type: n.type, time: n.time, timeEnd: n.timeEnd,
           function: n.fn, emotion: n.emotion, visual: n.visual, summary: n.summary,
+          anchor: n.anchor || undefined,
           stat: n.stat, x: Math.round(n.x), y: Math.round(n.y)
         };
       }),

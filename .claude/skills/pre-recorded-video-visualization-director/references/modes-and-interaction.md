@@ -43,7 +43,7 @@ Unless the user requests otherwise, return the result in this order:
 Trigger: the user asks for a quick version. Compress the output to:
 
 - Core message
-- Mini mind map (core node + 5–8 connected nodes, built as a board if the user has a project folder)
+- Mini mind map (core node + 5–8 connected nodes, built as a board if the user has a project folder) — including any abstract line and the anchor from the script that carries it, or a clear "no picture yet" note
 - Visual concept
 - Beat map
 - Shot/b-roll plan
@@ -111,5 +111,7 @@ The Phase 4 board is a living object, not a one-time diagram. Expect the user to
 - **They want it rearranged:** drag positions live in the HTML; the JSON export from the board (`E`) gives coordinates to write back into `previz/mindmap.json`.
 - **They want a node added, split, or cut:** edit the JSON, rebuild, and say which node ids changed.
 - **They disagree with the argument's shape:** that is the useful conversation. A board where every claim hangs off one unproven assertion is worth flagging out loud.
+- **A line is still unresolved:** do not solve it with a metaphor. Offer the two honest moves — name a concrete thing from their script that carries the line, or keep the beat image-free — and ask which they prefer only if the script truly gives nothing.
+- **They ask for a visual anyway:** say plainly what it would cost. An image the script never justified argues something the script did not say, and the board is where that is cheapest to catch.
 - **The script changes:** rebuild from the JSON rather than hand-editing the HTML, and note which downstream sections are now stale.
 - **They only want the text version:** give the board sketch from section 4 and skip the HTML; do not pretend the file was built if it was not.

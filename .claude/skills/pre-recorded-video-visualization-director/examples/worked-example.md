@@ -38,7 +38,9 @@ core: Proof of skill beats presentation polish
 └─ risk: stock hands would kill the argument  ← blocks ← note: one 10-min phone session
 ```
 
-Two numbers got shapes instead of numerals: 10-in-100 as a unit chart (one dot = one person), and the effort comparison as two plain bars. The napkin shows up in four nodes — that is the board telling us which object has to carry the edit.
+Two numbers got shapes instead of numerals: 10-in-100 as a unit chart (one dot = one person, because the script counts people), and the effort comparison as two plain bars. The napkin shows up in four nodes — that is the board telling us which object has to carry the edit.
+
+The core claim is abstract ("proof beats polish"), but the script supplies its own anchor — the napkin sketch drawn in front of a paying client — so no imported metaphor is needed. A board for a script with no such anchor would leave that node unresolved rather than reach for a lightbulb; the abstract-lines demo is at `examples/mindmap/abstract-to-anchor.html`.
 
 ### Visual concept
 

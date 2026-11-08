@@ -21,6 +21,9 @@ Usage
     # Dark board
     python3 scripts/build_mindmap.py nodes.json --theme dark
 
+    # Check that abstract lines are anchored to material in the transcript
+    python3 scripts/build_mindmap.py nodes.json --script transcript.txt --check
+
 Input format
 ------------
 {
@@ -49,7 +52,13 @@ Input format
 }
 
 Node types: core, hook, claim, proof, stat, example, emotion, visual,
-objection, cta, risk, note.
+objection, cta, risk, note, abstract.
+
+An "abstract" node is a line with no literal image. Its `anchor` must quote
+something the script already contains (an object, place, time, action, number
+or repeated phrase); the visual is a treatment of that anchor, never an
+imported metaphor. Set "anchor": "" to mark a line deliberately unresolved —
+the board will show it as having no picture yet.
 Relation types: supports, proves, expands, contrasts, callback, blocks,
 flows, inspires.
 Stat display kinds: dotgrid, bars, proportion, fraction, compare, steps,
@@ -69,7 +78,17 @@ PLACEHOLDER = "__BOARD_DATA_JSON__"
 
 NODE_TYPES = {
     "core", "hook", "claim", "proof", "stat", "example",
-    "emotion", "visual", "objection", "cta", "risk", "note",
+    "emotion", "visual", "objection", "cta", "risk", "note", "abstract",
+}
+
+# Words too common to prove that an anchor came from the script.
+ANCHOR_STOPWORDS = {
+    "the", "and", "that", "this", "with", "from", "they", "them", "their",
+    "when", "what", "which", "your", "youre", "have", "has", "had", "was",
+    "were", "will", "would", "could", "should", "about", "into", "over",
+    "than", "then", "there", "these", "those", "been", "being", "because",
+    "just", "like", "more", "most", "some", "such", "very", "only", "also",
+    "does", "doesnt", "didnt", "isnt", "arent", "cant", "dont", "wont",
 }
 
 REL_TYPES = {
@@ -125,6 +144,47 @@ def normalize_id(value: Any) -> str:
     if value is None:
         return ""
     return str(value).strip()
+
+
+def anchor_terms(anchor: str) -> List[str]:
+    """Words in an anchor that must be traceable back to the script."""
+    words = re.findall(r"[a-z0-9']+", anchor.lower())
+    return [w for w in words if len(w) >= 4 and w not in ANCHOR_STOPWORDS]
+
+
+def anchor_in_script(anchor: str, script_words: set, script_text: str) -> bool:
+    """Loose containment check: an anchor word (or its stem) appears in the script."""
+    terms = anchor_terms(anchor)
+    if not terms:
+        return True
+    for term in terms:
+        if term in script_words or term in script_text:
+            return True
+        stem = term[:5]
+        for word in script_words:
+            if len(word) >= 4 and (word.startswith(stem) or stem.startswith(word[:5])):
+                return True
+    return False
+
+
+def check_anchors(nodes: List[Dict[str, Any]], script_text: str) -> List[str]:
+    warnings: List[str] = []
+    words = set(re.findall(r"[a-z0-9']+", script_text.lower()))
+    for node in nodes:
+        if not isinstance(node, dict):
+            continue
+        if str(node.get("type", "")).lower() != "abstract":
+            continue
+        anchor = str(node.get("anchor") or "").strip()
+        if not anchor:
+            continue
+        if not anchor_in_script(anchor, words, script_text.lower()):
+            warnings.append(
+                f"node '{normalize_id(node.get('id'))}': the anchor \"{anchor}\" does not appear to come "
+                "from this script \u2014 drive-by metaphors from outside the script's world are "
+                "the thing this phase exists to prevent"
+            )
+    return warnings
 
 
 def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
@@ -202,6 +262,24 @@ def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
                                 f"node '{node_id}': only {filled}/{total} dots are highlighted — "
                                 "at card size that reads as empty; consider a counter instead"
                             )
+
+        if "anchor" in node and node["anchor"] is not None and not isinstance(node["anchor"], str):
+            errors.append(f"node '{node_id}': 'anchor' must be a string")
+
+        if node_type == "abstract":
+            anchor = str(node.get("anchor") or "").strip()
+            if not anchor:
+                # "anchor": "" is a deliberate decision; a missing key is usually an oversight.
+                if "anchor" not in node:
+                    warnings.append(
+                        f"node '{node_id}' is abstract with no 'anchor' field. If the script really "
+                        "contains nothing concrete, set \"anchor\": \"\" to mark it deliberately "
+                        "unresolved; otherwise quote the thing in the script that carries the line"
+                    )
+            elif not str(node.get("visual") or "").strip():
+                warnings.append(
+                    f"node '{node_id}' has an anchor but no 'visual' \u2014 say how the anchor is treated on screen"
+                )
 
         for key in ("visual", "summary", "emotion", "function"):
             if key in node and node[key] is not None and not isinstance(node[key], str):
@@ -296,11 +374,19 @@ def summarize(data: Dict[str, Any]) -> str:
     by_type = ", ".join(f"{key} {value}" for key, value in sorted(types.items(), key=lambda kv: -kv[1]))
     timed = sum(1 for node in nodes if isinstance(node, dict) and node.get("time"))
     stats = sum(1 for node in nodes if isinstance(node, dict) and node.get("stat"))
-    return (
-        f"{len(nodes)} nodes ({by_type})\n"
-        f"{len(edges)} connections\n"
-        f"{timed} nodes with timecodes · {stats} data points with metaphor graphics"
-    )
+    abstract = [n for n in nodes if isinstance(n, dict) and str(n.get("type", "")).lower() == "abstract"]
+    unresolved = [n for n in abstract if not str(n.get("anchor") or "").strip()]
+    lines = [
+        f"{len(nodes)} nodes ({by_type})",
+        f"{len(edges)} connections",
+        f"{timed} nodes with timecodes · {stats} data points with metaphor graphics",
+    ]
+    if abstract:
+        lines.append(
+            f"{len(abstract)} abstract line(s): {len(abstract) - len(unresolved)} anchored, "
+            f"{len(unresolved)} unresolved"
+        )
+    return "\n".join(lines)
 
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
@@ -312,6 +398,7 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
             "  python3 scripts/build_mindmap.py nodes.json --check\n"
             "  python3 scripts/build_mindmap.py nodes.json -o mindmap.html\n"
             "  python3 scripts/build_mindmap.py nodes.json --theme dark\n"
+            "  python3 scripts/build_mindmap.py nodes.json --script transcript.txt\n"
         ),
     )
     parser.add_argument("graph", type=Path, help="path to the node-graph JSON file")
@@ -321,6 +408,9 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
                         help="board template (default: assets/mindmap-board.template.html)")
     parser.add_argument("--theme", choices=("light", "dark"), default=None,
                         help="override the board theme")
+    parser.add_argument("-s", "--script", type=Path, default=None,
+                        help="transcript the graph was built from; checks that every abstract "
+                             "node's anchor actually comes from it")
     parser.add_argument("--check", action="store_true", help="validate only, write nothing")
     parser.add_argument("--strict", action="store_true", help="treat warnings as errors")
     parser.add_argument("--quiet", action="store_true", help="only print errors")
@@ -335,6 +425,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         data = load_graph(args.graph)
         errors, warnings = validate(data)
+
+        if args.script:
+            try:
+                script_text = args.script.read_text(encoding="utf-8", errors="replace")
+            except OSError as exc:
+                raise ValidationError(f"cannot read script {args.script}: {exc}") from exc
+            if not script_text.strip():
+                raise ValidationError(f"script {args.script} is empty")
+            warnings.extend(check_anchors(data["nodes"], script_text))
 
         if errors:
             print("Invalid node graph:", file=sys.stderr)
