@@ -249,6 +249,31 @@ jumps, caption drift? Edges, handles, off-by-one-frame moves?
 - **Motivated movement only:** reveal, connect, emphasise, pace. Name the reason or cut the move.
 - **Pattern breaks are currency.** Spend them twice per minute, not twice per second.
 
+### Data visualisation
+
+A chart is a designed object, not a widget. It gets the same treatment as a frame: one focal point,
+one accent, a grid, and a reason.
+
+- **The chart is chosen by the relationship, and the relationship comes from the sentence.** A move
+  over time, a share of a whole, a ranking, a rate, a gap between two totals — each has shapes that
+  show it honestly and shapes that flatter it. Start from the claim, not from a chart type you like.
+- **If the sentence is only a figure, there is nothing to chart.** Set the number and hold it. A chart
+  of a single quantity invents a comparison that the narration never made.
+- **Direct labels beat a legend** whenever there is one series. Label the line, not the colour key.
+- **The axis is the argument.** A truncated axis must be declared on screen. Nothing on a chart should
+  be true only because of where zero was placed.
+- **Annotate the moment the voice names**, not every point. One annotation beats ten gridlines.
+- **Animate the change, not the furniture.** The number moving is meaning; bars building in one after
+  another is decoration.
+- **Keep the remainder visible.** If 1 of 10 is the story, the other 9 stay on screen.
+- **Match the video's system.** Same type, same accent, same ground. A chart pasted from a template is
+  visible from across the room.
+- **Never fake evidence:** no invented data, no 3D, no decorative pies, no needle gauges, no growth
+  arrows the script never claimed.
+
+The test is the same one applied to every frame: **could this graphic be lifted into a different
+video unchanged?** If yes, it was a template, not a response.
+
 ### Sound
 
 - **Sound is punctuation**, not wallpaper. A cut can land on silence.
@@ -287,7 +312,10 @@ Score each 1–5. Anything below 4 on **Idea** or **Truth** means rework, regard
 | Teal-and-orange "cinematic" grade | A filter used as a style |
 | Lower-third template with logo, line and shirred background | Software is doing the design |
 | Kinetic type on every sentence | Emphasis loses all meaning when everything is emphasised |
-| A chart for every figure | The number was never given a body |
+| A chart for a sentence that is not comparing anything | A relationship was invented to justify a shape |
+| Four numbers carried four different ways with four different looks | Variety standing in for a system |
+| A chart and an object doing the same job in one frame | The carrier was never decided, so both were used |
+| A truncated axis with no note | The chart wins the argument by lying about zero |
 
 ---
 

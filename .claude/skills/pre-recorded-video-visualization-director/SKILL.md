@@ -41,7 +41,7 @@ Make the pre-recorded video visible before the final edit is built. The user sho
 8. If the user is stuck, give concrete options instead of open-ended questions.
 9. If the user provides only a script, estimate timing but clearly mark it as estimated.
 10. If the user provides a transcript or recorded file description, use it as the backbone of the plan.
-11. Map the script before shooting it: claims, proofs, numbers, and motifs belong on a node board before they become shots.
+11. Map the script before shooting it: claims, proofs, numbers, and motifs belong on a node board before they become shots. Every number records the carrier its own sentence earns — an object from the script, a data visualisation with a written reason, or the figure set in type. All three are legitimate; what fails is a shape nobody decided on.
 12. Design in order: tension → named references → three territories → one system → style frames. A look chosen first is a template, not a direction.
 13. Hold the craft standards in `references/design-craft.md`: one focal point per frame, one accent colour, at most two type families, movement only when it has a reason, and restraint above novelty.
 14. Critique before delivery: mute, squint, stranger, delete and swap tests — and if a graphic survives being removed without consequence, remove it.
@@ -151,7 +151,7 @@ python3 scripts/build_mindmap.py previz/mindmap.json --check
 python3 scripts/build_mindmap.py previz/mindmap.json -o previz/mindmap.html
 ```
 
-The output is a single self-contained HTML file — nodes drag, the canvas pans and zooms, connections are drawn as curves, and each number shows the body that carries it (`form`), with an optional schematic preview where one genuinely helps. It has no dependencies and makes no network requests.
+The output is a single self-contained HTML file — nodes drag, the canvas pans and zooms, connections are drawn as curves, and each number shows the carrier its sentence earned (an object, a chart with its reason, or plain type), with an optional preview of that decision. It has no dependencies and makes no network requests.
 
 Node types: `core`, `hook`, `claim`, `proof`, `stat`, `example`, `emotion`, `visual`, `objection`, `cta`, `risk`, `note`, `abstract`.
 Relations: `supports`, `proves`, `expands`, `contrasts`, `callback`, `blocks`, `flows`, `inspires`.

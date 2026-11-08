@@ -71,78 +71,97 @@ Every node except a deliberate island needs at least one connection. Prefer a fe
 
 `contrasts`, `callback`, and `blocks` are the three that earn their keep: they show the editor where the tension and the loops are. Use them only when the script really does one of those things.
 
-### 4. Give every number a body from this script
+### 4. Give every number a carrier — decided by its sentence
 
-**A number is not a graphic.** Before anything is drawn, find out what the number is *of*, and let
-the script say what that looks like.
+**A number on screen sits on something.** That something is a carrier, and there are three kinds:
 
-The failure mode this section exists to prevent: see a number → reach for a dot grid. A dot grid is
-one legitimate body for one narrow kind of fact — a counted population of identical things. Everywhere
-else it is decoration, and it tells the viewer the editor had a template instead of a point of view.
+- an **object** the script already contains — a page, a shutter, a receipt, a row of chairs, a room
+- a **data visualisation** — a line, a proportion, a comparison, a count made visible
+- **type** — the figure set well and held, with nothing drawn around it
 
-**Dot grids are not the house style.** Neither are bars, rings, or "data-viz" styling. If a graphic is
-reached for because the line contains a number, the number has not been given a body yet.
+All three are legitimate. **None is the default, and none is a fallback.** The sentence decides, and a
+different script with the same number will get a different answer.
 
-#### The protocol
+The failure this section exists to prevent is not "a chart". It is **a shape nobody decided on** — a
+graphic reached for because the line had a number in it, the same graphics the same way in every video.
 
-1. **Quote the number and its unit as spoken.** "Ten out of a hundred", "three weeks", "two thousand
-   years", "eight days".
-2. **Name what is being counted, compared, or elapsed.** Write the noun: clients, weeks, years, days.
-3. **Find that noun's body in the script.** An object it names, a place, a time of day, a document, a
-   body part, an action, a piece of furniture. This is the same search as the anchor search in
-   section 5.
-4. **Choose the carrier and write it in `form`.** The carrier is the physical thing on screen that
-   holds the number. Required on every `stat` node.
-5. **Only now decide whether a schematic helps.** Most numbers do not need one. `stat.display` is
-   optional, and it is a schematic *preview* for the board — never the finished look, and never a
-   substitute for step 3.
+#### The questions (ask these of the sentence, not of a table)
 
-| What the script said | What is being counted | Carrier (`form`) | Schematic? |
-|---|---|---|---|
-| "a hundred small decisions nobody claps for" | decisions a hand made | a sheet of a hundred pencil tallies | no — the tallies are countable on camera |
-| "three weeks polishing vs forty minutes drawing" | elapsed time | two calendars side by side, one crossed out | no |
-| "two thousand years of church history" | centuries of retelling | the wall of paintings the sentence describes | `counter` only as a timestamp |
-| "seven days without a single sign" | empty days | seven blank cells on a page, nothing written in them | `dotgrid` 7/0 — the one fair use |
-| "eight days later" | a sequence | the same page, one entry added | `steps` 8, eighth active |
-| "two thousand dollars" | money | the invoice or the stack of notes | no |
-| "one in three people" | people | three chairs in a room, one occupied | no |
+1. **What is this line doing to the viewer?** Dread, relief, scale, evidence, a joke, a turn? The
+   feeling tells you how much apparatus the moment can carry.
+2. **What does *this* script already give me?** An object, a place, a time of day, a repeated act, a
+   piece of footage. If the material is there, the carrier is usually there too.
+3. **Is a relationship actually being asserted?** Growth, share, ranking, rate, before/after,
+   accumulation, elapsed time. If yes, a visualisation can carry it — that is what visualisations are
+   for. If the line is only a figure, a chart invents a relationship that the sentence does not have.
+4. **What would a viewer of this video expect to see at this moment?** Not a viewer of videos in
+   general — of *this* one, in this room, with this voice.
+5. **Could this frame be lifted into a different video unchanged?** If yes, it is a template, not a
+   response. Go back to question 1.
 
-#### Rules
+#### What that looks like across different scripts
 
-- **The carrier must be in the script.** If it is not, the number is not a visual problem yet — it is
-  an abstraction problem. Go to section 5 and do not invent a chart instead.
-- **Real objects beat schematic shapes** whenever the script gives you one. Counting jars on a bench
-  is better television than counting dots on white.
-- **If the number is the point and has no body**, say it in type. A naked numeral held on screen is
-  honest; a chart that dresses it up is not.
-- **Keep the scale honest.** If 10 of 100 is highlighted, the other 90 stay visible. Never crop the
-  remainder to make the point louder.
-- **Reveal on the spoken beat.** Put the build in `visual`: marks arriving, days blanking out, the
-  page being set down.
-- **Never fake a dashboard.** No invented axes, no 3D pies, no gauges, no growth arrows the script
-  never claimed.
-- **Never invent a number.** Every figure on the board must appear in the transcript. The builder
-  checks this against `--script`.
-- **Vary the bodies.** If two numbers in one script want the same carrier, check whether one of them
-  actually needs a visual at all.
+These are four different answers to four different sentences, from one common example board
+(`examples/mindmap/numbers-by-context.json`). **They are not the answers your script should reach.**
+They are evidence that the same kind of fact gets different treatment when the context changes.
 
-#### Optional schematics
-
-Available `display` values, for the rare case where a schematic communicates faster than anything
-filmable. Each one is a fallback, not a menu to work down:
-
-| `display` | Only when | Fields |
+| The sentence is doing this | One script's answer | Why that script went there |
 |---|---|---|
-| `dotgrid` | a counted population of identical things, and nothing more textured is available | `total`, `filled`, `caption` |
-| `steps` | a sequence the script counts in order | `steps`, `active`, `caption` |
-| `bars` | several named quantities the script explicitly compares | `values`, `labels`, `highlight` |
-| `proportion` | a share of a whole, when the whole has no other identity | `percent`, `caption` |
-| `fraction` | a ratio said as a fraction | `part`, `whole` |
-| `compare` | two magnitudes the script sets against each other | `values` |
-| `counter` | a single number where scale is the point and nothing else can carry it | `value`, `prefix`, `suffix` |
+| stating a first figure, nothing to compare it to yet | `carrier: "type"` — 40 set on a shutter, no graphic | a chart would have invented a relationship the sentence did not have |
+| describing a move over time | `chart` — one line, endpoints labelled, no gridlines | the sentence is about the change; nothing filmable in that script could show a rise |
+| describing a repeated act in a real place | `form` — the shutter going up, thirty mornings | the footage already carried the count; a diagram would have been weaker |
+| stating a share of a small whole | `chart` — ten marks, one alive, the other nine kept | the share *is* the claim, and the whole is small enough to show completely |
 
-If a board ends up with several numbers and every one of them is a schematic, that is the failure
-this phase is meant to catch — say so and rework them.
+A different script about the same four facts — a hostage diary, say, or a hospital log — would rightly
+produce four different answers, or no drawings at all.
+
+#### The three carriers, when each tends to earn its place
+
+Read these as tendencies to test, never as mappings to apply. Every one of them can be wrong.
+
+- **Object.** Earns its place when the script names a thing, and that thing can physically hold the
+  quantity — the page with one new line, the invoice, the empty chairs, the stack of drafts. It is the
+  strongest carrier when the video is *in a place* rather than *about a claim*.
+- **Data visualisation.** Earns its place when the sentence asserts a relationship the viewer has to
+  *see* to believe: a rise, a share, a ranking, a rate, a gap between two totals. It is the strongest
+  carrier when the argument is the subject, and the weakest when the video is a story about people.
+- **Type.** Earns its place when the number is the whole point and has no relationship to show — a
+  single figure, a date, a title. It is underused and never embarrassing. A held numeral is more
+  honest than a diagram that pretends there is more to say.
+
+If none of the three is justified by the script, the line is **not a visual problem yet**. Leave the
+node unresolved and ask (section 5, and the Unclarity Scan), rather than reaching for a shape.
+
+#### Rules that hold in every context
+
+- **The figure must come from the script.** Never invent one. The builder checks every number against
+  the transcript when you pass `--script`.
+- **A chart needs its reason written down.** The `chart` block carries `what` is being compared and
+  `why` this sentence earns a visualisation. If you cannot write the `why` in one clause, the chart is
+  decoration.
+- **Never fake evidence.** No invented axes, no 3D pies, no gauges with needles, no growth arrows the
+  script never claimed, no data the video does not have.
+- **Keep the scale honest.** A truncated axis is declared on screen. If 1 of 10 is highlighted, the
+  other 9 stay visible.
+- **Reveal on the spoken beat.** The build goes in `visual`: the line arriving with the word, the page
+  being set down, the marks appearing as they are counted.
+- **Vary deliberately, or don't vary at all.** Four numbers carried four ways must still look like one
+  video — same light, same type, same frame. If they look like four videos, the carrier decision was
+  not the problem.
+
+#### Recording the decision
+
+Every `stat` node records **one** of these:
+
+```jsonc
+{"form": "the shutter going up, thirty mornings"}                    // object
+{"chart": {"what": "one line, 40 to 400", "why": "the line is a move over time"}}   // visualisation
+{"carrier": "type"}                                                   // the figure, set and held
+```
+
+`stat` (the small preview drawn on the board card) is optional and always labelled *"Schematic — not
+the finished look"*. Kinds available for the preview: `line`, `bars`, `proportion`, `fraction`,
+`compare`, `steps`, `counter`, `dotgrid`. They are previews of a decision, not the decision.
 
 ### 5. When the script has no picture
 
@@ -245,8 +264,9 @@ If Python is unavailable, copy `assets/mindmap-board.template.html` and replace 
 
 - exactly one `core` node, and it is the actual argument
 - no floating nodes unless the isolation is intentional (`risk`, `note`)
-- every number in the script appears as a `stat` node whose `form` names a real carrier, or is deliberately
-  left as speech or as type; a schematic is present only where it genuinely helps
+- every number in the script appears as a `stat` node with a carrier recorded — an object (`form`), a
+  visualisation (`chart` with a written `why`), or `"carrier": "type"` when the figure is simply set and
+  held; the small `stat` preview is present only where it genuinely helps
 - no `stat` node introduces a figure that is not in the transcript
 - every `abstract` node either quotes an anchor that appears in the script, or is left unresolved on
   purpose — and unresolved ones are called out in section 4, not quietly filled later

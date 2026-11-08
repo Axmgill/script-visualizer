@@ -1,0 +1,131 @@
+{
+  "title": "The Number That Decided It",
+  "subtitle": "YouTube · 16:9 · 0:24 — numbers carried four different ways, each decided by its sentence",
+  "theme": "light",
+  "source": {
+    "platform": "YouTube",
+    "aspect": "16:9",
+    "duration": "0:24",
+    "estimated": true
+  },
+  "nodes": [
+    {
+      "id": "core",
+      "label": "Growth was not the number that decided the business",
+      "type": "core",
+      "time": "0:00–0:24",
+      "function": "Core message",
+      "emotion": "reversal",
+      "visual": "Shot in the shop before opening, one light on. The evidence is the same room at four in the morning, not a dashboard.",
+      "summary": "Four numbers appear in twenty-four seconds and none of them is drawn the same way. That is the point of the board: the sentence decides the carrier."
+    },
+    {
+      "id": "hook",
+      "label": "Forty loaves. That was a whole week.",
+      "type": "hook",
+      "time": "0:00–0:03",
+      "function": "Hook",
+      "emotion": "small beginnings",
+      "visual": "The figure itself, held: 40 set large on the shutter, nothing else in frame. No counter, no bar.",
+      "summary": "A single quantity with nothing to compare it to yet. Drawing a chart here would invent a relationship the sentence does not have; the number is the image."
+    },
+    {
+      "id": "stat_forty",
+      "label": "Forty loaves a week — stated, not compared",
+      "type": "stat",
+      "time": "0:00–0:03",
+      "function": "Number — type carrier",
+      "emotion": "awe",
+      "visual": "40 in heavy type on the closed shutter, slowly going out of focus as the shutter lifts. The figure is the subject; the frame does the animating.",
+      "summary": "Carrier: type. The line states a figure, it does not compare one. This is the case where a chart would be a costume.",
+      "carrier": "type",
+      "form": "",
+      "chart": null,
+      "stat": null
+    },
+    {
+      "id": "stat_growth",
+      "label": "Forty to four hundred in eight months",
+      "type": "stat",
+      "time": "0:04–0:08",
+      "function": "Number — chart carrier",
+      "emotion": "momentum",
+      "visual": "One line, drawn left to right, no gridlines, the two endpoints labelled directly. The line arrives with the word 'four hundred'.",
+      "summary": "Carrier: chart. The sentence is about the move, not the bakery — there is no object in this script that can show a rise, so a line is the honest answer.",
+      "form": "",
+      "chart": {
+        "what": "one line, 40 to 400 over eight months, endpoints labelled",
+        "why": "the line is about the change in quantity over a period, and the script names both endpoints and the interval"
+      },
+      "stat": {
+        "display": "line",
+        "values": [40, 400],
+        "labels": ["start", "eight months"],
+        "caption": "40 → 400"
+      }
+    },
+    {
+      "id": "stat_days",
+      "label": "Opened at four, every day, for thirty days",
+      "type": "stat",
+      "time": "0:09–0:14",
+      "function": "Number — object carrier",
+      "emotion": "endurance",
+      "visual": "The shop shutter going up, filmed thirty mornings, cut as a fast lift with one frame of darkness between. The count is carried by the repetition, not by dots.",
+      "summary": "Carrier: object. Same script as the sales line, different answer — because this sentence is about a repeated action in a real place, and the footage already exists.",
+      "form": "the shutter going up, thirty mornings, one frame each",
+      "chart": null,
+      "stat": null
+    },
+    {
+      "id": "stat_return",
+      "label": "One in ten came back a third time",
+      "type": "stat",
+      "time": "0:15–0:20",
+      "function": "Number — chart carrier",
+      "emotion": "dread",
+      "visual": "Ten tickets laid flat; one turned over to show a third stamp. If the tickets cannot be sourced, ten identical marks with one alive — the only schematic in the edit, and it is earned.",
+      "summary": "Carrier: chart, with an object fallback. The sentence is literally a share of a whole, so a proportion is not decoration — it is the claim. The other nine stay visible; cropping them would lie.",
+      "form": "",
+      "chart": {
+        "what": "one of ten, the remainder kept visible",
+        "why": "the sentence states a share of a whole group, which is a relationship, and the whole is small enough to show completely"
+      },
+      "stat": {
+        "display": "proportion",
+        "percent": 10,
+        "caption": "1 in 10 returned a third time"
+      }
+    },
+    {
+      "id": "cta",
+      "label": "Count the number that decides whether they come back",
+      "type": "cta",
+      "time": "0:20–0:24",
+      "function": "Close",
+      "emotion": "clarity",
+      "visual": "Back to the shop in daylight, one person at the counter. No graphic. The last frame has no number in it at all.",
+      "summary": "The closing beat drops every carrier on purpose: after four numbers, the argument is carried by a person."
+    },
+    {
+      "id": "risk",
+      "label": "Four numbers, four different carriers — consistency comes from type and light, not from the graphics",
+      "type": "risk",
+      "time": "",
+      "function": "Risk",
+      "emotion": "",
+      "visual": "",
+      "summary": "Different carriers are only coherent if the frame stays the same: same light, same shutter, same type face. If the four numbers look like four different videos, the carrier decision is not the problem — the visual system is."
+    }
+  ],
+  "edges": [
+    { "from": "core", "to": "hook", "rel": "flows", "label": "opens with" },
+    { "from": "core", "to": "stat_return", "rel": "proves", "label": "decided by" },
+    { "from": "hook", "to": "stat_forty", "rel": "expands", "label": "the figure" },
+    { "from": "hook", "to": "stat_growth", "rel": "flows", "label": "eight months later" },
+    { "from": "stat_growth", "to": "stat_days", "rel": "contrasts", "label": "the cost of it" },
+    { "from": "stat_days", "to": "stat_return", "rel": "flows", "label": "and then the drop" },
+    { "from": "stat_return", "to": "cta", "rel": "flows", "label": "so" },
+    { "from": "risk", "to": "core", "rel": "blocks", "label": "if the look drifts" }
+  ]
+}
