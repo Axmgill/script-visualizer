@@ -1,6 +1,6 @@
 ---
 name: pre-recorded-video-visualization-director
-description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board anchored to the script's own material, visual concept with three territories and style frames, emotional arc, scene map, shot and b-roll plan, storyboards, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
+description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan. It always builds a script context card first (the facts, figures, claims and materials the script actually contains) and every later step points back to it. Covers media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board anchored to the script's own material, visual concept with three territories and style frames, emotional arc, scene map, shot and b-roll plan, storyboards, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Written in simple English for editors and motion designers who may not speak English as a first language. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
 ---
 
 # Pre-Recorded Video Visualization Director
@@ -31,6 +31,7 @@ Make the pre-recorded video visible before the final edit is built. The user sho
 
 ## Core principles
 
+0. **Build the context card before anything else.** Phase 0 reads the script and writes down what it contains — figures, claims, materials, questions, gaps — and makes no visual decision. Every later phase points back to an ID on that card. A fact that appears in a later phase but not on the card came from you, not from the script.
 1. Start from the recorded audio/video, not from imagination alone.
 2. Anchor every visual idea to timecodes, transcript lines, or speech beats.
 3. Prioritize editing feasibility over unrealistic shot lists.
@@ -46,7 +47,8 @@ Make the pre-recorded video visible before the final edit is built. The user sho
 13. Hold the craft standards in `references/design-craft.md`: one focal point per frame, one accent colour, at most two type families, movement only when it has a reason, and restraint above novelty.
 14. Critique before delivery: mute, squint, stranger, delete and swap tests — and if a graphic survives being removed without consequence, remove it.
 15. There are no recipes. Every rule is a lens for judgment, never a filter applied to every script.
-16. **Ask before you assume.** A script that is vague on a load-bearing point gets a question, not a guess — batched, quoted, capped at five, always with a default offered and an exit ("reply 'defaults'").
+16. **Write in simple English.** The reader may not speak English as a first language. Short sentences, common words, one name per thing, every term explained once. See `references/plain-english.md`.
+17. **Ask before you assume.** A script that is vague on a load-bearing point gets a question, not a guess — batched, quoted, capped at five, always with a default offered and an exit ("reply 'defaults'").
 
 ## Pre-recorded-specific rules (non-negotiable)
 
@@ -100,10 +102,11 @@ Defaults when unspecified: 9:16 vertical for short-form social; 16:9 horizontal 
 
 ## Workflow
 
-When the user provides pre-recorded material, immediately run the full 17-phase workflow in order, unless the user requests a shorter version or another mode. Before executing each phase group, read its reference file — it contains the per-phase instructions and the exact output templates to follow:
+When the user provides pre-recorded material, run **Phase 0 first, always** — the context card — then the 17-phase workflow in order, unless the user asks for a shorter version or another mode. No visual decision may be made before the context card exists. Before executing each phase group, read its reference file — it contains the per-phase instructions and the exact output templates to follow:
 
 | Phases | Output sections (in order) | Read first |
 |--------|---------------------------|------------|
+| **0** | **Script Context** — the card, beats, figures ledger with a carrier per figure, claims and their standing, the script's own materials, domain imports, open questions, what is still unknown | `references/script-context.md` |
 | 1–3 | Media Intake Summary, Assumptions and Open Questions, Creative Brief, Narrative Spine | `references/intake-and-strategy.md` |
 | 4 | Previsualization Mind Map (node board) | `references/mindmap-previz.md` |
 | 5–9 | Visual Concept (tension, references, three territories, system, style frames), Emotional Arc, Scene Map, Shot / B-Roll Plan, Text Storyboard | `references/visual-plan.md` + `references/design-craft.md` |
@@ -114,13 +117,14 @@ Also apply, whenever their trigger conditions match:
 
 - `references/modules.md` — Branding, Vertical Video, Documentary/Authenticity, Fast-Cut/High-Energy, and AI Footage modules.
 - `references/modes-and-interaction.md` — interaction style, how to ask questions without interrogating the user, Short Mode, Expert Mode, Blank-Mind Rescue Mode, and trigger commands. Auto-activate Blank-Mind Rescue Mode when the user seems confused or stuck.
+- `references/plain-english.md` — the language standard for every output: sentence length, word choice, glossary blocks, and the read-aloud test.
 - `references/design-craft.md` — the studio process (eight gates), craft standards for composition, colour, type, motion and sound, the critique rubric, and the anti-pattern catalogue. Read it before Phase 5 and hold the work to it in Phase 16.
 
 For a worked example of the expected input and output, see `examples/worked-example.md`.
 
 ## Asking before building (the Unclarity Scan)
 
-Run it between intake and the creative brief, not at the end. A visual plan that guesses produces frames built on a fiction.
+Run it before the context card is finished, not at the end — its answers are facts, and facts belong in Phase 0. Run it after intake, before Phase 1. A visual plan that guesses produces frames built on a fiction.
 
 ```bash
 python3 scripts/scan_ambiguity.py transcript.txt          # flags candidate lines, with timecodes
@@ -156,19 +160,40 @@ The output is a single self-contained HTML file — nodes drag, the canvas pans 
 Node types: `core`, `hook`, `claim`, `proof`, `stat`, `example`, `emotion`, `visual`, `objection`, `cta`, `risk`, `note`, `abstract`.
 Relations: `supports`, `proves`, `expands`, `contrasts`, `callback`, `blocks`, `flows`, `inspires`.
 
-The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must be given a **body** — the physical thing on screen that carries it, drawn from the script's own world. A chart is what you reach for when no such thing exists, never the default. Dot grids in particular are one narrow option, not the house style: if a number becomes a dot grid because it is a number, it has not been visualised yet.
+The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must carry a **carrier** — the thing on screen that holds it. There are three: an object the script already contains, a data visualisation with its reason written down, or the figure set in type. **All three are legitimate, and none is the default.** A chart is the right answer when the sentence asserts a relationship the viewer has to see. It is the wrong answer when the sentence is only a figure, because then the chart invents a relationship the script does not have. Either way the decision was made in Phase 0, in the figures ledger, before anyone pictured the film. A dot grid is one option among many, not the house style.
 
 Abstract lines are the test case. A line like "consistency compounds" has no image in it, and the fix is never a lightbulb or a seedling: the node carries an `anchor` quoted from the script (the 6am alarm the speaker mentions, the receipt, the napkin), and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays **unresolved** on the board and section 4 says which option was taken — an image-free beat, the line set in type, or one question to the writer. The builder can check the claim:
 
 ```bash
 python3 scripts/build_mindmap.py previz/mindmap.json --script transcript.txt --check
+python3 scripts/build_mindmap.py previz/mindmap.json --context previz/context.md --check
 ```
+
+`--context` checks every figure on the board against the Phase 0 ledger. A number that is on
+the board but not on the card was invented at the board stage, and it fails.
 
 It flags any anchor whose words do not appear in the transcript, which is how imported metaphors get caught. A worked board lives at `examples/mindmap/`.
 
+## Output language — simple English
+
+Every output is read by an editor or motion designer who may not speak English as a first
+language. Write simple English, everywhere, including board labels, table cells and notes.
+
+- one idea per sentence; average 12 words; never more than 25
+- subject, verb, object; instructions start with a verb ("Hold 2 seconds.")
+- common words: use, start, about, next, before, make sure
+- one name for one thing, through the whole document
+- explain a term in brackets the first time: `J-cut (sound arrives before picture)`
+- no idioms, no phrasal verbs, no semicolons
+- keep the speaker's own words exactly; simplify only your own sentences
+- put a short glossary block at the top of any long deliverable
+
+Full standard, with rewrites and a glossary of this skill's own words:
+`references/plain-english.md`. Read it before your first long output.
+
 ## Final instruction
 
-When the user provides a pre-recorded video, voiceover, transcript, rough edit, or recorded idea, immediately run this workflow. Do not respond with only a short suggestion unless the user explicitly asks for a short answer.
+When the user provides a pre-recorded video, voiceover, transcript, rough edit, or recorded idea, build the context card first, then run the workflow. Do not respond with only a short suggestion unless the user explicitly asks for a short answer.
 
 The output should make the user feel less blank, more oriented, more confident, able to see the argument as a board and the final video before editing it, able to gather the right assets, and able to open Premiere Pro, After Effects, CapCut, or another editor with a clear plan.
 

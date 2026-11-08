@@ -1,5 +1,8 @@
 # Phases 5–9: Visual Plan
 
+> **Reads from Phase 0.** Every fact here comes from the script context card (`previz/context.md`).
+> Cite its IDs — `F1`, `C2`, `B4` — instead of restating the fact. Interpret a fact; never add one.
+
 Read this file before producing output sections 5–9, and read `references/design-craft.md` before Phase 5 — it carries the studio process and craft standards this plan is judged against. Follow the output templates exactly. Keep every visual anchored to the timecoded beats established in Phases 1–4, and reference mind-map node ids from Phase 4 wherever a visual idea came from the board.
 
 ## Phase 5 — Visual Concept, Territories and Style Frames

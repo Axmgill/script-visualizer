@@ -15,6 +15,34 @@ A compact demonstration of the skill transforming a raw transcript into an edit 
 
 **Timing note:** No timecodes provided. All times below are ESTIMATED at ~2.75 words/second (48 words, ~19 seconds total). Verify against the recording.
 
+### Phase 0 — the context card
+
+Built before any visual decision, from the words only.
+
+| | |
+|---|---|
+| What this is | 48 words, ~19 seconds, one speaker, no footage. Instagram Reels. |
+| The line | "Your first client doesn't come from a perfect portfolio." (0:00) |
+| The job | Make a waiting freelancer send one message today. |
+| The turn | 0:08 — "Stop waiting" turns a story into an instruction. |
+| The room | A coffee shop, a napkin. Both named by the speaker. |
+
+**Figures ledger.** One figure only:
+
+| ID | Time | Figure | What the sentence does with it |
+|---|---|---|---|
+| F1 | 0:00 | "your first client" | Not an amount. It is a milestone, said once, as a noun. |
+
+No carrier is needed for F1: there is no number on screen. **This is the point of the ledger.**
+A script can be about a "first" something and still contain no data. The plan must not invent
+a chart to look analytical, and the board must not contain a `stat` node here.
+
+**Materials.** a portfolio, a napkin, a coffee shop, a logo drawn by hand, a payment before
+the speaker got home. That is the entire world of the film.
+
+**Domain imports to refuse.** Guru-in-a-hoodie graphics, a rising line labelled "clients",
+a rocket, a lightbulb, a stock handshake.
+
 ### Assumptions and open questions
 
 ```

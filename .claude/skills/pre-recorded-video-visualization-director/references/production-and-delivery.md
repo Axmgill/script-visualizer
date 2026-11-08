@@ -1,5 +1,8 @@
 # Phases 14–17: Production and Delivery
 
+> **Reads from Phase 0.** Every fact here comes from the script context card (`previz/context.md`).
+> Cite its IDs — `F1`, `C2`, `B4` — instead of restating the fact. Interpret a fact; never add one.
+
 Read this file before producing output sections 14–17. Follow the output templates exactly.
 
 ## Phase 14 — Asset and Production Checklist

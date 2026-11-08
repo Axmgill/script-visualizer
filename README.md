@@ -4,18 +4,18 @@ An Agent Skill that turns pre-recorded audio/video material into a complete, tim
 
 ## Install
 
-**Latest release:** [v1.0.0](https://github.com/Axmgill/script-visualizer/releases/tag/v1.0.0)
+**Latest release:** [v1.0.0](https://github.com/Axmgill/script-visualizer/releases/tag/v1.1.0)
 
 **Installation URL** (versioned source archive):
 
 ```
-https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.0.0.zip
+https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.1.0.zip
 ```
 
 Install for all projects (Claude Code):
 
 ```bash
-curl -L https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.0.0.zip -o sv.zip
+curl -L https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.1.0.zip -o sv.zip
 unzip -q sv.zip
 mkdir -p ~/.claude/skills
 cp -r script-visualizer-*/.claude/skills/pre-recorded-video-visualization-director ~/.claude/skills/
@@ -24,12 +24,12 @@ cp -r script-visualizer-*/.claude/skills/pre-recorded-video-visualization-direct
 Or with git (no curl/unzip needed):
 
 ```bash
-git clone --branch v1.0.0 --depth 1 https://github.com/Axmgill/script-visualizer.git
+git clone --branch v1.1.0 --depth 1 https://github.com/Axmgill/script-visualizer.git
 mkdir -p ~/.claude/skills
 cp -r script-visualizer/.claude/skills/pre-recorded-video-visualization-director ~/.claude/skills/
 ```
 
-For a single project, copy into that project's `.claude/skills/` instead. For claude.ai, zip just the `pre-recorded-video-visualization-director/` folder and upload it under Settings → Capabilities → Skills. Full instructions are in the [release notes](https://github.com/Axmgill/script-visualizer/releases/tag/v1.0.0).
+For a single project, copy into that project's `.claude/skills/` instead. For claude.ai, zip just the `pre-recorded-video-visualization-director/` folder and upload it under Settings → Capabilities → Skills. Full instructions are in the [release notes](https://github.com/Axmgill/script-visualizer/releases/tag/v1.1.0).
 
 ## The skill
 
@@ -39,6 +39,8 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
 .claude/skills/pre-recorded-video-visualization-director/
 ├── SKILL.md                              # Entry point: role, principles, workflow router
 ├── references/
+│   ├── script-context.md                 # Phase 0: the context card — facts before any idea
+│   ├── plain-english.md                  # Output language standard (simple English)
 │   ├── intake-and-strategy.md            # Phases 1–3: intake, brief, narrative spine
 │   ├── mindmap-previz.md                 # Phase 4: previsualization mind map (node board)
 │   ├── design-craft.md                   # Studio process, craft standards, critique rubric
@@ -51,10 +53,13 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
 │   └── mindmap-board.template.html       # Self-contained interactive board (no dependencies)
 ├── scripts/
 │   ├── estimate_timecodes.py             # Deterministic timecode estimation / SRT & VTT parsing
+│   ├── extract_context.py                # Phase 0: collects figures, claims, materials — decides nothing
 │   ├── scan_ambiguity.py                 # Flags lines a plan would have to guess at
 │   └── build_mindmap.py                  # Node graph JSON → standalone HTML board
 └── examples/
     ├── worked-example.md                 # Input → output demonstration (Short Mode)
+    ├── context/
+    │   └── numbers-by-context.context.md # A finished context card: four figures, four readings
     └── mindmap/
         ├── napkin-proof.json             # Example node graph
         ├── napkin-proof.html             # Built board — open it in a browser
@@ -70,9 +75,62 @@ It follows the [Agent Skills](https://agentskills.io) format: a `SKILL.md` with 
 
 ## What it does
 
-Give it a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, or transcript (a script works too — timing gets marked ESTIMATED), and it produces a 17-section edit plan: media intake, assumptions and open questions, creative brief, narrative spine, a previsualization mind map, visual concept, emotional arc, scene map, shot/b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and a copy-into-production delivery summary.
+Give it a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, or transcript (a script works too — timing gets marked ESTIMATED), and it produces a context card plus a 17-section edit plan: media intake, assumptions and open questions, creative brief, narrative spine, a previsualization mind map, visual concept, emotional arc, scene map, shot/b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and a copy-into-production delivery summary.
 
 Every visual is anchored to timecodes or speech beats. Existing footage comes first; new assets are suggested only when needed, always with a fallback.
+
+## It reads the script before it imagines the film (Phase 0)
+
+The first thing the skill does is not a mood board. It is a **context card**: what the script
+actually contains, written in plain words, with timecodes.
+
+```bash
+python3 scripts/extract_context.py script.txt -o previz/context-raw.md
+```
+
+The helper collects and decides nothing — every figure with the sentence it sits in, amounts
+with no number, claims that point outside the script, the words the script repeats, and the
+shape of the text. The skill turns that into `previz/context.md`:
+
+| Section | What it holds |
+|---|---|
+| The card | what this is, the line that carries the video, the job, the turn, the register, the room |
+| Beats | the argument in order, one line each |
+| **Figures ledger** | every number, what its sentence *does* with it, and the carrier — decided here, from the words alone |
+| Claims | what each claim rests on: sourced, own account, unsourced, rhetorical, withheld, impossible in this edit |
+| Materials | the things, places and acts the script names — the only raw material allowed |
+| Domain imports | the clichés this subject invites and the script does not earn |
+| Open questions | what blocks, with a default for each |
+| Still unknown | the honest list, carried to the end of the package |
+
+**Nothing visual is decided before this card exists.** Every later phase cites an ID from it
+(`F1`, `C2`, `B4`). Phases may interpret a fact; they may not add one. The builder enforces
+it in both directions:
+
+```bash
+python3 scripts/build_mindmap.py previz/mindmap.json \
+  --script transcript.txt --context previz/context.md --check
+```
+
+It fails a figure that is on the board but not in the ledger (invented at the board stage)
+and warns about a figure in the ledger that the board never shows (a dropped beat).
+
+That is also why the numbers hold now. Decide what a number *is* while you are still reading
+the words, and no idea of "the look" can quietly turn it into a chart.
+
+## Written in simple English
+
+Editors and motion designers reading this may not speak English as a first language, so every
+output follows `references/plain-english.md`:
+
+- one idea per sentence, average 12 words, never more than 25
+- instructions start with a verb — *"Hold 2 seconds."*
+- common words: use, start, about, next, before, make sure
+- one name for one thing, through the whole document
+- every term explained once in brackets: `J-cut (sound arrives before picture)`
+- no idioms, no phrasal verbs, no semicolons
+- the speaker's own words are never simplified — only the plan's
+- a short glossary block at the top of any long deliverable
 
 ## It asks before it assumes
 
@@ -136,6 +194,11 @@ python3 scripts/build_mindmap.py examples/mindmap/napkin-proof.json -o previz/mi
 # check that abstract lines are anchored to the transcript, not invented
 python3 scripts/build_mindmap.py examples/mindmap/abstract-to-anchor.json \
   --script examples/mindmap/abstract-script.txt --check
+
+# check every figure on the board against the Phase 0 context card
+python3 scripts/build_mindmap.py examples/mindmap/numbers-by-context.json \
+  --script examples/mindmap/numbers-script.txt \
+  --context examples/context/numbers-by-context.context.md --check
 ```
 
 Open `examples/mindmap/napkin-proof.html` to see a finished board. This phase is on `main` and ships in the next release; the install links above point at v1.0.0.
