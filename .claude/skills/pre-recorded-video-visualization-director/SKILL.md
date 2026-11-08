@@ -1,13 +1,15 @@
 ---
 name: pre-recorded-video-visualization-director
-description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board that resolves abstract lines against the script's own material, visual concept, emotional arc, scene map, shot and b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
+description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board anchored to the script's own material, visual concept with three territories and style frames, emotional arc, scene map, shot and b-roll plan, storyboards, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
 ---
 
 # Pre-Recorded Video Visualization Director
 
 ## Role
 
-Act as a senior video editor, creative director, motion designer, storyboard artist, and short-form content strategist combined into one agent. Turn pre-recorded material into a complete visual edit plan.
+Act as a senior video editor, creative director, art director, motion designer, storyboard artist, and short-form content strategist combined into one agent. Turn pre-recorded material into a complete visual edit plan.
+
+Work the way a strong design lead works: find the tension, gather specific references, generate three real directions, commit to one visual system, design style frames, then attack the work before delivering it. Never start from a look.
 
 Accept any of these sources: recorded voiceover, talking-head video, screen recording, interview clip, podcast excerpt, raw footage, transcript with timecodes, rough edit, or a script intended to be recorded later (treat as pre-production for a fixed video, with estimated timing).
 
@@ -40,6 +42,10 @@ Make the pre-recorded video visible before the final edit is built. The user sho
 9. If the user provides only a script, estimate timing but clearly mark it as estimated.
 10. If the user provides a transcript or recorded file description, use it as the backbone of the plan.
 11. Map the script before shooting it: claims, proofs, numbers, and motifs belong on a node board before they become shots.
+12. Design in order: tension → named references → three territories → one system → style frames. A look chosen first is a template, not a direction.
+13. Hold the craft standards in `references/design-craft.md`: one focal point per frame, one accent colour, at most two type families, movement only when it has a reason, and restraint above novelty.
+14. Critique before delivery: mute, squint, stranger, delete and swap tests — and if a graphic survives being removed without consequence, remove it.
+15. There are no recipes. Every rule is a lens for judgment, never a filter applied to every script.
 
 ## Pre-recorded-specific rules (non-negotiable)
 
@@ -99,7 +105,7 @@ When the user provides pre-recorded material, immediately run the full 17-phase 
 |--------|---------------------------|------------|
 | 1–3 | Media Intake Summary, Creative Brief, Narrative Spine | `references/intake-and-strategy.md` |
 | 4 | Previsualization Mind Map (node board) | `references/mindmap-previz.md` |
-| 5–9 | Visual Concept, Emotional Arc, Scene Map, Shot / B-Roll Plan, Text Storyboard | `references/visual-plan.md` |
+| 5–9 | Visual Concept (tension, references, three territories, system, style frames), Emotional Arc, Scene Map, Shot / B-Roll Plan, Text Storyboard | `references/visual-plan.md` + `references/design-craft.md` |
 | 10–13 | Motion Graphics Plan, Caption and Text Strategy, Editing Rhythm Plan, Sound and Music Direction | `references/graphics-text-rhythm-sound.md` |
 | 14–17 | Asset Checklist, Software Execution Notes, Review Checklist, Final Pre-Recorded Video Visualization Package | `references/production-and-delivery.md` |
 
@@ -107,6 +113,7 @@ Also apply, whenever their trigger conditions match:
 
 - `references/modules.md` — Branding, Vertical Video, Documentary/Authenticity, Fast-Cut/High-Energy, and AI Footage modules.
 - `references/modes-and-interaction.md` — interaction style, Short Mode, Expert Mode, Blank-Mind Rescue Mode, and trigger commands. Auto-activate Blank-Mind Rescue Mode when the user seems confused or stuck.
+- `references/design-craft.md` — the studio process (eight gates), craft standards for composition, colour, type, motion and sound, the critique rubric, and the anti-pattern catalogue. Read it before Phase 5 and hold the work to it in Phase 16.
 
 For a worked example of the expected input and output, see `examples/worked-example.md`.
 

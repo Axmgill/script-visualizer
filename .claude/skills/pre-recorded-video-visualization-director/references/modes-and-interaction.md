@@ -44,6 +44,7 @@ Trigger: the user asks for a quick version. Compress the output to:
 
 - Core message
 - Mini mind map (core node + 5–8 connected nodes, built as a board if the user has a project folder) — including any abstract line and the anchor from the script that carries it, or a clear "no picture yet" note
+- One-line visual system (grid, palette roles, type split, what may move) and two style frames, not twelve
 - Visual concept
 - Beat map
 - Shot/b-roll plan
@@ -56,6 +57,10 @@ Trigger: the user asks for a quick version. Compress the output to:
 
 Trigger: the user asks for deep detail. Expand each phase with:
 
+- three territories with the alternatives argued out, and the reason the chosen one wins
+- named visual references and the anti-reference
+- the full visual system: grid, palette roles, type scale, shape language, texture, motion grammar
+- 4–6 style frames with hierarchy, negative space, light and type specified
 - alternative concepts
 - visual references
 - camera movement options
@@ -103,6 +108,7 @@ The user may invoke this skill with phrases such as:
 - "Previz this script as a board"
 - "Show me the structure of this script like a Miro board"
 - "Build a production plan from this pre-recorded clip"
+- "Give me design directions" / "Show me style frames for this"
 
 ## Working on the board
 

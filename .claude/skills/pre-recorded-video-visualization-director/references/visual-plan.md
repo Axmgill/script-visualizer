@@ -1,31 +1,104 @@
 # Phases 5–9: Visual Plan
 
-Read this file before producing output sections 5–9. Follow the output templates exactly. Keep every visual anchored to the timecoded beats established in Phases 1–4, and reference mind-map node ids from Phase 4 wherever a visual idea came from the board.
+Read this file before producing output sections 5–9, and read `references/design-craft.md` before Phase 5 — it carries the studio process and craft standards this plan is judged against. Follow the output templates exactly. Keep every visual anchored to the timecoded beats established in Phases 1–4, and reference mind-map node ids from Phase 4 wherever a visual idea came from the board.
 
-## Phase 5 — Visual Concept for the Edit
+## Phase 5 — Visual Concept, Territories and Style Frames
 
-Create the overall visual world for the pre-recorded video. This is not about shooting a new film unless b-roll is required. This is about how the existing recording will be presented.
+**Read `references/design-craft.md` first.** This phase is art direction, not a mood paragraph: it
+runs Gates 0–4 of that file and produces decisions someone could design against.
 
-Define: visual theme; use of original footage; use of b-roll; use of motion graphics; use of text/captions; use of archival or supporting media; camera feel if new b-roll is needed; lighting/color mood; editing energy; graphic style; sound atmosphere.
+Do not begin with a look. Begin with the tension, then generate three directions, then commit.
+
+### 5.1 The tension (Gate 0)
+
+One sentence: what the viewer believes now, and what the video has to make them feel. Not a topic, not
+a theme. If it works for any video on the subject, it is too general.
+
+### 5.2 References (Gate 1)
+
+6–10 *named* references across composition, colour/light, type, and motion/texture — plus one
+anti-reference. Each with one line: what is being taken from it.
+
+Banned: "clean", "modern", "premium", "bold", "cinematic". These are adjectives, not references.
+
+### 5.3 Three territories (Gate 2)
+
+Three mutually exclusive visual directions. Each in the form *"It looks like X, because the script
+says Y."* — the second half is where the argument lives. Each carries a named risk. Recommend one,
+with a reason that survives comparison to the other two.
+
+Kill test: swap the three into a different script. If they still work, they are house styles, not a
+response to this material.
+
+### 5.4 Commit and specify the system (Gate 3)
+
+Grid and ratio · palette roles with a value range · type families and a fixed scale ratio · shape
+language · texture and where it is allowed · motion grammar · sound palette.
+
+### 5.5 Style frames (Gate 4)
+
+Four to six frames from different functions (hook, proof, turn, payoff), described well enough to be
+rebuilt without further questions. They must read as a series. Include the hardest frame, not only
+the showcase one.
 
 Output template:
 
-```
+````
 VISUAL CONCEPT
+
+Tension: <viewer believes X → the video must make them feel Y>
+
+References
+| # | Reference (named) | Bucket | What I am taking |
+|---|---|---|---|
+
+Anti-reference: <the thing this must not look like, and why>
+
+Territories
+Territory A — "<It looks like X, because the script says Y.>"
+- What the viewer sees:
+- Risk:
+Territory B — ...
+Territory C — ...
+
+Chosen: <A/B/C> — because <reason that survives comparison>
+
+Visual system
 - Concept title:
-- One-line visual idea:
+- Grid / ratio:
+- Palette roles (ground / ink / accent / alert):
+- Type: <family + scale ratio + job split>
+- Shape language:
+- Texture:
+- Motion grammar:
+- Sound palette:
 - How the original recording is used:
-- How b-roll supports the message:
-- How graphics support clarity:
-- Camera style for any new/support footage:
-- Lighting style:
-- Color palette:
-- Mood:
-- Editing rhythm:
-- Graphic style:
-- Sound/music direction:
+- How graphics support meaning (not decoration):
 - Why this concept fits the recorded audio:
-```
+
+Style frames
+Frame 1 — <name> (<function>, <timecode>)
+- In frame, by visual weight: primary → secondary → tertiary
+- Negative space:
+- Framing / lens feel:
+- Light:
+- Palette roles used:
+- Type present:
+- Texture:
+- What moves next:
+... repeat for 4–6 frames
+
+Hardest frame: <which one, and why it is the risk>
+Series check: <what makes these frames read as one film>
+````
+
+### 5.6 What this phase must not do
+
+- Present one look with no alternatives.
+- Use mood adjectives in place of named references.
+- Design frames that only work as stills.
+- Let the style frames drift from the Phase 4 board: every frame must trace to an argument node or an
+  anchor, and any number or abstract line in it must respect the `form`/`anchor` rules.
 
 ## Phase 6 — Emotional Arc Mapped to Time
 
@@ -130,13 +203,13 @@ Shot 02:
 
 Every shot needs an alternative that is achievable with existing assets or a simple graphic. Prefer existing recording first; escalate to b-roll, graphics, archive, screen capture, AI footage, or stock only when the existing material cannot carry the moment.
 
-For any shot covering an abstract line, the visual must be the thing named by that node's `anchor` in Phase 4. If the node is unresolved, do not invent an image here — carry the beat with the speaker, with type from the line's own words, or leave it as a held shot, and repeat the unresolved note from section 4. A shot that needs a metaphor the script never contained is out of scope.
+For any shot covering an abstract line, the visual must be the thing named by that node's `anchor` in Phase 4, and it must be built inside the visual system from Phase 5 — a shot that needs a new palette, grid or type treatment is a design failure, not a shot problem. If the node is unresolved, do not invent an image here — carry the beat with the speaker, with type from the line's own words, or leave it as a held shot, and repeat the unresolved note from section 4. A shot that needs a metaphor the script never contained is out of scope.
 
 ## Phase 9 — Text Storyboard for the Edit
 
 Since images may not be generated, create a text storyboard detailed enough for an editor or motion designer to build from without further questions.
 
-For each major frame, describe: frame number; timecode; what is visible; what the speaker is saying; what text appears; what graphic appears; camera/subject position; composition; motion direction; emotional tone; transition to next frame.
+For each major frame, describe: frame number; timecode; what is visible; what the speaker is saying; what text appears; what graphic appears; camera/subject position; composition; motion direction; emotional tone; transition to next frame. Every storyboard frame must trace to a style frame from Phase 5 or to that system — if a frame needs a new look, the system was under-specified, so fix the system rather than inventing here.
 
 Output template:
 

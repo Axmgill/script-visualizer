@@ -43,7 +43,24 @@ The core claim is abstract ("proof beats polish"), but the script supplies its o
 
 ### Visual concept
 
-"The Napkin Proof" — the voiceover stays untouched; visuals move from an implied polished portfolio (rejected) to one continuous real-world moment: hands, napkin, pen, coffee ring. Authentic close-up texture, no stock. Captions carry the argument when visuals are minimal.
+**Tension.** The viewer believes a portfolio is a website. The video has to make a stranger's handwriting feel more trustworthy than a grid of thumbnails.
+
+**References.** *Composition:* Saul Bass poster hierarchy, one idea per field. *Colour:* diner-table warm neutrals, one red accent earned by the coffee ring. *Type:* Swiss grotesque for captions, no second family. *Motion:* Vox-style hold-then-reveal, cuts not swooshes. *Anti-reference:* the Dribbble-thumbnail grid — the exact thing the video is arguing against.
+
+**Three territories.**
+1. *The Napkin* — one continuous real-world surface, hands and pen, light shifting across the minute. The risk: if the pen never crosses the frame's centre, the middle turn flatlines.
+2. *The Studio Wall* — pinned paper, tape, marker, shot from above as a desk in use. The risk: reads as craft-hobby content, not portfolio advice.
+3. *The Case File* — evidence labels and a magnifier on the same napkin. The risk: turns a warm story cold.
+
+Winner: **The Napkin**, with one borrow from territory 3 — a single small label at the end naming the thing ("this is the portfolio"). It passes the swap test: no other video in this niche arrives on a paper napkin in one light.
+
+**System.** 1.85:1, 12-column grid, 96 px margin. Palette by role: paper `#EDE3D2` ground, ink `#1A1614` type, red `#B23A2E` accent used exactly twice (the coffee ring, the end label). Type: one grotesque, 5 steps at 1.25. Shape: hard rectangle only, no rounded cards. Texture: real paper grain, never an overlay. Motion: hold, then cut; the pen is the only thing that moves within a frame. Sound: room tone, pen scratch, paper.
+
+**Style frame A — the proof (0:00–0:12).** Close top-down, napkin filling 80% of frame, pen entering from bottom-right, red ring at one-third left. One caption, top-left, 5% of frame height. Nothing else. Could be paused and printed as a poster.
+
+**Style frame B — the turn (0:41).** Pull back to show the room: the same napkin on the table, two hands, coffee cup missing. The empty ring where the cup was is the focal point; the caption sits below the ring, never over it. This is the hardest frame and the one that proves the direction — it only works if the light has visibly moved since frame A.
+
+**Must not.** No stock b-roll, no laptop mockups, no animated arrows, no second accent colour, no caption over the napkin's centre.
 
 ### Beat map
 

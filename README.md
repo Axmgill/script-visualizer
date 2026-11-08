@@ -41,7 +41,8 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
 ├── references/
 │   ├── intake-and-strategy.md            # Phases 1–3: intake, brief, narrative spine
 │   ├── mindmap-previz.md                 # Phase 4: previsualization mind map (node board)
-│   ├── visual-plan.md                    # Phases 5–9: concept, emotional arc, scenes, shots, storyboard
+│   ├── design-craft.md                   # Studio process, craft standards, critique rubric
+│   ├── visual-plan.md                    # Phases 5–9: art direction, arc, scenes, shots, storyboard
 │   ├── graphics-text-rhythm-sound.md     # Phases 10–13: graphics, captions, rhythm, sound
 │   ├── production-and-delivery.md        # Phases 14–17: assets, software notes, review, delivery
 │   ├── modules.md                        # Branding, vertical, documentary, fast-cut, AI footage
@@ -68,6 +69,19 @@ It follows the [Agent Skills](https://agentskills.io) format: a `SKILL.md` with 
 Give it a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, or transcript (a script works too — timing gets marked ESTIMATED), and it produces a 17-section edit plan: media intake, creative brief, narrative spine, a previsualization mind map, visual concept, emotional arc, scene map, shot/b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and a copy-into-production delivery summary.
 
 Every visual is anchored to timecodes or speech beats. Existing footage comes first; new assets are suggested only when needed, always with a fallback.
+
+## How it designs (Phase 5)
+
+It doesn't hand you a mood board and a look. It runs the process strong motion designers actually run:
+
+1. **Tension** — what the viewer believes now, and what the video must make them feel.
+2. **Named references** — 6–10 specific pieces across composition, colour, type and motion, plus one anti-reference. "Clean, modern, premium" is rejected as non-specific.
+3. **Three territories** — mutually exclusive directions, each argued as *"it looks like X because the script says Y"*, each with a named risk. Swap test: if a direction still works in another video, it was a house style.
+4. **One visual system** — grid and ratio, palette *roles* rather than a mood, a type scale with a fixed ratio, shape language, texture rules, motion grammar.
+5. **4–6 style frames** — composition, hierarchy, negative space, light, type and texture, specified precisely enough to rebuild. They must read as a series, and must include the hardest frame, not just the showcase one.
+6. **Critique** — mute, squint, stranger, delete and swap tests, scored against a rubric where *Truth* and *Idea* below 4 means rework.
+
+The standards come from how the craft is taught and practised — School of Motion's Design Kickstart, Design Bootcamp and Illustration for Motion, plus the documentary-graphics and retention work taught at AevyTV — encoded as gates and pass/fail tests, not as visual trends to copy.
 
 ## Mind map board (Phase 4)
 
