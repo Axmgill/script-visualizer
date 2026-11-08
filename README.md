@@ -4,18 +4,18 @@ An Agent Skill that turns pre-recorded audio/video material into a complete, tim
 
 ## Install
 
-**Latest release:** [v1.0.0](https://github.com/Axmgill/script-visualizer/releases/tag/v1.1.0)
+**Latest release:** [v1.0.0](https://github.com/Axmgill/script-visualizer/releases/tag/v1.2.0)
 
 **Installation URL** (versioned source archive):
 
 ```
-https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.1.0.zip
+https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.2.0.zip
 ```
 
 Install for all projects (Claude Code):
 
 ```bash
-curl -L https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.1.0.zip -o sv.zip
+curl -L https://github.com/Axmgill/script-visualizer/archive/refs/tags/v1.2.0.zip -o sv.zip
 unzip -q sv.zip
 mkdir -p ~/.claude/skills
 cp -r script-visualizer-*/.claude/skills/pre-recorded-video-visualization-director ~/.claude/skills/
@@ -24,12 +24,12 @@ cp -r script-visualizer-*/.claude/skills/pre-recorded-video-visualization-direct
 Or with git (no curl/unzip needed):
 
 ```bash
-git clone --branch v1.1.0 --depth 1 https://github.com/Axmgill/script-visualizer.git
+git clone --branch v1.2.0 --depth 1 https://github.com/Axmgill/script-visualizer.git
 mkdir -p ~/.claude/skills
 cp -r script-visualizer/.claude/skills/pre-recorded-video-visualization-director ~/.claude/skills/
 ```
 
-For a single project, copy into that project's `.claude/skills/` instead. For claude.ai, zip just the `pre-recorded-video-visualization-director/` folder and upload it under Settings → Capabilities → Skills. Full instructions are in the [release notes](https://github.com/Axmgill/script-visualizer/releases/tag/v1.1.0).
+For a single project, copy into that project's `.claude/skills/` instead. For claude.ai, zip just the `pre-recorded-video-visualization-director/` folder and upload it under Settings → Capabilities → Skills. Full instructions are in the [release notes](https://github.com/Axmgill/script-visualizer/releases/tag/v1.2.0).
 
 ## The skill
 
