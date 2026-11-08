@@ -42,8 +42,10 @@ Input format
       "emotion": "relief",
       "visual": "One continuous real-world tabletop moment",
       "summary": "What the whole edit has to prove.",
-      "form": "",     # type "stat" only: the physical thing on screen that carries the number
-      "stat": null,   # type "stat" only: OPTIONAL schematic preview for the board
+      "form": "",     # type "stat": the physical thing on screen that carries the number (or "")
+      "chart": null,  # type "stat": OR a data visualisation, as {"what": ..., "why": ...}
+      "carrier": "",  # type "stat": OR "type" when the figure is simply set and held
+      "stat": null,   # type "stat": OPTIONAL schematic preview of the form or chart
       "x": 0, "y": 0
     }
   ],
@@ -62,8 +64,16 @@ imported metaphor. Set "anchor": "" to mark a line deliberately unresolved —
 the board will show it as having no picture yet.
 Relation types: supports, proves, expands, contrasts, callback, blocks,
 flows, inspires.
-Stat display kinds: dotgrid, bars, proportion, fraction, compare, steps,
-counter.
+A number on screen is carried by something. There are three carriers and the
+script decides which one: an object it names ("form"), a data visualisation
+("chart": {"what": what is being compared, "why": why a chart serves this
+line}), or type alone ("carrier": "type", with the treatment in "visual").
+A chart is a legitimate answer, not a fallback — what is rejected is a shape
+chosen with no reason. The builder requires a reason ("why") next to every
+chart, and requires every figure to exist in the script.
+
+Stat display kinds (optional preview, never the finished look): dotgrid,
+bars, line, proportion, fraction, compare, steps, counter.
 """
 
 from __future__ import annotations
@@ -98,7 +108,7 @@ REL_TYPES = {
 }
 
 STAT_KINDS = {
-    "dotgrid", "dots", "bars", "chart", "proportion", "progress",
+    "dotgrid", "dots", "bars", "line", "chart", "proportion", "progress",
     "fraction", "ratio", "compare", "steps", "counter",
 }
 
@@ -340,14 +350,43 @@ def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
 
         if node_type == "stat":
             form = str(node.get("form") or "").strip()
-            if not form:
+            chart = node.get("chart")
+            has_chart = isinstance(chart, dict) and bool(chart)
+            carrier = str(node.get("carrier") or "").strip().lower()
+            type_only = carrier in {"type", "type-only", "typographic", "text"}
+
+            if chart is not None and not isinstance(chart, dict):
                 errors.append(
-                    f"node '{node_id}': a stat node needs a 'form' \u2014 the physical thing on screen "
-                    "that carries the number (a page of tallies, an invoice, seven blank cells). "
-                    "A chart alone is not a body"
+                    f"node '{node_id}': 'chart' must be an object like "
+                    '{"what": "clients, Jan to Dec", "why": "the line says the count moved"}'
                 )
+                has_chart = False
+
+            if not form and not has_chart and not type_only:
+                errors.append(
+                    f"node '{node_id}': this number has no carrier recorded. Say what it sits on \u2014 an "
+                    "object from the script ('form'), a data visualisation ('chart') with the reason it "
+                    "earns one, or \"carrier\": \"type\" when the honest answer is the figure set and held. "
+                    "Any of the three can be right; what fails is a shape nobody decided on"
+                )
+
+            if has_chart:
+                what = str(chart.get("what") or "").strip()
+                why = str(chart.get("why") or "").strip()
+                if not what:
+                    errors.append(
+                        f"node '{node_id}': the 'chart' block needs 'what' \u2014 what is being compared "
+                        "or shown (a curve, a share, two totals, a count, a span)"
+                    )
+                if not why:
+                    errors.append(
+                        f"node '{node_id}': the 'chart' block needs 'why' \u2014 the part of the sentence "
+                        "that makes a visualisation the right answer here. A chart with no reason is the "
+                        "failure this rule exists to catch, not the chart itself"
+                    )
+
             if node.get("stat") is not None and not isinstance(node.get("stat"), dict):
-                errors.append(f"node '{node_id}': 'stat' is an optional schematic and must be an object")
+                errors.append(f"node '{node_id}': 'stat' is an optional preview and must be an object")
             if node.get("form") is not None and not isinstance(node.get("form"), str):
                 errors.append(f"node '{node_id}': 'form' must be a string")
 
@@ -384,8 +423,9 @@ def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
             )
     if len(stat_nodes) >= 2 and len(displays) and sum(len(v) for v in displays.values()) == len(stat_nodes):
         warnings.append(
-            "every number in this board is a schematic. Charts are a fallback, not the house style: "
-            "check whether each number has a real carrier in the script (section 4 of mindmap-previz.md)"
+            "every number in this board is drawn as a diagram. That is fine if the script really is about "
+            "these relationships \u2014 check each line earns it, and that at least one of them is not "
+            "better carried by an object the script already names (section 4 of mindmap-previz.md)"
         )
 
     core_nodes = [n for n in nodes if isinstance(n, dict) and str(n.get("type", "")).lower() == "core"]
@@ -476,13 +516,19 @@ def summarize(data: Dict[str, Any]) -> str:
 
     by_type = ", ".join(f"{key} {value}" for key, value in sorted(types.items(), key=lambda kv: -kv[1]))
     timed = sum(1 for node in nodes if isinstance(node, dict) and node.get("time"))
-    stats = sum(1 for node in nodes if isinstance(node, dict) and node.get("stat"))
+    stat_nodes = [n for n in nodes if isinstance(n, dict) and str(n.get("type", "")).lower() == "stat"]
+    carried = [
+        n for n in stat_nodes
+        if str(n.get("form") or "").strip()
+        or isinstance(n.get("chart"), dict)
+        or str(n.get("carrier") or "").strip().lower() in {"type", "type-only", "typographic", "text"}
+    ]
     abstract = [n for n in nodes if isinstance(n, dict) and str(n.get("type", "")).lower() == "abstract"]
     unresolved = [n for n in abstract if not str(n.get("anchor") or "").strip()]
     lines = [
         f"{len(nodes)} nodes ({by_type})",
         f"{len(edges)} connections",
-        f"{timed} nodes with timecodes · {stats} numbers given a carrier",
+        f"{timed} nodes with timecodes · {len(carried)} of {len(stat_nodes)} numbers with a decided carrier",
     ]
     if abstract:
         lines.append(
