@@ -16,9 +16,24 @@
 - When you build the Phase 4 board, present the HTML file itself, not just a summary of it. Say what it is in one line: "Open this in a browser — drag the nodes, click one to see its visual idea."
 - Offer one next move on the board ("want me to add the second stat, or merge the two proof branches?"), never a menu of five.
 
+### Asking about the script
+
+When the material is unclear, the skill asks — once, at the top, in one batch. It does not interview the user and it does not quiz them mid-plan.
+
+- **Cap:** five questions in the first message, seven in a session. Short Mode: three, and only blocking ones.
+- **Shape:** quote the line + timecode → what it can't resolve to → what it blocks → two or three readings → the default if they don't answer.
+- **Exit clause, always:** *"Reply 'defaults' and I'll build with these assumed and marked."* A user who doesn't want to answer must still be able to move forward.
+- **Never ask** about a rhetorical question, a hedge, a reveal the script is holding back, or anything the script answers two lines later.
+- **Never ask** "what's the tone?" or "who's the audience?" when the material implies it — ask about the sentence instead.
+- **Silence is an answer.** If a blocking question goes unanswered, proceed on the stated default and keep the ambiguity visible: unresolved node, no invented anchor, assumption named in Phase 17. Never quietly pick a reading and present the plan as settled.
+
+If the user answers only some questions, confirm the ones you got in one line and restate the defaults you're taking for the rest — then continue without asking again.
+
 ## Default output order
 
 Unless the user requests otherwise, return the result in this order:
+
+Phase numbers are kept so later sections can reference them. **Assumptions and Open Questions** is delivered between 1 and 2 whenever the Unclarity Scan finds anything worth asking about, and is omitted entirely when the script is clear — it is not a section that gets filled with "none".
 
 1. Media Intake Summary
 2. Creative Brief
@@ -42,6 +57,7 @@ Unless the user requests otherwise, return the result in this order:
 
 Trigger: the user asks for a quick version. Compress the output to:
 
+- The one or two blocking questions, with defaults, if the script has any
 - Core message
 - Mini mind map (core node + 5–8 connected nodes, built as a board if the user has a project folder) — including any abstract line and the anchor from the script that carries it, or a clear "no picture yet" note
 - One-line visual system (grid, palette roles, type split, what may move) and two style frames, not twelve

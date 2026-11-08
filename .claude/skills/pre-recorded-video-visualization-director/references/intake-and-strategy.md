@@ -49,6 +49,106 @@ MEDIA INTAKE SUMMARY
 - Assumptions made:
 ```
 
+## Before Phase 2 — The Unclarity Scan
+
+Read the script once for meaning, then read it again for what it *does not* say. A plan built on a
+guess produces frames built on a fiction; a question costs ten seconds.
+
+```
+python3 scripts/scan_ambiguity.py transcript.txt
+```
+
+The helper flags candidate lines with timecodes and a severity — it cannot judge them, and it never
+answers anything. You apply the protocol below.
+
+### What counts as unclear, and must be asked
+
+1. **Unfinished material** — placeholders, TODOs, `[link]`, "coming soon", "insert name here".
+2. **Unsupported authority** — "studies show", "experts say", "they say", "everyone knows", with no
+   source anywhere in the material.
+3. **A quantity with no number** — "most people", "thousands of them", "a huge amount". The plan
+   cannot design a figure the script never states.
+4. **Media from another edit** — "as you can see", "the chart below", "like this one". If that
+   footage or graphic is not in the package, the sentence has no visual and no meaning.
+5. **A claim that fights another line** — two statements that cannot both be true, or a claim the
+   video's own evidence undercuts. Only a human read finds these; the helper cannot.
+6. **A missing handle** — no call to action, or a call to action pointing at something never named.
+7. **A production fact the plan cannot invent** — rights to footage, paintings or music; a runtime
+   cap; aspect ratio and platform; brand colours; whether a person on camera may be shown.
+8. **Whose story it is** — first person with no identified speaker, or a "we" that could mean the
+   speaker, the audience, or a whole industry.
+
+### What is not unclear, and must never be asked
+
+- Rhetorical questions, irony, deliberate mystery, a reveal being held back on purpose.
+- An opinion marked as an opinion ("I think", "for me", "my guess").
+- Anything the script answers two lines later.
+- Anything the user's own brief or constraints already fix.
+- Tone, audience or platform when the material or the brief already implies them.
+
+Asking about these is worse than not asking: it tells the user the skill wasn't listening.
+
+### Three severities
+
+| Severity | What it changes | What you do |
+|---|---|---|
+| **BLOCKING** | the claim, the spine, or an anchor | must be answered or explicitly defaulted **before Phase 4** |
+| **SHAPING** | a design or edit choice — a date, a baseline, a palette, a pace | ask, propose a default, and continue if it goes unanswered |
+| **NOTE** | wording, hedge, or the script's own voice | never ask; mention at delivery only if it matters |
+
+### How to ask
+
+- **Batch it.** One message, blocking first, **five questions maximum** — seven in a whole session.
+  Never drip-feed one question per turn.
+- **Quote the sentence**, with its timecode. A question about "the tone" is unanswerable; a question
+  about a specific line is answerable in three words.
+- **Name what it blocks.** "This decides whether Phase 4 gets an anchor or an unresolved node."
+- **Offer two or three candidate readings**, not an open field. The user corrects a guess far faster
+  than they compose an answer.
+- **Always attach the default**: "if you'd rather not decide, I'll treat it as X and mark it."
+- **Offer the exit**: *"Reply 'defaults' and I'll build with the assumptions named."*
+- **Ask once, up front.** After that, run to the end without interrupting unless a genuinely new
+  blocker appears — no mid-plan quizzes.
+
+### Never silently choose
+
+If a blocking question goes unanswered you may still proceed, but the ambiguity must stay visible:
+
+- the mind-map node stays `unresolved` with no invented `anchor` (see `mindmap-previz.md`);
+- every frame that depends on the guess is labelled with the assumption;
+- the assumption is carried into Phase 17.
+
+A plan that names its guess is usable. A plan that hides one is a trap for whoever builds it.
+
+### Output template
+
+```
+ASSUMPTIONS AND OPEN QUESTIONS
+
+Read: <one or two lines on what the script is already clear about>
+
+Blocking — answer these, or I default
+B1. "<quoted line>"
+    Timecode: <0:42, ESTIMATED if derived>
+    Unclear: <what it cannot resolve to>
+    Blocks: <Phase 3 claim / Phase 4 anchor / Phase 8 shot / Phase 14 rights>
+    Options: (a) <reading> — <consequence for the plan>
+             (b) <reading> — <consequence>
+    If unanswered: <the exact default, and what stays marked unresolved>
+
+Shaping — a default is enough
+S1. "<quoted line>" (1:12) — <question>. Default: <default>.
+
+Not asking, on purpose
+- "<quoted line>" — rhetorical; the plan will not answer it.
+- "<quoted line>" — already marked as the speaker's opinion.
+
+If you reply "defaults": <one paragraph stating exactly what the plan will assume>
+```
+
+If the user's first message already answers everything, do not perform the questions — show the
+template once with "answered" against each item, then move straight into Phase 2.
+
 ## Phase 2 — Creative Brief for the Pre-Recorded Video
 
 Convert the raw material into a clear creative brief.

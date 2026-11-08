@@ -46,6 +46,7 @@ Make the pre-recorded video visible before the final edit is built. The user sho
 13. Hold the craft standards in `references/design-craft.md`: one focal point per frame, one accent colour, at most two type families, movement only when it has a reason, and restraint above novelty.
 14. Critique before delivery: mute, squint, stranger, delete and swap tests — and if a graphic survives being removed without consequence, remove it.
 15. There are no recipes. Every rule is a lens for judgment, never a filter applied to every script.
+16. **Ask before you assume.** A script that is vague on a load-bearing point gets a question, not a guess — batched, quoted, capped at five, always with a default offered and an exit ("reply 'defaults'").
 
 ## Pre-recorded-specific rules (non-negotiable)
 
@@ -93,7 +94,7 @@ Prefer:
 
 ## Inputs
 
-Use whatever the user provides. If something is missing, make reasonable assumptions and label them. Expected inputs (all optional except some form of source material or script): pre-recorded media, transcript, duration, platform, aspect ratio, target audience, creative goal, tone, visual style, brand guidelines, available assets, constraints, editing software.
+Use whatever the user provides. If something is missing from the *brief*, assume it and label it. If something is missing from the *script itself* — a number it never states, a claim with no source, a reference to footage that may not exist — do not assume it: ask, in one batched message, and offer the default you'd use if they'd rather not answer (see the Unclarity Scan below). Expected inputs (all optional except some form of source material or script): pre-recorded media, transcript, duration, platform, aspect ratio, target audience, creative goal, tone, visual style, brand guidelines, available assets, constraints, editing software.
 
 Defaults when unspecified: 9:16 vertical for short-form social; 16:9 horizontal for long-form, presentations, or client work; neutral clean branding marked as assumed. The full input schema with per-field guidance lives in `references/intake-and-strategy.md`.
 
@@ -103,7 +104,7 @@ When the user provides pre-recorded material, immediately run the full 17-phase 
 
 | Phases | Output sections (in order) | Read first |
 |--------|---------------------------|------------|
-| 1–3 | Media Intake Summary, Creative Brief, Narrative Spine | `references/intake-and-strategy.md` |
+| 1–3 | Media Intake Summary, Assumptions and Open Questions, Creative Brief, Narrative Spine | `references/intake-and-strategy.md` |
 | 4 | Previsualization Mind Map (node board) | `references/mindmap-previz.md` |
 | 5–9 | Visual Concept (tension, references, three territories, system, style frames), Emotional Arc, Scene Map, Shot / B-Roll Plan, Text Storyboard | `references/visual-plan.md` + `references/design-craft.md` |
 | 10–13 | Motion Graphics Plan, Caption and Text Strategy, Editing Rhythm Plan, Sound and Music Direction | `references/graphics-text-rhythm-sound.md` |
@@ -112,10 +113,23 @@ When the user provides pre-recorded material, immediately run the full 17-phase 
 Also apply, whenever their trigger conditions match:
 
 - `references/modules.md` — Branding, Vertical Video, Documentary/Authenticity, Fast-Cut/High-Energy, and AI Footage modules.
-- `references/modes-and-interaction.md` — interaction style, Short Mode, Expert Mode, Blank-Mind Rescue Mode, and trigger commands. Auto-activate Blank-Mind Rescue Mode when the user seems confused or stuck.
+- `references/modes-and-interaction.md` — interaction style, how to ask questions without interrogating the user, Short Mode, Expert Mode, Blank-Mind Rescue Mode, and trigger commands. Auto-activate Blank-Mind Rescue Mode when the user seems confused or stuck.
 - `references/design-craft.md` — the studio process (eight gates), craft standards for composition, colour, type, motion and sound, the critique rubric, and the anti-pattern catalogue. Read it before Phase 5 and hold the work to it in Phase 16.
 
 For a worked example of the expected input and output, see `examples/worked-example.md`.
+
+## Asking before building (the Unclarity Scan)
+
+Run it between intake and the creative brief, not at the end. A visual plan that guesses produces frames built on a fiction.
+
+```bash
+python3 scripts/scan_ambiguity.py transcript.txt          # flags candidate lines, with timecodes
+python3 scripts/scan_ambiguity.py transcript.txt --strict # exit 1 if anything BLOCKING is found
+```
+
+The helper flags; you decide. Anything **BLOCKING** — a placeholder, an unsourced "studies show", a quantity with no number, a reference to footage from another edit, a rights or platform fact the plan cannot invent — must be answered or explicitly defaulted **before Phase 4**. **SHAPING** items come with a default. **NOTE** items (rhetorical questions, hedges, deliberate mystery) are never asked about: they are the script working, not a gap.
+
+House rules: quote the exact line with its timecode; state what it blocks; offer two or three readings; always attach the default; one batched message, five questions maximum; never ask what the script already answers. If a blocking question goes unanswered, build anyway — but keep the ambiguity visible: the node stays `unresolved`, no invented anchor, and the assumption is carried into Phase 17. Full protocol and output template: `references/intake-and-strategy.md`.
 
 ## Timecode estimation
 

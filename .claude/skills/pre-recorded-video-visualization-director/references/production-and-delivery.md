@@ -200,4 +200,10 @@ FINAL PRE-RECORDED VIDEO VISUALIZATION PACKAGE
 13. Software setup:
 14. First action step:
 15. Biggest risk to avoid:
+16. Still open (unanswered questions, and what was assumed instead):
 ```
+
+Item 16 is not decoration. Name every question from the Unclarity Scan that never got an answer, what
+default was used, and which section depends on it — "the runtime is assumed to be 3:00; if it grows
+past 3:30 the eight-page montage in §8 has to go". If nothing is open, write "Nothing — the script was
+clear on every load-bearing point" and mean it.
