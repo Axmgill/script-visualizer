@@ -58,6 +58,9 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
     └── mindmap/
         ├── napkin-proof.json             # Example node graph
         ├── napkin-proof.html             # Built board — open it in a browser
+        ├── numbers-by-context.json       # Four numbers, four carriers, each decided by its sentence
+        ├── numbers-by-context.html       # Built board for the above
+        ├── numbers-script.txt            # The transcript those carriers come from
         ├── abstract-to-anchor.json       # Abstract lines, anchored vs unresolved
         ├── abstract-to-anchor.html       # Built board for the above
         └── abstract-script.txt           # The transcript those anchors come from
@@ -108,14 +111,25 @@ Before any shot is chosen, the script is mapped the way an editor would map it o
 
 The skill writes that graph to JSON and builds a real board — one self-contained HTML file, no dependencies, no network calls:
 
+- **reading order** — press `←` / `→` and the board walks the beats in sequence, dimming everything except the current beat and its connections. A route through the map, not just a map.
+- **search that takes you there** — type, pick from the result list, and the camera flies to the beat. No "everything faded and you're still looking at the middle".
+- **needs attention** — a queue of what still has to be decided: abstract lines with no anchor, numbers with no carrier, beats with no timecode. `J` / `K` to walk it.
+- **minimap + breadcrumb** — where you are on the board, and the path you took to the selected beat.
 - drag nodes, pan and zoom an infinite canvas; click a node to inspect its function, emotion and visual idea
 - connections are colored by relation, so the argument's shape is visible at a glance
-- the timecode track under the canvas puts every beat on the timeline
-- **numbers get a body, not a chart.** Every `stat` node must name the physical thing on screen that carries the figure — a page of tallies, an invoice, seven blank cells, the wall of paintings the sentence describes. Charts are an optional schematic preview, never the default. A number with no body in the script stays as type or as speech; the builder rejects a `stat` node that has only a chart, and `--script` flags any figure the transcript never stated.
+- the timecode track under the canvas scrubs: drag a range to isolate part of the edit
+- **works from 320px to 2560px** — six layout modes. On a phone the board becomes a **beat-by-beat view**: one card at a readable size with the neighbouring beats peeking above and below, swipe to move. The map is one tap away, never a shrunken poster.
+- pan, zoom and card positions persist in the browser; `R` rebuilds the layout from scratch
+- export the node graph as JSON, or the board itself as a PNG
+- **every number records the carrier its own sentence earns.** Three are legitimate and none is the default: an **object** the script already contains (`form` — the page with one new line, the invoice, the shutter going up), a **data visualisation** (`chart` — with `what` is being compared and `why` this line earns one), or **type** (`carrier: "type"` — the figure set and held). A chart is an answer, not a fallback; what the builder rejects is a number with no carrier recorded, and a chart with no written reason. `--script` still flags any figure the transcript never stated.
 - **abstract lines never borrow imagery.** A line like "consistency compounds" has no picture in it. The node carries an `anchor` quoted from the script — the 6am alarm the speaker actually mentions — and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays visibly **unresolved** instead of being handed a lightbulb or a seedling.
 
 ```bash
 cd .claude/skills/pre-recorded-video-visualization-director
+python3 scripts/build_mindmap.py examples/mindmap/numbers-by-context.json \
+  --script examples/mindmap/numbers-script.txt --check
+python3 scripts/build_mindmap.py examples/mindmap/numbers-by-context.json \
+  -o previz/numbers.html
 python3 scripts/build_mindmap.py examples/mindmap/napkin-proof.json --check
 python3 scripts/build_mindmap.py examples/mindmap/napkin-proof.json -o previz/mindmap.html
 
