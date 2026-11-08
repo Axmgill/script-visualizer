@@ -168,7 +168,10 @@ Protocol:
    - set the line's own language in type (the word repeated, the sentence struck through)
    - ask the writer one question: "what do you actually see when you say this?"
 
-   Never fill the gap with an outside metaphor.
+   Never fill the gap with an outside metaphor. Questions raised here belong in the **Unclarity Scan**
+   (`references/intake-and-strategy.md`), not in a mid-board aside: collect them, ask them once, up
+   front, and only then finish the board. A board that grows question by question is a board nobody
+   can read.
 
 **The in-context test:** a stranger should be able to point at the line in the script that justifies the visual. If they can't, it was imported.
 
@@ -247,6 +250,8 @@ If Python is unavailable, copy `assets/mindmap-board.template.html` and replace 
 - no `stat` node introduces a figure that is not in the transcript
 - every `abstract` node either quotes an anchor that appears in the script, or is left unresolved on
   purpose — and unresolved ones are called out in section 4, not quietly filled later
+- every unresolved abstract line, and every number the script never states, appears as a question in
+  the Unclarity Scan output. Nothing load-bearing is resolved by a silent guess
 - run the builder with `--script transcript.txt` when you have the text: it flags anchors that do not
   appear in the script, which is the fastest way to catch an imported metaphor
 - labels are the spoken idea, not a topic ("She paid me before I got home", not "Payment")

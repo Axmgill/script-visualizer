@@ -51,6 +51,7 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
 │   └── mindmap-board.template.html       # Self-contained interactive board (no dependencies)
 ├── scripts/
 │   ├── estimate_timecodes.py             # Deterministic timecode estimation / SRT & VTT parsing
+│   ├── scan_ambiguity.py                 # Flags lines a plan would have to guess at
 │   └── build_mindmap.py                  # Node graph JSON → standalone HTML board
 └── examples/
     ├── worked-example.md                 # Input → output demonstration (Short Mode)
@@ -66,9 +67,27 @@ It follows the [Agent Skills](https://agentskills.io) format: a `SKILL.md` with 
 
 ## What it does
 
-Give it a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, or transcript (a script works too — timing gets marked ESTIMATED), and it produces a 17-section edit plan: media intake, creative brief, narrative spine, a previsualization mind map, visual concept, emotional arc, scene map, shot/b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and a copy-into-production delivery summary.
+Give it a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, or transcript (a script works too — timing gets marked ESTIMATED), and it produces a 17-section edit plan: media intake, assumptions and open questions, creative brief, narrative spine, a previsualization mind map, visual concept, emotional arc, scene map, shot/b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and a copy-into-production delivery summary.
 
 Every visual is anchored to timecodes or speech beats. Existing footage comes first; new assets are suggested only when needed, always with a fallback.
+
+## It asks before it assumes
+
+A script is rarely as complete as it sounds. Before it builds anything, the skill reads for what the script *doesn't* say and asks — once, in one batch, five questions at most.
+
+```bash
+python3 scripts/scan_ambiguity.py transcript.txt
+```
+
+The scanner flags the sentences a plan would otherwise invent around, each with an estimated timecode and a severity:
+
+| Severity | Examples | Rule |
+|---|---|---|
+| **Blocking** | `[link]` placeholders · "studies show" with no source · "most people" with no number · "as you can see" pointing at footage from another edit | answered or explicitly defaulted **before the mind map is built** |
+| **Shaping** | "recently" with no date · "better than ever" with nothing to compare to | asked, with a default offered — the plan continues |
+| **Note** | rhetorical questions · "I think" · a reveal being held back | **never asked** — that's the script working |
+
+Every question quotes the line and its timecode, says which phase it blocks, offers two or three readings, and names the default. There is always an exit: *reply "defaults"* and the plan proceeds with its assumptions marked. If a blocking question goes unanswered, the ambiguity stays visible — the node stays unresolved, no anchor is invented, and the assumption is carried into the final package as *"still open"*. Nothing load-bearing is ever settled by a silent guess.
 
 ## How it designs (Phase 5)
 
@@ -131,6 +150,11 @@ python3 scripts/estimate_timecodes.py transcript.txt --wps 2.75 --format md
 
 # Extract real timecodes from captions
 python3 scripts/estimate_timecodes.py captions.srt --format json
+
+# Find the lines a visual plan would have to guess at
+python3 scripts/scan_ambiguity.py transcript.txt            # markdown, severity-sorted
+python3 scripts/scan_ambiguity.py transcript.txt --strict   # exit 1 if anything BLOCKING
+python3 scripts/scan_ambiguity.py examples/ambiguous-script.txt   # 5 blocking, 2 shaping, 3 note
 
 # Validate a mind-map node graph, then build the board
 python3 scripts/build_mindmap.py previz/mindmap.json --check

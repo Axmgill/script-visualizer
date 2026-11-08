@@ -15,6 +15,29 @@ A compact demonstration of the skill transforming a raw transcript into an edit 
 
 **Timing note:** No timecodes provided. All times below are ESTIMATED at ~2.75 words/second (48 words, ~19 seconds total). Verify against the recording.
 
+### Assumptions and open questions
+
+```
+ASSUMPTIONS AND OPEN QUESTIONS
+
+Read: The script is clear on the claim ("proof beats polish"), the object (the napkin), the
+action (the logo drawn in front of the client) and the payoff (paid the same day). Nothing here
+needs a source.
+
+Blocking — none. Nothing in the script asks the plan to invent evidence.
+
+Shaping — a default is enough
+S1. "Mine came from a napkin sketch in a coffee shop." — was the client there when you drew it,
+    or did you bring the sketch to her? The frame changes: hands at a table versus handing paper over.
+    Default: she is present, watching it happen — that is what "right in front of her" implies.
+
+Not asking, on purpose
+- "Stop waiting to look professional." — imperative, not a claim; there is nothing to resolve.
+
+If you reply "defaults": the edit assumes one continuous tabletop, one client across the table,
+and a same-day payment. No numbers are used, because the script states none.
+```
+
 ### Core message
 
 Proof of skill beats presentation polish — your first client wants a solved problem, not a perfect portfolio.
@@ -33,7 +56,7 @@ core: Proof of skill beats presentation polish
 ├─ objection: "Stop waiting to look professional"                      0:13.5–0:16
 │  └─ cta: "Start showing people you can solve their problem"          0:16–0:19
 │     ↩ callback → hook
-├─ stat: "She paid me before I got home"  →  3 weeks vs 40 minutes, two bars
+├─ contrast: "She paid me before I got home" — stated as a turn, never as a number
 └─ risk: stock hands would kill the argument  ← blocks ← note: one 10-min phone session
 ```
 
