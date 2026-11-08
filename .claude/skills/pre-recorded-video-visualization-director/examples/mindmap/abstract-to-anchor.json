@@ -1,0 +1,129 @@
+{
+  "title": "Nobody Claps",
+  "subtitle": "Abstract-lines demo · 9:16 · 0:14 (ESTIMATED) — anchors come only from the script",
+  "theme": "light",
+  "source": {
+    "platform": "Instagram Reels",
+    "aspect": "9:16",
+    "duration": "0:14",
+    "estimated": true
+  },
+  "nodes": [
+    {
+      "id": "core",
+      "label": "Success is what you do when nobody claps",
+      "type": "core",
+      "time": "0:00–0:14",
+      "function": "Core message",
+      "emotion": "quiet resolve",
+      "visual": "One desk, one lamp, one sheet of paper — the same frame for the whole piece.",
+      "summary": "The whole script is abstract, so almost every visual here is an anchor decision, not a shot decision."
+    },
+    {
+      "id": "not_a_line",
+      "label": "Success isn't a straight line",
+      "type": "abstract",
+      "time": "0:00–0:04",
+      "function": "Hook / claim",
+      "emotion": "deflation",
+      "anchor": "a hundred small decisions nobody claps for",
+      "visual": "A hundred pencil tally marks pressed into one sheet; the only line drawn through them is visibly jagged.",
+      "summary": "The script answers its own abstraction in the next sentence — the tally marks are the line, and they are not straight."
+    },
+    {
+      "id": "motif_tally",
+      "label": "A hundred tallies on one real sheet",
+      "type": "visual",
+      "time": "0:02–0:06",
+      "function": "Visual motif",
+      "emotion": "patience",
+      "visual": "Pen on paper, overhead, no graphics. The count is carried by an object the speaker describes, not by a chart.",
+      "summary": "The script counts decisions, so the number becomes marks a hand can actually make — not a dot grid."
+    },
+    {
+      "id": "consistency",
+      "label": "Consistency compounds",
+      "type": "abstract",
+      "time": "0:06–0:09",
+      "function": "Claim",
+      "emotion": "conviction",
+      "anchor": "I still show up at 6am",
+      "visual": "The same 6:00 alarm and the same framing three mornings running; only the light and the paper stack change.",
+      "summary": "The anchor is a time the speaker actually names. The repetition across three mornings is the argument — no illustration required."
+    },
+    {
+      "id": "motif_alarm",
+      "label": "6:00, three mornings, identical frame",
+      "type": "visual",
+      "time": "0:06–0:10",
+      "function": "Visual motif",
+      "emotion": "discipline",
+      "visual": "Alarm, hands, page — cut on the same beat each time. The third morning is the one that pays off."
+    },
+    {
+      "id": "invisible",
+      "label": "Compounding is invisible while it happens",
+      "type": "abstract",
+      "time": "0:10–0:12",
+      "function": "Objection handled",
+      "emotion": "loneliness",
+      "anchor": "",
+      "visual": "",
+      "summary": "Nothing in the script carries this line. Deliberately unresolved: hold on the speaker or let the words sit in type. No drifting particles, no seedling."
+    },
+    {
+      "id": "drafts",
+      "label": "I keep a stack of every draft nobody saw",
+      "type": "proof",
+      "time": "0:10–0:12",
+      "function": "Proof",
+      "emotion": "honesty",
+      "visual": "Hands lift the actual stack; the top sheet is dated. Nothing is arranged for the camera."
+    },
+    {
+      "id": "risk_montage",
+      "label": "A timelapse of the stack would read as a stock success montage",
+      "type": "risk",
+      "time": "",
+      "function": "Production risk",
+      "emotion": "—",
+      "visual": "Keep it static and slow. If the stack animates, the piece starts selling instead of admitting."
+    },
+    {
+      "id": "cta",
+      "label": "Show up when nobody is watching",
+      "type": "cta",
+      "time": "0:12–0:14",
+      "function": "Call to action",
+      "emotion": "resolve",
+      "visual": "Back to the first frame — same desk, same sheet, one more tally mark added.",
+      "summary": "Returns to the opening image so the loop closes without adding a new idea."
+    },
+    {
+      "id": "note_setup",
+      "label": "One desk, one lamp, phone overhead",
+      "type": "note",
+      "time": "",
+      "function": "Production constraint",
+      "emotion": "—",
+      "visual": "Natural light from a window at dawn for the 6am frames. No faces, no second location."
+    }
+  ],
+  "edges": [
+    { "from": "core", "to": "not_a_line", "rel": "flows", "label": "opens" },
+    { "from": "core", "to": "consistency", "rel": "supports", "label": "carried by" },
+    { "from": "core", "to": "cta", "rel": "flows", "label": "lands on" },
+
+    { "from": "not_a_line", "to": "motif_tally", "rel": "inspires", "label": "made visible by" },
+    { "from": "not_a_line", "to": "consistency", "rel": "expands", "label": "then" },
+    { "from": "consistency", "to": "motif_alarm", "rel": "inspires", "label": "made visible by" },
+
+    { "from": "consistency", "to": "invisible", "rel": "contrasts", "label": "but" },
+    { "from": "invisible", "to": "drafts", "rel": "flows", "label": "answered by" },
+    { "from": "drafts", "to": "motif_tally", "rel": "supports", "label": "same object" },
+
+    { "from": "risk_montage", "to": "drafts", "rel": "blocks", "label": "threatens" },
+    { "from": "note_setup", "to": "motif_alarm", "rel": "supports", "label": "enables" },
+    { "from": "cta", "to": "not_a_line", "rel": "callback", "label": "returns to" }
+  ]
+}
