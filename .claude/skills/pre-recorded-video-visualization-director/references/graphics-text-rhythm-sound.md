@@ -1,8 +1,8 @@
-# Phases 9–12: Graphics, Text, Rhythm, Sound
+# Phases 10–13: Graphics, Text, Rhythm, Sound
 
-Read this file before producing output sections 9–12. Follow the output templates exactly. Every graphic, caption, cut, and sound event must tie back to a spoken word, phrase, or beat from the recording.
+Read this file before producing output sections 10–13. Follow the output templates exactly. Every graphic, caption, cut, and sound event must tie back to a spoken word, phrase, or beat from the recording.
 
-## Phase 9 — Motion Graphics Plan
+## Phase 10 — Motion Graphics Plan
 
 Plan where graphics support meaning, not decoration.
 
@@ -35,7 +35,7 @@ Moment 2:
 
 Also include: text animation style; shape style; logo animation; lower third style; caption style; highlight style; transition graphics; end card graphics.
 
-## Phase 10 — Caption and Text Strategy
+## Phase 11 — Caption and Text Strategy
 
 Plan subtitles, keywords, and emphasis text for the pre-recorded speech.
 
@@ -73,7 +73,7 @@ Emphasis examples:
 - "you" → direct address emphasis
 - "now" → kinetic typography
 
-## Phase 11 — Editing Rhythm Plan
+## Phase 12 — Editing Rhythm Plan
 
 Create the cut map for the pre-recorded video.
 
@@ -105,7 +105,7 @@ Section 2:
 
 Also include: hook timing; retention spikes; pattern interrupts; breathing moments; final payoff timing; where to remove dead air; where to preserve natural pause for impact.
 
-## Phase 12 — Sound and Music Direction
+## Phase 13 — Sound and Music Direction
 
 Plan audio even though the main focus is visualization.
 

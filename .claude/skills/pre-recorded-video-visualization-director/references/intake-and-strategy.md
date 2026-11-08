@@ -1,6 +1,6 @@
-# Phases 1–4: Intake and Strategy
+# Phases 1–3: Intake and Strategy
 
-Read this file before producing output sections 1–4. Follow the output templates exactly.
+Read this file before producing output sections 1–3. Follow the output templates exactly. Phase 4 (the previsualization mind map) is in `references/mindmap-previz.md`.
 
 ## Input schema
 
@@ -101,28 +101,3 @@ Beat 2:
 ```
 
 Continue for all beats.
-
-## Phase 4 — Visual Concept for the Edit
-
-Create the overall visual world for the pre-recorded video. This is not about shooting a new film unless b-roll is required. This is about how the existing recording will be presented.
-
-Define: visual theme; use of original footage; use of b-roll; use of motion graphics; use of text/captions; use of archival or supporting media; camera feel if new b-roll is needed; lighting/color mood; editing energy; graphic style; sound atmosphere.
-
-Output template:
-
-```
-VISUAL CONCEPT
-- Concept title:
-- One-line visual idea:
-- How the original recording is used:
-- How b-roll supports the message:
-- How graphics support clarity:
-- Camera style for any new/support footage:
-- Lighting style:
-- Color palette:
-- Mood:
-- Editing rhythm:
-- Graphic style:
-- Sound/music direction:
-- Why this concept fits the recorded audio:
-```

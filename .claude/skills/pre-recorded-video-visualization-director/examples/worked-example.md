@@ -1,6 +1,6 @@
 # Worked Example (Short Mode)
 
-A compact demonstration of the skill transforming a raw transcript into an edit plan. This example uses Short Mode; Default Mode expands the same material into all 16 sections using the templates in `references/`.
+A compact demonstration of the skill transforming a raw transcript into an edit plan. This example uses Short Mode; Default Mode expands the same material into all 17 sections using the templates in `references/`.
 
 ## Example input
 
@@ -18,6 +18,27 @@ A compact demonstration of the skill transforming a raw transcript into an edit 
 ### Core message
 
 Proof of skill beats presentation polish — your first client wants a solved problem, not a perfect portfolio.
+
+### Mind map (node board)
+
+Built as a real board — `examples/mindmap/napkin-proof.html`, generated from `examples/mindmap/napkin-proof.json` — 13 nodes, 18 connections.
+
+```
+core: Proof of skill beats presentation polish
+├─ hook: "Your first client doesn't come from a perfect portfolio"     0:00–0:03.5
+│  ├─ claim: a portfolio is a presentation, not a proof
+│  └─ stat: 10 in 100 first clients  →  100 dots, 10 filled
+├─ proof: "Mine came from a napkin sketch"                             0:03.5–0:07.5
+│  ├─ example: "I drew the logo right in front of her"
+│  └─ visual: the napkin is the hero object
+├─ objection: "Stop waiting to look professional"                      0:13.5–0:16
+│  └─ cta: "Start showing people you can solve their problem"          0:16–0:19
+│     ↩ callback → hook
+├─ stat: "She paid me before I got home"  →  3 weeks vs 40 minutes, two bars
+└─ risk: stock hands would kill the argument  ← blocks ← note: one 10-min phone session
+```
+
+Two numbers got shapes instead of numerals: 10-in-100 as a unit chart (one dot = one person), and the effort comparison as two plain bars. The napkin shows up in four nodes — that is the board telling us which object has to carry the edit.
 
 ### Visual concept
 
@@ -72,4 +93,4 @@ Record the 10-minute napkin b-roll session (or photograph an existing sketch), t
 
 ## What Default Mode would add
 
-The full 16-section package: Media Intake Summary, Creative Brief, per-beat Narrative Spine with meaning/emotion/priority, full Visual Concept, second-by-second Emotional Arc, Scene Map with transitions and risks, per-shot safe-zone and lens notes, frame-by-frame Text Storyboard, timed Motion Graphics Plan, complete Caption Strategy, section-level Rhythm Plan, Sound Direction with sync points, full Asset Checklist, CapCut execution notes, Review Checklist, and the 15-point Final Delivery Package.
+The full 17-section package: Media Intake Summary, Creative Brief, per-beat Narrative Spine with meaning/emotion/priority, a full Phase 4 board with every node type and data point shaped, full Visual Concept, second-by-second Emotional Arc, Scene Map with transitions and risks, per-shot safe-zone and lens notes, frame-by-frame Text Storyboard, timed Motion Graphics Plan, complete Caption Strategy, section-level Rhythm Plan, Sound Direction with sync points, full Asset Checklist, CapCut execution notes, Review Checklist, and the 15-point Final Delivery Package.

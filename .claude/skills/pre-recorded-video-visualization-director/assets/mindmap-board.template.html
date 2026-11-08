@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Previsualization Mind Map</title>
+<style>
+  :root{
+    --bg:#eef0f4; --canvas:#f7f8fa; --grid:#dfe3ea;
+    --card:#ffffff; --ink:#111827; --ink-soft:#4b5563; --ink-faint:#8a93a3;
+    --line:#d5dae3; --edge:#b6bdc9; --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 20px rgba(16,24,40,.07);
+    --accent:#2563eb; --chip:#f1f3f7;
+    --panel:#ffffff; --panel-line:#e5e8ee;
+    --core-bg:#111827; --core-ink:#f9fafb;
+    --core-chip-bg:#ffffff1f; --core-chip-line:#ffffff2e; --core-chip-ink:#e5e7eb;
+    --core-soft:#c7cdd8; --core-time:#9aa3b2;
+  }
+  body[data-theme="dark"]{
+    --bg:#0b0e14; --canvas:#12151d; --grid:#1e2430;
+    --card:#191e28; --ink:#f3f4f6; --ink-soft:#b3bac7; --ink-faint:#7b8494;
+    --line:#2a3140; --edge:#39414f; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 26px rgba(0,0,0,.35);
+    --accent:#60a5fa; --chip:#222937;
+    --panel:#12151d; --panel-line:#242b38;
+    --core-bg:#f9fafb; --core-ink:#111827;
+    --core-chip-bg:#11182712; --core-chip-line:#11182722; --core-chip-ink:#4b5563;
+    --core-soft:#4b5563; --core-time:#6b7280;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:14px/1.45 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; overflow:hidden;
+  }
+  #app{
+    height:100vh; display:grid;
+    grid-template-columns:236px minmax(0,1fr) 312px;
+    grid-template-rows:auto minmax(0,1fr) auto;
+    grid-template-areas:"top top top" "left stage right" "time time time";
+  }
+
+  /* ---------- top bar ---------- */
+  #topbar{
+    grid-area:top; display:flex; align-items:center; gap:14px;
+    padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--panel-line);
+    min-height:58px; z-index:5;
+  }
+  #topbar .brand{display:flex;flex-direction:column;gap:1px;min-width:0}
+  #topbar h1{margin:0;font-size:15px;font-weight:650;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #topbar .sub{margin:0;font-size:11.5px;color:var(--ink-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .meta{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto;align-items:center}
+  .meta .pill{
+    font-size:11px;padding:4px 8px;border-radius:999px;background:var(--chip);color:var(--ink-soft);
+    border:1px solid var(--line);white-space:nowrap;
+  }
+  .meta .pill.est{border-color:#f59e0b55;background:#f59e0b1a;color:#b45309}
+  body[data-theme="dark"] .meta .pill.est{color:#fbbf24}
+  .tools{display:flex;gap:6px;align-items:center}
+  button{
+    font:inherit;font-size:12px;color:var(--ink-soft);background:var(--card);
+    border:1px solid var(--line);border-radius:8px;padding:6px 9px;cursor:pointer;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  button:hover{background:var(--chip);color:var(--ink)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  button.icon{padding:6px 8px;min-width:32px}
+
+  /* ---------- left legend ---------- */
+  #panel-left{
+    grid-area:left; background:var(--panel); border-right:1px solid var(--panel-line);
+    padding:12px; overflow-y:auto; display:flex; flex-direction:column; gap:14px;
+  }
+  .section-title{
+    font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-faint); margin:0 0 7px;
+  }
+  #search{
+    width:100%;padding:7px 9px;border-radius:8px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font:inherit;font-size:12.5px;
+  }
+  #search:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+  .legend{display:flex;flex-direction:column;gap:2px}
+  .legend button{
+    display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+    background:transparent;border:1px solid transparent;border-radius:7px;padding:5px 6px;
+    color:var(--ink-soft);font-size:12.5px;
+  }
+  .legend button:hover{background:var(--chip)}
+  .legend button.off{opacity:.38}
+  .legend .swatch{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:var(--ink-faint)}
+  .legend .count{margin-left:auto;font-size:11px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+  .relkey{display:flex;flex-direction:column;gap:5px}
+  .relkey .row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-soft)}
+  .relkey svg{flex:0 0 auto}
+  .hint{font-size:11.5px;color:var(--ink-faint);line-height:1.5}
+  kbd{
+    font:inherit;font-size:10.5px;background:var(--chip);border:1px solid var(--line);
+    border-bottom-width:2px;border-radius:4px;padding:0 4px;color:var(--ink-soft);
+  }
+
+  /* ---------- stage ---------- */
+  #stage{
+    grid-area:stage; position:relative; overflow:hidden; background:var(--canvas);
+    background-image:radial-gradient(var(--grid) 1px,transparent 1px);
+    background-size:22px 22px; cursor:grab; touch-action:none;
+  }
+  #stage.panning{cursor:grabbing}
+  #world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+  #edges{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none}
+  #edges path{fill:none;stroke:var(--edge);stroke-width:1.6;stroke-linecap:round}
+  #edges marker path{fill:var(--edge)}
+  #edges #arrow-red path{fill:#dc2626}
+  #edges #arrow-violet path{fill:#8b5cf6}
+  #edges #arrow-teal path{fill:#0d9488}
+  #edges path.rel-contrasts{stroke:#e11d48;stroke-dasharray:7 5}
+  #edges path.rel-callback{stroke:#8b5cf6;stroke-dasharray:2 6;stroke-width:1.8}
+  #edges path.rel-blocks{stroke:#dc2626;stroke-dasharray:5 4;stroke-width:1.8}
+  #edges path.rel-proves{stroke:#0d9488}
+  #edges path.rel-expands{stroke:var(--edge)}
+  #edges path.is-faded{opacity:.12}
+  #edges path.is-live{stroke-width:2.6;opacity:1}
+  #edges text{
+    font:11px ui-sans-serif,system-ui,sans-serif;fill:var(--ink-faint);
+    paint-order:stroke;stroke:var(--canvas);stroke-width:4px;stroke-linejoin:round;
+  }
+
+  .node{
+    position:absolute;width:224px;background:var(--card);border:1px solid var(--line);
+    border-left:4px solid var(--type-color,#8a93a3);border-radius:11px;
+    box-shadow:var(--shadow);cursor:grab;user-select:none;
+    transition:opacity .18s, box-shadow .18s, transform .06s;
+    padding:9px 11px 10px;
+  }
+  .node.dragging{cursor:grabbing;box-shadow:0 16px 34px rgba(16,24,40,.22);z-index:50}
+  .node.is-dim{opacity:.2}
+  .node.is-match{box-shadow:0 0 0 3px var(--accent),var(--shadow)}
+  .node.is-selected{box-shadow:0 0 0 2px var(--type-color,#111),0 14px 30px rgba(16,24,40,.18)}
+  .node.is-neighbor{box-shadow:0 0 0 1.5px var(--type-color,#111)}
+  .node.type-core{
+    width:262px;background:var(--core-bg);color:var(--core-ink);border-color:transparent;
+    border-left-color:#f59e0b;padding:13px 15px 14px;
+  }
+  .node.type-core .node-label{font-size:16px;font-weight:650;letter-spacing:-.01em;line-height:1.3}
+  .node.type-core .node-meta,.node.type-core .node-fn,.node.type-core .node-visual{color:var(--core-soft)}
+  .node.type-core .chip{background:var(--core-chip-bg);border-color:var(--core-chip-line);color:var(--core-chip-ink)}
+  .node.type-core .node-visual{border-top-color:var(--core-chip-line)}
+  .node.type-core .time{color:var(--core-time)}
+
+  .node-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+  .chip{
+    font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:2px 6px;border-radius:5px;background:var(--chip);color:var(--ink-soft);
+    border:1px solid var(--line);white-space:nowrap;
+  }
+  .chip.fn{background:transparent;border-style:dashed;font-weight:600;letter-spacing:.02em;text-transform:none;font-size:10px}
+  .time{margin-left:auto;font-size:10.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .node-label{font-size:13px;font-weight:600;letter-spacing:-.005em;line-height:1.35;color:var(--ink)}
+  .node-meta{margin-top:5px;font-size:11px;color:var(--ink-faint);display:flex;gap:5px;flex-wrap:wrap}
+  .node-fn{margin-top:5px;font-size:11px;color:var(--ink-soft);line-height:1.4}
+  .node-visual{
+    margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);
+    font-size:11px;color:var(--ink-soft);line-height:1.4;
+  }
+  .node-visual b{font-weight:600;color:var(--ink);font-size:10px;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .node-viz{margin-top:7px}
+
+  /* ---------- metaphor graphics ---------- */
+  .viz{--viz-accent:#7c3aed}
+  .viz .dots{display:grid;gap:1.5px;justify-content:start}
+  .viz .dot{width:4.5px;height:4.5px;border-radius:50%;background:var(--line)}
+  .viz .dot.on{background:var(--viz-accent)}
+  .viz .bars{display:flex;align-items:flex-end;gap:4px;height:38px}
+  .viz .bar{width:9px;border-radius:2px 2px 0 0;background:var(--line);min-height:3px}
+  .viz .bar.on{background:var(--viz-accent)}
+  .viz .barlabels{display:flex;gap:4px;margin-top:3px;font-size:9px;color:var(--ink-faint)}
+  .viz .barlabels span{width:9px;text-align:center;overflow:visible;white-space:nowrap}
+  .viz .counter{display:flex;align-items:baseline;gap:6px}
+  .viz .counter .big{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--viz-accent);line-height:1}
+  .viz .counter .cap{font-size:10px;color:var(--ink-faint)}
+  .viz .prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+  .viz .prog i{display:block;height:100%;background:var(--viz-accent);border-radius:99px}
+  .viz .caption{margin-top:4px;font-size:9.5px;color:var(--ink-faint)}
+  .viz .fraction{display:flex;align-items:baseline;gap:3px;font-variant-numeric:tabular-nums}
+  .viz .fraction .p{font-size:22px;font-weight:700;color:var(--viz-accent);line-height:1}
+  .viz .fraction .w{font-size:12px;color:var(--ink-faint)}
+  .viz .compare{display:flex;gap:12px;align-items:flex-end;height:40px}
+  .viz .compare .col{display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end}
+  .viz .compare .col i{width:22px;border-radius:3px 3px 0 0;background:var(--viz-accent);display:block}
+  .viz .compare .col span{font-size:9px;color:var(--ink-faint);white-space:nowrap}
+  .viz .steps{display:flex;gap:3px;align-items:center;flex-wrap:wrap}
+  .viz .steps span{
+    font-size:9px;padding:2px 5px;border-radius:4px;background:var(--chip);
+    border:1px solid var(--line);color:var(--ink-faint);white-space:nowrap;
+  }
+  .viz .steps span.on{background:var(--viz-accent);border-color:transparent;color:#fff}
+  .viz .note{font-size:10px;color:var(--ink-faint);margin-top:5px;font-style:italic}
+  .viz-lg .dot{width:9px;height:9px}
+  .viz-lg .dots{gap:3px}
+  .viz-lg .caption{font-size:11px}
+  .viz-lg .counter .big{font-size:44px}
+  .viz-lg .bars{height:70px}
+  .viz-lg .bar{width:14px}
+  .viz-lg .prog{height:12px}
+
+  /* ---------- inspector ---------- */
+  #inspector{
+    grid-area:right;background:var(--panel);border-left:1px solid var(--panel-line);
+    overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;
+  }
+  #inspector .empty{color:var(--ink-faint);font-size:12.5px;line-height:1.6}
+  .insp-type{
+    display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--type-color,#6b7280);
+  }
+  .insp-type i{width:8px;height:8px;border-radius:50%;background:currentColor}
+  .insp-title{margin:6px 0 0;font-size:17px;font-weight:650;letter-spacing:-.015em;line-height:1.3}
+  .insp-time{font-size:12px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+  .kv{display:grid;grid-template-columns:78px 1fr;gap:6px 10px;font-size:12.5px}
+  .kv dt{color:var(--ink-faint);font-size:11px;letter-spacing:.02em;padding-top:1px}
+  .kv dd{margin:0;color:var(--ink-soft);line-height:1.45}
+  .insp-block{border-top:1px solid var(--line);padding-top:11px}
+  .insp-block h3{margin:0 0 6px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+  .insp-block p{margin:0;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+  .conn{display:flex;flex-direction:column;gap:4px}
+  .conn button{
+    text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;
+    padding:4px 6px;font-size:12px;color:var(--ink-soft);display:flex;gap:6px;align-items:baseline;
+  }
+  .conn button:hover{background:var(--chip)}
+  .conn .rel{font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;flex:0 0 auto}
+  .insp-viz{background:var(--chip);border-radius:9px;padding:12px;border:1px solid var(--line)}
+  .insp-viz .viz{margin:0}
+
+  /* ---------- timeline ---------- */
+  #timeline{
+    grid-area:time;background:var(--panel);border-top:1px solid var(--panel-line);
+    padding:8px 16px 10px;min-height:74px;display:none;
+  }
+  #timeline.on{display:block}
+  #timeline .tl-head{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  #timeline .tl-head span{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);font-weight:700}
+  #timeline .tl-head em{font-style:normal;font-size:10.5px;color:#b45309}
+  #track{position:relative;height:38px;margin:0 2px;border-top:1px solid var(--line)}
+  .tick{position:absolute;top:0;transform:translateX(-1px);cursor:pointer;padding-top:2px}
+  .tick i{display:block;width:2px;height:8px;background:var(--type-color,#9aa3b2);border-radius:1px}
+  .tick b{
+    display:block;margin-top:3px;font-size:9.5px;font-weight:600;color:var(--ink-faint);
+    white-space:nowrap;font-variant-numeric:tabular-nums;
+  }
+  .tick:hover b{color:var(--ink)}
+  .tick:hover::after{
+    content:attr(data-label);position:absolute;left:0;bottom:calc(100% + 4px);
+    background:var(--core-bg);color:var(--core-ink);font-size:10.5px;line-height:1.3;
+    padding:4px 7px;border-radius:6px;white-space:nowrap;max-width:280px;overflow:hidden;
+    text-overflow:ellipsis;z-index:20;pointer-events:none;
+  }
+  .tick.is-selected i{background:var(--ink);height:12px}
+
+  /* ---------- help + toast ---------- */
+  #help{
+    position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:100;
+  }
+  #help.on{display:flex}
+  #help .card{
+    background:var(--panel);color:var(--ink);border-radius:14px;padding:22px 24px;max-width:420px;width:calc(100% - 40px);
+    box-shadow:0 24px 60px rgba(0,0,0,.3);border:1px solid var(--panel-line);
+  }
+  #help h2{margin:0 0 12px;font-size:15px}
+  #help dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0;font-size:12.5px;color:var(--ink-soft)}
+  #help dt{text-align:right}
+  #help dd{margin:0}
+  #help .close{margin-top:16px}
+  #toast{
+    position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(10px);
+    background:var(--core-bg);color:var(--core-ink);font-size:12.5px;padding:8px 14px;border-radius:999px;
+    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:90;
+  }
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  #zoom-hud{
+    position:absolute;right:14px;bottom:14px;display:flex;gap:6px;align-items:center;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:9px;padding:3px;
+    box-shadow:var(--shadow);
+  }
+  #zoom-hud .lvl{font-size:11px;color:var(--ink-faint);min-width:38px;text-align:center;font-variant-numeric:tabular-nums}
+
+  @media (max-width:1080px){
+    #app{grid-template-columns:0 minmax(0,1fr) 0}
+    #panel-left,#inspector{display:none}
+    #app.panel-left-on{grid-template-columns:236px minmax(0,1fr) 0}
+    #app.panel-left-on #panel-left{display:flex}
+    #app.panel-right-on{grid-template-columns:0 minmax(0,1fr) 312px}
+    #app.panel-right-on #inspector{display:flex}
+  }
+  @media print{
+    #panel-left,#inspector,#zoom-hud,#topbar .tools{display:none}
+    html,body{overflow:visible;height:auto}
+    #app{display:block;height:auto}
+    #stage{height:900px}
+  }
+</style>
+</head>
+<body data-theme="light">
+<div id="app">
+  <header id="topbar">
+    <div class="brand">
+      <h1 id="board-title">Previsualization Mind Map</h1>
+      <p class="sub" id="board-sub"></p>
+    </div>
+    <div class="meta" id="board-meta"></div>
+    <div class="tools">
+      <button class="icon" id="btn-panels" title="Toggle panels">☰</button>
+      <button class="icon" id="btn-theme" title="Toggle theme (T)">◐</button>
+      <button id="btn-fit" title="Fit board (F)">Fit</button>
+      <button id="btn-export" title="Download nodes as JSON (E)">JSON</button>
+      <button class="icon" id="btn-help" title="Shortcuts (?)">?</button>
+    </div>
+  </header>
+
+  <aside id="panel-left">
+    <div>
+      <p class="section-title">Find</p>
+      <input id="search" type="search" placeholder="Search nodes…  ( / )" autocomplete="off" spellcheck="false">
+    </div>
+    <div>
+      <p class="section-title">Node types</p>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div>
+      <p class="section-title">Connections</p>
+      <div class="relkey" id="relkey"></div>
+    </div>
+    <div>
+      <p class="section-title">Board</p>
+      <div class="hint" id="stats"></div>
+    </div>
+    <div>
+      <p class="section-title">Controls</p>
+      <div class="hint">
+        Drag canvas to pan · wheel to zoom<br>
+        Drag a node to rearrange<br>
+        <kbd>F</kbd> fit · <kbd>R</kbd> relayout · <kbd>T</kbd> theme · <kbd>?</kbd> help
+      </div>
+    </div>
+  </aside>
+
+  <main id="stage">
+    <div id="world">
+      <svg id="edges" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z"></path>
+          </marker>
+          <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"></path>
+          </marker>
+          <marker id="arrow-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#8b5cf6"></path>
+          </marker>
+          <marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#0d9488"></path>
+          </marker>
+        </defs>
+      </svg>
+      <div id="nodes"></div>
+    </div>
+    <div id="zoom-hud">
+      <button class="icon" id="btn-out" title="Zoom out">−</button>
+      <span class="lvl" id="zoom-level">100%</span>
+      <button class="icon" id="btn-in" title="Zoom in">+</button>
+      <button class="icon" id="btn-fit2" title="Fit board">⤢</button>
+    </div>
+  </main>
+
+  <aside id="inspector">
+    <div class="empty" id="inspector-empty">
+      <strong>Nothing selected.</strong><br>
+      Click a node to inspect it — the panel shows its function, emotion, visual idea and how it connects to the rest of the script. Stat nodes show the exact metaphor graphic an editor should build.
+    </div>
+    <div id="inspector-body" hidden></div>
+  </aside>
+
+  <footer id="timeline">
+    <div class="tl-head"><span>Timecode track</span><em id="tl-estimate"></em></div>
+    <div id="track"></div>
+  </footer>
+</div>
+
+<div id="help">
+  <div class="card">
+    <h2>Board controls</h2>
+    <dl>
+      <dt><kbd>drag</kbd></dt><dd>Pan the canvas</dd>
+      <dt><kbd>wheel</kbd></dt><dd>Zoom at cursor</dd>
+      <dt><kbd>drag node</kbd></dt><dd>Move a node; edges follow</dd>
+      <dt><kbd>click node</kbd></dt><dd>Inspect and highlight its connections</dd>
+      <dt><kbd>F</kbd></dt><dd>Fit all nodes on screen</dd>
+      <dt><kbd>R</kbd></dt><dd>Re-run automatic layout</dd>
+      <dt><kbd>/</kbd></dt><dd>Search nodes</dd>
+      <dt><kbd>T</kbd></dt><dd>Light / dark theme</dd>
+      <dt><kbd>E</kbd></dt><dd>Export nodes + positions as JSON</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Clear selection</dd>
+    </dl>
+    <button class="close" id="btn-help-close">Close</button>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script id="board-data" type="application/json">__BOARD_DATA_JSON__</script>
+<script>
+(function(){
+  "use strict";
+
+  /* ------------------------------------------------------------------ *
+   *  Data
+   * ------------------------------------------------------------------ */
+
+  var raw = document.getElementById("board-data").textContent.trim();
+  var DATA = null;
+  try { DATA = JSON.parse(raw); } catch (err) { DATA = null; }
+
+  var TYPES = {
+    core:      { label: "Core message", color: "#f59e0b" },
+    hook:      { label: "Hook",         color: "#e11d48" },
+    claim:     { label: "Claim",        color: "#2563eb" },
+    proof:     { label: "Proof",        color: "#0d9488" },
+    stat:      { label: "Data point",   color: "#7c3aed" },
+    example:   { label: "Example",      color: "#0891b2" },
+    emotion:   { label: "Emotion",      color: "#db2777" },
+    visual:    { label: "Visual motif", color: "#ea580c" },
+    objection: { label: "Objection",    color: "#b45309" },
+    cta:       { label: "Call to action", color: "#16a34a" },
+    risk:      { label: "Risk",         color: "#dc2626" },
+    note:      { label: "Note",         color: "#64748b" }
+  };
+
+  var RELS = {
+    "supports":    { label: "supports",    cls: "" },
+    "proves":      { label: "proves",      cls: "rel-proves" },
+    "expands":     { label: "expands",     cls: "rel-expands" },
+    "contrasts":   { label: "contrasts",   cls: "rel-contrasts" },
+    "callback":    { label: "callback",    cls: "rel-callback" },
+    "blocks":      { label: "blocks",      cls: "rel-blocks" },
+    "flows":       { label: "flows into",  cls: "" },
+    "inspires":    { label: "inspires",    cls: "rel-expands" }
+  };
+
+  var stage = document.getElementById("stage");
+  var world = document.getElementById("world");
+  var svg   = document.getElementById("edges");
+  var nodeLayer = document.getElementById("nodes");
+  var inspectorBody = document.getElementById("inspector-body");
+  var inspectorEmpty = document.getElementById("inspector-empty");
+
+  var view = { x: 0, y: 0, k: 1 };
+  var nodes = [];
+  var edges = [];
+  var byId = {};
+  var selected = null;
+  var hiddenTypes = {};
+  var query = "";
+  var layoutDirty = true;
+
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function showToast(msg){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("on");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ t.classList.remove("on"); }, 1800);
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Normalize
+   * ------------------------------------------------------------------ */
+
+  function normalize(data){
+    var srcNodes = (data && Array.isArray(data.nodes)) ? data.nodes : [];
+    srcNodes.forEach(function(n, i){
+      if (!n || typeof n !== "object") return;
+      var type = TYPES[n.type] ? n.type : "note";
+      var node = {
+        id: String(n.id || ("n" + (i + 1))),
+        label: n.label || n.title || n.text || "Untitled node",
+        type: type,
+        time: n.time || "",
+        timeEnd: n.timeEnd || "",
+        fn: n.function || n.fn || n.beat || "",
+        emotion: n.emotion || "",
+        visual: n.visual || n.visualIdea || "",
+        summary: n.summary || n.context || n.note || "",
+        stat: (n.stat && typeof n.stat === "object") ? n.stat : null,
+        cluster: n.cluster || "",
+        x: Number.isFinite(n.x) ? +n.x : null,
+        y: Number.isFinite(n.y) ? +n.y : null
+      };
+      if (node.type === "core" && !node.fn) node.fn = "Core message";
+      nodes.push(node);
+      byId[node.id] = node;
+    });
+
+    var srcEdges = (data && Array.isArray(data.edges)) ? data.edges : [];
+    var seen = {};
+    srcEdges.forEach(function(e){
+      if (!e) return;
+      var from = String(e.from != null ? e.from : e.source);
+      var to = String(e.to != null ? e.to : e.target);
+      if (!byId[from] || !byId[to] || from === to) return;
+      var rel = String(e.rel || e.relation || "supports");
+      var key = from + ">" + to + ">" + rel;
+      if (seen[key]) return;
+      seen[key] = true;
+      edges.push({ from: from, to: to, rel: rel, label: e.label || "", id: "e" + edges.length });
+    });
+
+    // If the data has no explicit edges but nodes carry parents, connect them.
+    if (!edges.length){
+      nodes.forEach(function(n){
+        var p = n.parent;
+        if (p && byId[p]) edges.push({ from: p, to: n.id, rel: "expands", label: "", id: "e" + edges.length });
+      });
+    }
+  }
+
+  function neighborsOf(id){
+    var out = {};
+    edges.forEach(function(e){
+      if (e.from === id) out[e.to] = true;
+      if (e.to === id) out[e.from] = true;
+    });
+    return out;
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Timecode helpers
+   * ------------------------------------------------------------------ */
+
+  function parseTime(str){
+    if (!str) return null;
+    var m = String(str).match(/(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+    if (!m) return null;
+    if (m[3] != null) return (+m[1]) * 3600 + (+m[2]) * 60 + (+m[3]);
+    return (+m[1]) * 60 + (+m[2]);
+  }
+
+  function fmtTime(sec){
+    if (sec == null || !isFinite(sec)) return "";
+    var m = Math.floor(sec / 60), s = Math.round(sec % 60);
+    if (s === 60){ m += 1; s = 0; }
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Layout
+   * ------------------------------------------------------------------ */
+
+  function radiusOf(n){
+    return n.type === "core" ? 158 : 120;
+  }
+
+  function autoLayout(){
+    if (!nodes.length) return;
+
+    var hasAll = nodes.every(function(n){ return n.x != null && n.y != null; });
+    if (hasAll) return;
+
+    var core = nodes.filter(function(n){ return n.type === "core"; })[0] || nodes[0];
+
+    // --- BFS depth from the core node
+    var adj = {};
+    nodes.forEach(function(n){ adj[n.id] = []; });
+    edges.forEach(function(e){
+      if (adj[e.from] && adj[e.to]){ adj[e.from].push(e.to); adj[e.to].push(e.from); }
+    });
+
+    var depth = {};
+    depth[core.id] = 0;
+    var queue = [core.id];
+    while (queue.length){
+      var id = queue.shift();
+      (adj[id] || []).forEach(function(next){
+        if (depth[next] === undefined){ depth[next] = depth[id] + 1; queue.push(next); }
+      });
+    }
+    var maxDepth = 0;
+    nodes.forEach(function(n){
+      if (depth[n.id] === undefined){ depth[n.id] = 1; }
+      maxDepth = Math.max(maxDepth, depth[n.id]);
+    });
+
+    // --- radial seed
+    var rings = {};
+    nodes.forEach(function(n){ (rings[depth[n.id]] = rings[depth[n.id]] || []).push(n); });
+    Object.keys(rings).forEach(function(d){
+      var ring = rings[d];
+      var count = ring.length;
+      var radius = d === "0" ? 0 : 250 + (+d) * 215;
+      ring.forEach(function(n, i){
+        var ang = (i / Math.max(count, 1)) * Math.PI * 2 + (+d) * 0.55;
+        n.x = Math.cos(ang) * radius;
+        n.y = Math.sin(ang) * radius * 0.78;
+      });
+    });
+
+    // --- light force refinement (deterministic, no randomness)
+    var ITERS = 260;
+    for (var it = 0; it < ITERS; it++){
+      var cool = 1 - it / ITERS;
+
+      // repulsion
+      for (var i = 0; i < nodes.length; i++){
+        for (var j = i + 1; j < nodes.length; j++){
+          var a = nodes[i], b = nodes[j];
+          var dx = b.x - a.x, dy = b.y - a.y;
+          var d2 = dx * dx + dy * dy;
+          if (d2 < 0.01){ dx = 0.7; dy = 0.7; d2 = 0.98; }
+          var minD = radiusOf(a) + radiusOf(b);
+          var d = Math.sqrt(d2);
+          if (d < minD){
+            var push = (minD - d) * 0.06 * cool;
+            var ux = dx / d, uy = dy / d;
+            a.x -= ux * push; a.y -= uy * push;
+            b.x += ux * push; b.y += uy * push;
+          }
+        }
+      }
+
+      // springs
+      edges.forEach(function(e){
+        var a = byId[e.from], b = byId[e.to];
+        if (!a || !b) return;
+        var dx = b.x - a.x, dy = b.y - a.y;
+        var d = Math.sqrt(dx * dx + dy * dy) || 1;
+        var target = 262;
+        var force = (d - target) * 0.004 * cool;
+        var ux = dx / d, uy = dy / d;
+        a.x += ux * force; a.y += uy * force;
+        b.x -= ux * force; b.y -= uy * force;
+      });
+
+      // pull toward origin, gentler for deeper nodes
+      nodes.forEach(function(n){
+        var g = n === core ? 0.02 : 0.0016;
+        n.x -= n.x * g * cool;
+        n.y -= n.y * g * cool;
+      });
+    }
+
+    // keep the core near the middle
+    core.x = 0; core.y = 0;
+
+    // centre bounds
+    var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    nodes.forEach(function(n){
+      minX = Math.min(minX, n.x); maxX = Math.max(maxX, n.x);
+      minY = Math.min(minY, n.y); maxY = Math.max(maxY, n.y);
+    });
+    var cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+    nodes.forEach(function(n){ n.x -= cx; n.y -= cy; });
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Render: nodes
+   * ------------------------------------------------------------------ */
+
+  function syncPositions(){
+    nodes.forEach(function(n){
+      n.el.style.left = n.x + "px";
+      n.el.style.top = n.y + "px";
+    });
+  }
+
+  // Cards are wider than they are tall, so circular repulsion alone can leave
+  // corners touching. This pass separates real card rectangles; the core node
+  // stays pinned so the board keeps its centre of gravity.
+  function resolveOverlaps(){
+    if (nodes.length < 2) return;
+    var pad = 16;
+    for (var pass = 0; pass < 140; pass++){
+      var moved = false;
+      for (var i = 0; i < nodes.length; i++){
+        for (var j = i + 1; j < nodes.length; j++){
+          var a = nodes[i], b = nodes[j];
+          var dx = b.x - a.x, dy = b.y - a.y;
+          var ox = (a.w + b.w) / 2 + pad - Math.abs(dx);
+          var oy = (a.h + b.h) / 2 + pad - Math.abs(dy);
+          if (ox <= 0 || oy <= 0) continue;
+          moved = true;
+          var ax = 1, bx = 1;
+          if (a.type === "core"){ ax = 0; bx = 2; }
+          else if (b.type === "core"){ ax = 2; bx = 0; }
+          if (ox < oy){
+            var sx = (dx >= 0 ? 1 : -1) * (ox / 2);
+            a.x -= sx * ax; b.x += sx * bx;
+          } else {
+            var sy = (dy >= 0 ? 1 : -1) * (oy / 2);
+            a.y -= sy * ax; b.y += sy * bx;
+          }
+        }
+      }
+      if (!moved) break;
+    }
+  }
+
+  function renderNodes(){
+    nodeLayer.innerHTML = "";
+    nodes.forEach(function(n){
+      var card = el("div", "node type-" + n.type);
+      var info = TYPES[n.type] || TYPES.note;
+      card.style.setProperty("--type-color", info.color);
+      card.dataset.id = n.id;
+      card.style.left = n.x + "px";
+      card.style.top = n.y + "px";
+      card.style.transform = "translate(-50%,-50%)";
+
+      var head = el("div", "node-head");
+      head.appendChild(el("span", "chip", info.label));
+      if (n.fn) head.appendChild(el("span", "chip fn", n.fn));
+      if (n.time) head.appendChild(el("span", "time", n.time));
+      card.appendChild(head);
+
+      card.appendChild(el("div", "node-label", n.label));
+
+      if (n.emotion){
+        var meta = el("div", "node-meta");
+        meta.appendChild(el("span", "", "Emotion · " + n.emotion));
+        card.appendChild(meta);
+      }
+
+      if (n.stat){
+        card.appendChild(vizFor(n.stat, false));
+      }
+
+      if (n.visual){
+        var v = el("div", "node-visual");
+        v.appendChild(el("b", "", "Visual"));
+        v.appendChild(document.createTextNode(n.visual));
+        card.appendChild(v);
+      }
+
+      card.addEventListener("pointerdown", onNodePointerDown);
+      card.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if (!card.dataset.dragged) select(n.id);
+        delete card.dataset.dragged;
+      });
+
+      n.el = card;
+      nodeLayer.appendChild(card);
+    });
+
+    // measure after layout, then separate real card rectangles
+    nodes.forEach(function(n){
+      n.w = n.el.offsetWidth;
+      n.h = n.el.offsetHeight;
+    });
+    resolveOverlaps();
+    syncPositions();
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Render: edges
+   * ------------------------------------------------------------------ */
+
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function anchorPoint(n, tx, ty){
+    var cx = n.x, cy = n.y;
+    var hw = (n.w || 220) / 2 + 4, hh = (n.h || 90) / 2 + 4;
+    var dx = tx - cx, dy = ty - cy;
+    if (!dx && !dy) return { x: cx, y: cy };
+    var sx = dx === 0 ? Infinity : hw / Math.abs(dx);
+    var sy = dy === 0 ? Infinity : hh / Math.abs(dy);
+    var s = Math.min(sx, sy);
+    return { x: cx + dx * s, y: cy + dy * s };
+  }
+
+  function renderEdges(){
+    Array.prototype.slice.call(svg.querySelectorAll("path.edge, text.edge-label")).forEach(function(n){ n.remove(); });
+    edges.forEach(function(e){
+      var a = byId[e.from], b = byId[e.to];
+      if (!a || !b) return;
+      if (a.hidden || b.hidden) return;
+
+      var p1 = anchorPoint(a, b.x, b.y);
+      var p2 = anchorPoint(b, a.x, a.y);
+
+      var mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
+      var dx = p2.x - p1.x, dy = p2.y - p1.y;
+      var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      var bend = Math.min(60, dist * 0.14) * (e.from < e.to ? 1 : -1);
+      var nx = -dy / dist, ny = dx / dist;
+      var c1x = p1.x + dx * 0.33 + nx * bend, c1y = p1.y + dy * 0.33 + ny * bend;
+      var c2x = p1.x + dx * 0.66 + nx * bend, c2y = p1.y + dy * 0.66 + ny * bend;
+
+      var path = document.createElementNS(SVG_NS, "path");
+      path.setAttribute("d", "M " + p1.x + " " + p1.y + " C " + c1x + " " + c1y + ", " + c2x + " " + c2y + ", " + p2.x + " " + p2.y);
+      var relMeta = RELS[e.rel] || { cls: "" };
+      path.setAttribute("class", "edge " + relMeta.cls);
+      path.dataset.from = e.from;
+      path.dataset.to = e.to;
+      var marker = "";
+      if (e.rel === "contrasts" || e.rel === "blocks") marker = "arrow-red";
+      else if (e.rel === "callback") marker = "arrow-violet";
+      else if (e.rel === "proves") marker = "arrow-teal";
+      else marker = "arrow";
+      path.setAttribute("marker-end", "url(#" + marker + ")");
+      path.dataset.marker = marker;
+      svg.appendChild(path);
+
+      if (e.label){
+        var t = document.createElementNS(SVG_NS, "text");
+        t.setAttribute("x", mx + nx * bend * 0.75);
+        t.setAttribute("y", my + ny * bend * 0.75 - 4);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("class", "edge-label");
+        t.dataset.from = e.from;
+        t.dataset.to = e.to;
+        t.textContent = e.label;
+        svg.appendChild(t);
+      }
+      e.path = path;
+      e.labelEl = t;
+    });
+  }
+
+  function refreshEdgeClasses(){
+    Array.prototype.slice.call(svg.querySelectorAll("path.edge")).forEach(function(p){
+      var related = !selected || p.dataset.from === selected || p.dataset.to === selected;
+      p.classList.toggle("is-faded", !!selected && !related);
+      p.classList.toggle("is-live", !!selected && related);
+    });
+    Array.prototype.slice.call(svg.querySelectorAll("text.edge-label")).forEach(function(t){
+      var related = !selected || t.dataset.from === selected || t.dataset.to === selected;
+      t.style.opacity = related ? "1" : "0";
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Metaphor graphics  (stat nodes)
+   * ------------------------------------------------------------------ */
+
+  var VIZ_DEFAULT = "#7c3aed";
+
+  function vizFor(stat, big){
+    var wrap = el("div", "viz" + (big ? " viz-lg" : ""));
+    var accent = stat.accent || VIZ_DEFAULT;
+    wrap.style.setProperty("--viz-accent", accent);
+    var display = String(stat.display || stat.kind || "counter").toLowerCase();
+
+    if (display === "dotgrid" || display === "dots"){
+      var total = Math.max(1, Math.min(400, +stat.total || 100));
+      var filled = Math.max(0, Math.min(total, +stat.filled || 0));
+      var cols = Math.min(20, Math.ceil(Math.sqrt(total)));
+      var grid = el("div", "dots");
+      grid.style.gridTemplateColumns = "repeat(" + cols + ", auto)";
+      for (var i = 0; i < total; i++){
+        grid.appendChild(el("i", "dot" + (i < filled ? " on" : "")));
+      }
+      wrap.appendChild(grid);
+      wrap.appendChild(el("div", "caption", stat.caption || (filled + " of " + total)));
+
+    } else if (display === "bars" || display === "chart"){
+      var vals = Array.isArray(stat.values) ? stat.values : [];
+      var hi = Number.isFinite(stat.highlight) ? stat.highlight : -1;
+      var max = Math.max.apply(null, vals.concat([1]));
+      var bars = el("div", "bars");
+      vals.forEach(function(v, idx){
+        var bar = el("i", "bar" + (idx === hi ? " on" : ""));
+        bar.style.height = Math.max(3, (v / max) * 100) + "%";
+        bars.appendChild(bar);
+      });
+      wrap.appendChild(bars);
+      if (Array.isArray(stat.labels) && stat.labels.length){
+        var labels = el("div", "barlabels");
+        stat.labels.forEach(function(l){ labels.appendChild(el("span", "", l)); });
+        wrap.appendChild(labels);
+      }
+      if (stat.caption) wrap.appendChild(el("div", "caption", stat.caption));
+
+    } else if (display === "proportion" || display === "progress"){
+      var pct = Math.max(0, Math.min(100, +stat.percent || 0));
+      var track = el("div", "prog");
+      var fill = el("i");
+      fill.style.width = pct + "%";
+      track.appendChild(fill);
+      wrap.appendChild(track);
+      wrap.appendChild(el("div", "caption", stat.caption || (pct + "%")));
+
+    } else if (display === "fraction" || display === "ratio"){
+      var frac = el("div", "fraction");
+      frac.appendChild(el("span", "p", String(stat.part != null ? stat.part : "?")));
+      frac.appendChild(el("span", "w", "/ " + String(stat.whole != null ? stat.whole : "?")));
+      wrap.appendChild(frac);
+      if (stat.caption) wrap.appendChild(el("div", "caption", stat.caption));
+
+    } else if (display === "compare"){
+      var cols2 = Array.isArray(stat.values) ? stat.values : [];
+      var max2 = Math.max.apply(null, cols2.map(function(v){
+        return typeof v === "object" ? +v.value || 0 : +v || 0;
+      }).concat([1]));
+      var cmp = el("div", "compare");
+      cols2.forEach(function(v){
+        var value = typeof v === "object" ? (+v.value || 0) : (+v || 0);
+        var label = typeof v === "object" ? (v.label || "") : String(v);
+        var col = el("div", "col");
+        var barEl = document.createElement("i");
+        barEl.style.height = Math.max(6, (value / max2) * 34) + "px";
+        if (typeof v === "object" && v.accent) barEl.style.background = v.accent;
+        col.appendChild(barEl);
+        col.appendChild(el("span", "", label));
+        cmp.appendChild(col);
+      });
+      wrap.appendChild(cmp);
+      if (stat.caption) wrap.appendChild(el("div", "caption", stat.caption));
+
+    } else if (display === "steps"){
+      var steps = el("div", "steps");
+      (stat.steps || []).forEach(function(s, idx){
+        steps.appendChild(el("span", idx === stat.active ? "on" : "", s));
+      });
+      wrap.appendChild(steps);
+      if (stat.caption) wrap.appendChild(el("div", "caption", stat.caption));
+
+    } else {
+      var counter = el("div", "counter");
+      counter.appendChild(el("span", "big", (stat.prefix || "") + (stat.value != null ? stat.value : "?") + (stat.suffix || "")));
+      if (stat.caption) counter.appendChild(el("span", "cap", stat.caption));
+      wrap.appendChild(counter);
+    }
+
+    if (stat.metaphor) wrap.appendChild(el("div", "note", stat.metaphor));
+    return wrap;
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Selection + inspector
+   * ------------------------------------------------------------------ */
+
+  function refreshNodeSelection(){
+    var neighbours = selected ? neighborsOf(selected) : {};
+    nodes.forEach(function(n){
+      n.el.classList.toggle("is-selected", n.id === selected);
+      n.el.classList.toggle("is-neighbor", !!neighbours[n.id]);
+    });
+  }
+
+  function select(id){
+    selected = (selected === id) ? null : id;
+    refreshNodeSelection();
+    refreshEdgeClasses();
+    renderInspector();
+    renderTimelineSelection();
+    if (window.innerWidth < 1080){
+      document.getElementById("app").classList.toggle("panel-right-on", !!selected);
+    }
+  }
+
+  function renderInspector(){
+    if (!selected){
+      inspectorBody.hidden = true;
+      inspectorEmpty.hidden = false;
+      return;
+    }
+    var n = byId[selected];
+    if (!n) return;
+    inspectorEmpty.hidden = true;
+    inspectorBody.hidden = false;
+    var info = TYPES[n.type] || TYPES.note;
+
+    function block(title, content){
+      var b = el("div", "insp-block");
+      b.appendChild(el("h3", "", title));
+      if (typeof content === "string") b.appendChild(el("p", "", content));
+      else b.appendChild(content);
+      return b;
+    }
+
+    inspectorBody.innerHTML = "";
+    inspectorBody.style.setProperty("--type-color", info.color);
+
+    var typeRow = el("div", "insp-type");
+    typeRow.appendChild(el("i"));
+    typeRow.appendChild(document.createTextNode(info.label));
+    inspectorBody.appendChild(typeRow);
+
+    inspectorBody.appendChild(el("h2", "insp-title", n.label));
+    if (n.time || n.timeEnd){
+      inspectorBody.appendChild(el("div", "insp-time", n.time + (n.timeEnd ? " – " + n.timeEnd : "")));
+    }
+
+    var kv = el("dl", "kv");
+    if (n.fn){ kv.appendChild(el("dt", "", "Function")); kv.appendChild(el("dd", "", n.fn)); }
+    if (n.emotion){ kv.appendChild(el("dt", "", "Emotion")); kv.appendChild(el("dd", "", n.emotion)); }
+    if (n.summary){ kv.appendChild(el("dt", "", "Context")); kv.appendChild(el("dd", "", n.summary)); }
+    if (kv.children.length){
+      var kvWrap = el("div", "insp-block");
+      kvWrap.appendChild(kv);
+      inspectorBody.appendChild(kvWrap);
+    }
+
+    if (n.visual){
+      inspectorBody.appendChild(block("Visual idea", n.visual));
+    }
+
+    if (n.stat){
+      var box = el("div", "insp-viz");
+      box.appendChild(vizFor(n.stat, true));
+      inspectorBody.appendChild(block("Metaphor graphic", box));
+    }
+
+    var outgoing = edges.filter(function(e){ return e.from === n.id; });
+    var incoming = edges.filter(function(e){ return e.to === n.id; });
+    if (outgoing.length || incoming.length){
+      var connWrap = el("div", "insp-block");
+      connWrap.appendChild(el("h3", "", "Connections"));
+      var list = el("div", "conn");
+      function addConn(e, otherId, dir){
+        var other = byId[otherId];
+        if (!other) return;
+        var b = el("button");
+        b.appendChild(el("span", "rel", (dir === "out" ? "→ " : "← ") + (e.label || (RELS[e.rel] ? RELS[e.rel].label : e.rel))));
+        b.appendChild(el("span", "", other.label));
+        b.addEventListener("click", function(){ focusNode(other.id); });
+        list.appendChild(b);
+      }
+      outgoing.forEach(function(e){ addConn(e, e.to, "out"); });
+      incoming.forEach(function(e){ addConn(e, e.from, "in"); });
+      connWrap.appendChild(list);
+      inspectorBody.appendChild(connWrap);
+    }
+  }
+
+  function focusNode(id){
+    var n = byId[id];
+    if (!n) return;
+    selected = id;
+    refreshNodeSelection();
+    refreshEdgeClasses();
+    renderInspector();
+    renderTimelineSelection();
+    if (window.innerWidth < 1080) document.getElementById("app").classList.add("panel-right-on");
+    centerOn(n);
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  View transform
+   * ------------------------------------------------------------------ */
+
+  function applyView(){
+    world.style.transform = "translate(" + view.x + "px," + view.y + "px) scale(" + view.k + ")";
+    document.getElementById("zoom-level").textContent = Math.round(view.k * 100) + "%";
+  }
+
+  function stageSize(){
+    return { w: stage.clientWidth, h: stage.clientHeight };
+  }
+
+  function centerOn(n){
+    var s = stageSize();
+    view.k = Math.max(0.7, Math.min(1.15, view.k));
+    view.x = s.w / 2 - n.x * view.k;
+    view.y = s.h / 2 - n.y * view.k;
+    applyView();
+  }
+
+  function fit(){
+    if (!nodes.length) return;
+    var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    nodes.forEach(function(n){
+      if (n.hidden) return;
+      var w = n.w || 220, h = n.h || 90;
+      minX = Math.min(minX, n.x - w / 2); maxX = Math.max(maxX, n.x + w / 2);
+      minY = Math.min(minY, n.y - h / 2); maxY = Math.max(maxY, n.y + h / 2);
+    });
+    if (!isFinite(minX)) return;
+    var s = stageSize();
+    var pad = 70;
+    var bw = Math.max(1, maxX - minX), bh = Math.max(1, maxY - minY);
+    var k = Math.min((s.w - pad * 2) / bw, (s.h - pad * 2) / bh, 1.1);
+    k = Math.max(0.16, k);
+    view.k = k;
+    view.x = s.w / 2 - ((minX + maxX) / 2) * k;
+    view.y = s.h / 2 - ((minY + maxY) / 2) * k;
+    applyView();
+  }
+
+  function zoomAt(factor, px, py){
+    var s = stageSize();
+    px = px == null ? s.w / 2 : px;
+    py = py == null ? s.h / 2 : py;
+    var k2 = Math.max(0.16, Math.min(3, view.k * factor));
+    var ratio = k2 / view.k;
+    view.x = px - (px - view.x) * ratio;
+    view.y = py - (py - view.y) * ratio;
+    view.k = k2;
+    applyView();
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Pointer interactions
+   * ------------------------------------------------------------------ */
+
+  var drag = null;
+
+  function onNodePointerDown(ev){
+    if (ev.button !== 0 && ev.pointerType === "mouse") return;
+    var id = ev.currentTarget.dataset.id;
+    var n = byId[id];
+    if (!n) return;
+    ev.stopPropagation();
+    ev.preventDefault();
+    var start = { x: ev.clientX, y: ev.clientY, nx: n.x, ny: n.y };
+    var moved = false;
+    var card = n.el;
+
+    function move(e2){
+      var dx = (e2.clientX - start.x) / view.k;
+      var dy = (e2.clientY - start.y) / view.k;
+      if (Math.abs(e2.clientX - start.x) + Math.abs(e2.clientY - start.y) > 3) moved = true;
+      if (!moved) return;
+      card.classList.add("dragging");
+      n.x = start.nx + dx;
+      n.y = start.ny + dy;
+      card.style.left = n.x + "px";
+      card.style.top = n.y + "px";
+      renderEdges();
+    }
+    function up(){
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      card.classList.remove("dragging");
+      if (moved) card.dataset.dragged = "1";
+      layoutDirty = false;
+    }
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  }
+
+  stage.addEventListener("pointerdown", function(ev){
+    if (ev.target.closest(".node") || ev.target.closest("#zoom-hud")) return;
+    var start = { x: ev.clientX, y: ev.clientY, vx: view.x, vy: view.y };
+    stage.classList.add("panning");
+    function move(e2){
+      view.x = start.vx + (e2.clientX - start.x);
+      view.y = start.vy + (e2.clientY - start.y);
+      applyView();
+    }
+    function up(){
+      stage.classList.remove("panning");
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    }
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  });
+
+  stage.addEventListener("wheel", function(ev){
+    ev.preventDefault();
+    var rect = stage.getBoundingClientRect();
+    var factor = Math.exp(-ev.deltaY * 0.0015);
+    zoomAt(factor, ev.clientX - rect.left, ev.clientY - rect.top);
+  }, { passive: false });
+
+  stage.addEventListener("click", function(ev){
+    if (ev.target.closest(".node") || ev.target.closest("#zoom-hud")) return;
+    if (selected){ select(null); }
+  });
+
+  /* ------------------------------------------------------------------ *
+   *  Legend / search / timeline
+   * ------------------------------------------------------------------ */
+
+  function counts(){
+    var c = {};
+    nodes.forEach(function(n){ c[n.type] = (c[n.type] || 0) + 1; });
+    return c;
+  }
+
+  function renderLegend(){
+    var legend = document.getElementById("legend");
+    legend.innerHTML = "";
+    var c = counts();
+    Object.keys(TYPES).forEach(function(type){
+      if (!c[type]) return;
+      var b = document.createElement("button");
+      b.dataset.type = type;
+      if (hiddenTypes[type]) b.classList.add("off");
+      var sw = el("span", "swatch");
+      sw.style.background = TYPES[type].color;
+      b.appendChild(sw);
+      b.appendChild(el("span", "", TYPES[type].label));
+      b.appendChild(el("span", "count", String(c[type])));
+      b.addEventListener("click", function(){
+        hiddenTypes[type] = !hiddenTypes[type];
+        b.classList.toggle("off", !!hiddenTypes[type]);
+        applyFilters();
+      });
+      legend.appendChild(b);
+    });
+  }
+
+  function renderRelKey(){
+    var key = document.getElementById("relkey");
+    key.innerHTML = "";
+    var used = {};
+    edges.forEach(function(e){ used[e.rel] = true; });
+    var any = false;
+    Object.keys(RELS).forEach(function(rel){
+      if (!used[rel]) return;
+      any = true;
+      var row = el("div", "row");
+      var svgMini = document.createElementNS(SVG_NS, "svg");
+      svgMini.setAttribute("width", "30"); svgMini.setAttribute("height", "8");
+      var line = document.createElementNS(SVG_NS, "line");
+      line.setAttribute("x1", "0"); line.setAttribute("y1", "4");
+      line.setAttribute("x2", "30"); line.setAttribute("y2", "4");
+      line.setAttribute("stroke", rel === "contrasts" || rel === "blocks" ? "#dc2626" : rel === "callback" ? "#8b5cf6" : rel === "proves" ? "#0d9488" : "var(--edge)");
+      line.setAttribute("stroke-width", "2");
+      if (rel === "contrasts") line.setAttribute("stroke-dasharray", "6 4");
+      if (rel === "callback") line.setAttribute("stroke-dasharray", "2 5");
+      if (rel === "blocks") line.setAttribute("stroke-dasharray", "4 3");
+      svgMini.appendChild(line);
+      row.appendChild(svgMini);
+      row.appendChild(el("span", "", RELS[rel].label));
+      key.appendChild(row);
+    });
+    if (!any) key.appendChild(el("div", "hint", "No connections in this board."));
+  }
+
+  function applyFilters(){
+    var q = query.trim().toLowerCase();
+    var matches = {};
+    var anyMatch = false;
+
+    nodes.forEach(function(n){
+      var hidden = !!hiddenTypes[n.type];
+      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary).toLowerCase().indexOf(q) !== -1;
+      if (q && hit) anyMatch = true;
+      var dim = (q && !hit);
+      n.hidden = hidden;
+      n.el.style.display = hidden ? "none" : "";
+      n.el.classList.toggle("is-dim", !!dim && !hidden);
+      n.el.classList.toggle("is-match", !!q && hit);
+      if (hit) matches[n.id] = true;
+    });
+
+    // rebuild edges against the current visibility, then fade the unrelated ones
+    renderEdges();
+    Array.prototype.slice.call(svg.querySelectorAll("path.edge")).forEach(function(p){
+      var bothVisible = !(byId[p.dataset.from] && byId[p.dataset.from].hidden) && !(byId[p.dataset.to] && byId[p.dataset.to].hidden);
+      var related = !q || (matches[p.dataset.from] || matches[p.dataset.to]);
+      p.style.display = bothVisible ? "" : "none";
+      p.style.opacity = (q && !related) ? "0.08" : "";
+    });
+    Array.prototype.slice.call(svg.querySelectorAll("text.edge-label")).forEach(function(t){
+      var bothVisible = !(byId[t.dataset.from] && byId[t.dataset.from].hidden) && !(byId[t.dataset.to] && byId[t.dataset.to].hidden);
+      var related = !q || (matches[t.dataset.from] || matches[t.dataset.to]);
+      t.style.display = bothVisible ? "" : "none";
+      t.style.opacity = (q && !related) ? "0" : "";
+    });
+    refreshEdgeClasses();
+  }
+
+  function renderTimeline(){
+    var footer = document.getElementById("timeline");
+    var track = document.getElementById("track");
+    track.innerHTML = "";
+    var timed = nodes.filter(function(n){ return parseTime(n.time) != null; })
+      .sort(function(a, b){ return parseTime(a.time) - parseTime(b.time); });
+    if (timed.length < 2){ footer.classList.remove("on"); return; }
+    footer.classList.add("on");
+
+    var max = parseTime(timed[timed.length - 1].time) || 1;
+    var min = parseTime(timed[0].time) || 0;
+    var span = Math.max(1, max - min);
+    timed.forEach(function(n){
+      var t = parseTime(n.time);
+      var tick = el("div", "tick");
+      tick.dataset.id = n.id;
+      tick.style.left = (((t - min) / span) * 100) + "%";
+      tick.style.setProperty("--type-color", (TYPES[n.type] || TYPES.note).color);
+      tick.appendChild(el("i"));
+      tick.appendChild(el("b", "", fmtTime(t)));
+      tick.dataset.label = n.label;
+      tick.title = n.time + " · " + n.label;
+      tick.addEventListener("click", function(){ focusNode(n.id); });
+      track.appendChild(tick);
+    });
+
+    var estimated = DATA && DATA.source && (DATA.source.estimated === true || /est/i.test(String(DATA.source.timing || "")));
+    document.getElementById("tl-estimate").textContent = estimated ? "timecodes are ESTIMATED" : "";
+    renderTimelineSelection();
+  }
+
+  function renderTimelineSelection(){
+    Array.prototype.slice.call(document.querySelectorAll(".tick")).forEach(function(t){
+      t.classList.toggle("is-selected", t.dataset.id === selected);
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Header, export, controls
+   * ------------------------------------------------------------------ */
+
+  function renderHeader(){
+    var d = DATA || {};
+    document.title = d.title || "Previsualization Mind Map";
+    document.getElementById("board-title").textContent = d.title || "Previsualization Mind Map";
+    var sub = document.getElementById("board-sub");
+    sub.textContent = d.subtitle || "";
+    sub.style.display = d.subtitle ? "" : "none";
+
+    var meta = document.getElementById("board-meta");
+    meta.innerHTML = "";
+    var src = d.source || {};
+    [["platform", src.platform], ["aspect", src.aspect], ["duration", src.duration]].forEach(function(pair){
+      if (!pair[1]) return;
+      meta.appendChild(el("span", "pill", String(pair[1])));
+    });
+    if (src.estimated) meta.appendChild(el("span", "pill est", "ESTIMATED timing"));
+    if (d.theme === "dark") document.body.dataset.theme = "dark";
+
+    document.getElementById("stats").innerHTML =
+      nodes.length + " nodes · " + edges.length + " connections";
+  }
+
+  function exportJson(){
+    var payload = {
+      title: (DATA && DATA.title) || "Previsualization Mind Map",
+      subtitle: (DATA && DATA.subtitle) || "",
+      source: (DATA && DATA.source) || {},
+      nodes: nodes.map(function(n){
+        return {
+          id: n.id, label: n.label, type: n.type, time: n.time, timeEnd: n.timeEnd,
+          function: n.fn, emotion: n.emotion, visual: n.visual, summary: n.summary,
+          stat: n.stat, x: Math.round(n.x), y: Math.round(n.y)
+        };
+      }),
+      edges: edges.map(function(e){ return { from: e.from, to: e.to, rel: e.rel, label: e.label }; })
+    };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "mindmap-nodes.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    showToast("Exported mindmap-nodes.json");
+  }
+
+  function relayout(){
+    nodes.forEach(function(n){ n.x = null; n.y = null; });
+    autoLayout();
+    resolveOverlaps();
+    syncPositions();
+    renderEdges();
+    fit();
+    showToast("Layout rebuilt");
+  }
+
+  function bindControls(){
+    document.getElementById("btn-fit").addEventListener("click", fit);
+    document.getElementById("btn-fit2").addEventListener("click", fit);
+    document.getElementById("btn-in").addEventListener("click", function(){ zoomAt(1.25); });
+    document.getElementById("btn-out").addEventListener("click", function(){ zoomAt(0.8); });
+    document.getElementById("btn-export").addEventListener("click", exportJson);
+
+    document.getElementById("btn-theme").addEventListener("click", function(){
+      document.body.dataset.theme = document.body.dataset.theme === "dark" ? "light" : "dark";
+    });
+
+    document.getElementById("btn-help").addEventListener("click", function(){
+      document.getElementById("help").classList.add("on");
+    });
+    document.getElementById("btn-help-close").addEventListener("click", function(){
+      document.getElementById("help").classList.remove("on");
+    });
+    document.getElementById("help").addEventListener("click", function(ev){
+      if (ev.target.id === "help") ev.target.classList.remove("on");
+    });
+
+    document.getElementById("btn-panels").addEventListener("click", function(){
+      document.getElementById("app").classList.toggle("panel-left-on");
+    });
+
+    document.getElementById("search").addEventListener("input", function(ev){
+      query = ev.target.value;
+      applyFilters();
+    });
+
+    document.addEventListener("keydown", function(ev){
+      if (ev.target.tagName === "INPUT" || ev.target.tagName === "TEXTAREA"){
+        if (ev.key === "Escape"){ ev.target.value = ""; query = ""; applyFilters(); ev.target.blur(); }
+        return;
+      }
+      if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      var k = ev.key.toLowerCase();
+      if (k === "f"){ ev.preventDefault(); fit(); }
+      else if (k === "r"){ ev.preventDefault(); relayout(); }
+      else if (k === "t"){ ev.preventDefault(); document.getElementById("btn-theme").click(); }
+      else if (k === "e"){ ev.preventDefault(); exportJson(); }
+      else if (k === "/"){ ev.preventDefault(); document.getElementById("search").focus(); }
+      else if (k === "?"){ document.getElementById("help").classList.add("on"); }
+      else if (ev.key === "Escape"){
+        document.getElementById("help").classList.remove("on");
+        select(null);
+      }
+    });
+
+    window.addEventListener("resize", function(){
+      if (layoutDirty) fit();
+      renderEdges();
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Boot
+   * ------------------------------------------------------------------ */
+
+  var booted = false;
+
+  function boot(){
+    if (booted) return;
+    booted = true;
+
+    var app = document.getElementById("app");
+    if (!DATA || !Array.isArray(DATA.nodes) || !DATA.nodes.length){
+      app.innerHTML = '<div style="grid-column:1/-1;padding:40px;font:14px ui-sans-serif,system-ui">' +
+        '<h2 style="margin:0 0 8px">No board data</h2>' +
+        '<p style="color:#6b7280;margin:0">This file needs a JSON node graph embedded in <code>&lt;script id="board-data"&gt;</code>. ' +
+        'Build one with <code>scripts/build_mindmap.py</code>, or open the bundled example.</p></div>';
+      return;
+    }
+
+    normalize(DATA);
+    renderHeader();
+    autoLayout();
+    renderNodes();
+    renderEdges();
+    renderLegend();
+    renderRelKey();
+    renderTimeline();
+    bindControls();
+
+    requestAnimationFrame(function(){
+      fit();
+      // re-measure after fonts settle, then re-fit once
+      setTimeout(function(){
+        nodes.forEach(function(n){ n.w = n.el.offsetWidth; n.h = n.el.offsetHeight; });
+        resolveOverlaps();
+        syncPositions();
+        renderEdges();
+        fit();
+      }, 120);
+    });
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+</body>
+</html>

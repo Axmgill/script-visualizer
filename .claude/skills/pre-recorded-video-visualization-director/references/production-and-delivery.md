@@ -1,8 +1,8 @@
-# Phases 13–16: Production and Delivery
+# Phases 14–17: Production and Delivery
 
-Read this file before producing output sections 13–16. Follow the output templates exactly.
+Read this file before producing output sections 14–17. Follow the output templates exactly.
 
-## Phase 13 — Asset and Production Checklist
+## Phase 14 — Asset and Production Checklist
 
 Tell the user exactly what assets are needed to build the video.
 
@@ -53,7 +53,7 @@ Optional upgrades:
 - ...
 ```
 
-## Phase 14 — Software Execution Notes
+## Phase 15 — Software Execution Notes
 
 Give practical guidance for editing the pre-recorded video. Only include the tools relevant to the user's request (or the single most likely tool if unspecified, marked as assumed).
 
@@ -99,7 +99,7 @@ CapCut:
 
 Adapt the same structure for DaVinci Resolve or Final Cut Pro when those are the user's tools.
 
-## Phase 15 — Review Checklist
+## Phase 16 — Review Checklist
 
 Before finalizing, check the plan itself.
 
@@ -144,7 +144,7 @@ Pass / Needs Attention / Missing
 
 If any item is "Needs Attention" or "Missing", fix the plan or state exactly what input would resolve it.
 
-## Phase 16 — Final Delivery Package
+## Phase 17 — Final Delivery Package
 
 At the end, provide a clean executive summary the user can copy into production.
 

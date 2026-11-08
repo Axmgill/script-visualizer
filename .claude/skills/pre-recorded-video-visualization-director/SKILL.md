@@ -1,6 +1,6 @@
 ---
 name: pre-recorded-video-visualization-director
-description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, visual concept, emotional arc, scene map, shot and b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
+description: Visualizes pre-recorded video and audio as a complete, timecoded visual edit plan covering media intake, creative brief, narrative spine, a previsualization mind map built as an interactive node board, visual concept, emotional arc, scene map, shot and b-roll plan, text storyboard, motion graphics, caption strategy, editing rhythm, sound direction, asset checklist, software execution notes, review checklist, and final delivery package. Use when the user provides a voiceover, talking-head video, screen recording, interview, podcast clip, raw footage, rough edit, transcript, or script and asks to visualize it, plan the edit, storyboard it, map it to visuals, mind-map or previz the script as a node board, choose b-roll, or plan captions and graphics. Supports TikTok, Reels, and Shorts vertical video as well as long-form and client work. Not for live streaming, real-time video, or writing a script from scratch.
 ---
 
 # Pre-Recorded Video Visualization Director
@@ -17,6 +17,7 @@ This skill is NOT for live streaming, NOT for real-time conversation, and NOT on
 
 Make the pre-recorded video visible before the final edit is built. The user should be able to open the output and immediately understand:
 
+- how the script's argument maps out as a connected node board
 - what is on screen at each moment
 - where cuts should happen
 - what b-roll or graphics are needed
@@ -38,6 +39,7 @@ Make the pre-recorded video visible before the final edit is built. The user sho
 8. If the user is stuck, give concrete options instead of open-ended questions.
 9. If the user provides only a script, estimate timing but clearly mark it as estimated.
 10. If the user provides a transcript or recorded file description, use it as the backbone of the plan.
+11. Map the script before shooting it: claims, proofs, numbers, and motifs belong on a node board before they become shots.
 
 ## Pre-recorded-specific rules (non-negotiable)
 
@@ -91,14 +93,15 @@ Defaults when unspecified: 9:16 vertical for short-form social; 16:9 horizontal 
 
 ## Workflow
 
-When the user provides pre-recorded material, immediately run the full 16-phase workflow in order, unless the user requests a shorter version or another mode. Before executing each phase group, read its reference file — it contains the per-phase instructions and the exact output templates to follow:
+When the user provides pre-recorded material, immediately run the full 17-phase workflow in order, unless the user requests a shorter version or another mode. Before executing each phase group, read its reference file — it contains the per-phase instructions and the exact output templates to follow:
 
 | Phases | Output sections (in order) | Read first |
 |--------|---------------------------|------------|
-| 1–4 | Media Intake Summary, Creative Brief, Narrative Spine, Visual Concept | `references/intake-and-strategy.md` |
-| 5–8 | Emotional Arc, Scene Map, Shot / B-Roll Plan, Text Storyboard | `references/visual-plan.md` |
-| 9–12 | Motion Graphics Plan, Caption and Text Strategy, Editing Rhythm Plan, Sound and Music Direction | `references/graphics-text-rhythm-sound.md` |
-| 13–16 | Asset Checklist, Software Execution Notes, Review Checklist, Final Pre-Recorded Video Visualization Package | `references/production-and-delivery.md` |
+| 1–3 | Media Intake Summary, Creative Brief, Narrative Spine | `references/intake-and-strategy.md` |
+| 4 | Previsualization Mind Map (node board) | `references/mindmap-previz.md` |
+| 5–9 | Visual Concept, Emotional Arc, Scene Map, Shot / B-Roll Plan, Text Storyboard | `references/visual-plan.md` |
+| 10–13 | Motion Graphics Plan, Caption and Text Strategy, Editing Rhythm Plan, Sound and Music Direction | `references/graphics-text-rhythm-sound.md` |
+| 14–17 | Asset Checklist, Software Execution Notes, Review Checklist, Final Pre-Recorded Video Visualization Package | `references/production-and-delivery.md` |
 
 Also apply, whenever their trigger conditions match:
 
@@ -118,10 +121,26 @@ python3 scripts/estimate_timecodes.py transcript.txt --wps 2.75 --format md
 
 It accepts plain text (estimates timing), or SRT/VTT files (uses real timecodes), and outputs a timecoded block map in Markdown or JSON. Prefer running the script over mental arithmetic when a transcript file is available; otherwise estimate inline and label it.
 
+## Mind map board
+
+Phase 4 produces a real board, not a description of one. Write the graph to `<project>/previz/mindmap.json`, then build it:
+
+```bash
+python3 scripts/build_mindmap.py previz/mindmap.json --check
+python3 scripts/build_mindmap.py previz/mindmap.json -o previz/mindmap.html
+```
+
+The output is a single self-contained HTML file — nodes drag, the canvas pans and zooms, connections are drawn as curves, and numbers render as their metaphor graphic (`10 in 100` becomes 100 dots with 10 filled). It has no dependencies and makes no network requests.
+
+Node types: `core`, `hook`, `claim`, `proof`, `stat`, `example`, `emotion`, `visual`, `objection`, `cta`, `risk`, `note`.
+Relations: `supports`, `proves`, `expands`, `contrasts`, `callback`, `blocks`, `flows`, `inspires`.
+
+The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must be given a shape an editor can build in twenty minutes. A worked board lives at `examples/mindmap/`.
+
 ## Final instruction
 
 When the user provides a pre-recorded video, voiceover, transcript, rough edit, or recorded idea, immediately run this workflow. Do not respond with only a short suggestion unless the user explicitly asks for a short answer.
 
-The output should make the user feel less blank, more oriented, more confident, able to see the final video before editing it, able to gather the right assets, and able to open Premiere Pro, After Effects, CapCut, or another editor with a clear plan.
+The output should make the user feel less blank, more oriented, more confident, able to see the argument as a board and the final video before editing it, able to gather the right assets, and able to open Premiere Pro, After Effects, CapCut, or another editor with a clear plan.
 
 The purpose is not just to analyze words. The purpose is to turn a pre-recorded message into a living visual edit plan.
