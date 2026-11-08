@@ -163,6 +163,20 @@
   }
   .node-visual b{font-weight:600;color:var(--ink);font-size:10px;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:2px}
   .node-viz{margin-top:7px}
+  .node-form{
+    margin-top:7px;padding:6px 8px;border-radius:6px;background:var(--chip);
+    font-size:11px;line-height:1.4;color:var(--ink-soft);
+  }
+  .node-form b{
+    display:block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:2px;
+  }
+  .node.viz-only .node-form{background:#b4530914;border:1px dashed #b4530955}
+  body[data-theme="dark"] .node.viz-only .node-form{background:#f59e0b14;border-color:#f59e0b55}
+  .schematic-tag{
+    font-size:8.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0 0 3px;
+  }
   .node.is-unanchored{border-style:dashed;border-left-style:solid;box-shadow:0 0 0 1px #f59e0b66,var(--shadow)}
   .node-anchor{
     margin-top:7px;padding:5px 7px;border-radius:6px;background:var(--chip);
@@ -424,7 +438,7 @@
 </div>
 <div id="toast"></div>
 
-<script id="board-data" type="application/json">{"title": "The Napkin Proof", "subtitle": "Instagram Reels · 9:16 · 0:19 — previsualization board", "theme": "light", "source": {"platform": "Instagram Reels", "aspect": "9:16", "duration": "0:19", "estimated": true}, "nodes": [{"id": "core", "label": "Proof of skill beats presentation polish", "type": "core", "time": "0:00–0:19", "function": "Core message", "emotion": "relief", "visual": "One continuous tabletop moment — pen, napkin, coffee ring, no cutaways to faces.", "summary": "Every node in this board either supports this sentence or gets cut. The edit is 19 seconds long, so nothing decorative survives."}, {"id": "hook", "label": "Your first client doesn't come from a perfect portfolio", "type": "hook", "time": "0:00–0:03.5", "function": "Hook / objection broken", "emotion": "provocation", "visual": "Bold caption on a dark frame; the word 'perfect' gets struck through the moment it is spoken."}, {"id": "claim_portfolio", "label": "A portfolio is a presentation, not a proof", "type": "claim", "time": "0:01–0:03.5", "function": "Claim", "emotion": "clarity", "visual": "Caption only. No portfolio mockups — mocking one up makes the video look like the thing it is arguing against."}, {"id": "stat_ten", "label": "10 in 100 first clients trace back to a polished portfolio", "type": "stat", "time": "0:02–0:04", "function": "Data point / proof", "emotion": "surprise", "visual": "100 small dots, 10 of them filled — the 'unlucky majority' reads instantly without a chart.", "stat": {"display": "dotgrid", "total": 100, "filled": 10, "caption": "10 of 100", "accent": "#7c3aed", "metaphor": "One dot per person. Highlighted dots drift forward one at a time to the beat, so the number is felt, not read."}}, {"id": "story", "label": "Mine came from a napkin sketch in a coffee shop", "type": "proof", "time": "0:03.5–0:07.5", "function": "Proof / story", "emotion": "warmth", "visual": "Top-down close-up: pen drawing on a real napkin, coffee cup edge in frame, hand entering from the right."}, {"id": "visual_napkin", "label": "The napkin is the hero object", "type": "visual", "time": "0:03.5–0:19", "function": "Visual motif", "emotion": "honesty", "visual": "One real napkin appears in every scene, in the same light, and is reused for the CTA — a single object holding the whole 19 seconds together."}, {"id": "example_logo", "label": "I drew the logo right in front of her", "type": "example", "time": "0:07.5–0:10.5", "function": "Proof / detail", "emotion": "tension then satisfaction", "visual": "Same shot, tighter: the pen completes the mark; a second pair of hands slides the napkin closer."}, {"id": "stat_paid", "label": "She paid me before I got home", "type": "stat", "time": "0:10.5–0:13.5", "function": "Payoff", "emotion": "relief", "visual": "Payment notification overlay hitting a black frame the instant the line starts.", "stat": {"display": "compare", "values": [{"label": "3 weeks polishing", "value": 21}, {"label": "40 min drawing", "value": 1, "accent": "#7c3aed"}], "caption": "the effort people expect vs. the effort that works", "metaphor": "Two bars only. The tall one is grey and unlabelled, the short one is accent — the eye lands on the winner without reading a number."}}, {"id": "objection", "label": "Stop waiting to look professional", "type": "objection", "time": "0:13.5–0:16", "function": "Transformation / objection handled", "emotion": "confrontation", "visual": "Caption takes the whole frame. Cut the music dead for one beat before it lands."}, {"id": "cta", "label": "Start showing people you can solve their problem", "type": "cta", "time": "0:16–0:19", "function": "Call to action / payoff", "emotion": "resolve", "visual": "Return to the napkin, slow push-in; captions land one phrase per beat and hold 1.5s past the voiceover."}, {"id": "risk_stock", "label": "Stock-footage hands would kill the whole argument", "type": "risk", "time": "", "function": "Production risk", "emotion": "—", "visual": "Any b-roll hands that look bought undercut 'real proof'. If filming fails, use a photo of the actual sketch instead.", "summary": "This is the one note the editor must not ignore: the moment the napkin looks stock, the message inverts."}, {"id": "note_shoot", "label": "One 10-minute phone session, hands only", "type": "note", "time": "", "function": "Production constraint", "emotion": "—", "visual": "Table by a window, natural light, phone clamped overhead. No faces, no second location, no new purchases."}, {"id": "contrast_polish", "label": "Polish takes weeks; proof takes one conversation", "type": "emotion", "time": "0:03.5–0:13.5", "function": "Emotional contrast", "emotion": "anxiety → relief", "visual": "The edit stays slow and untouched during the story, then snaps tight at 'She paid me' — the contrast is carried by pacing, not by effects."}], "edges": [{"from": "core", "to": "hook", "rel": "flows", "label": "opens with"}, {"from": "core", "to": "story", "rel": "proves", "label": "proved by"}, {"from": "core", "to": "objection", "rel": "flows", "label": "then"}, {"from": "core", "to": "cta", "rel": "flows", "label": "resolves in"}, {"from": "hook", "to": "claim_portfolio", "rel": "expands", "label": "because"}, {"from": "claim_portfolio", "to": "stat_ten", "rel": "proves", "label": "backed by"}, {"from": "story", "to": "example_logo", "rel": "expands", "label": "detail"}, {"from": "story", "to": "visual_napkin", "rel": "inspires", "label": "becomes"}, {"from": "example_logo", "to": "stat_paid", "rel": "flows", "label": "pays off"}, {"from": "stat_ten", "to": "stat_paid", "rel": "contrasts", "label": "abstract vs lived"}, {"from": "contrast_polish", "to": "story", "rel": "supports", "label": "colors"}, {"from": "contrast_polish", "to": "stat_paid", "rel": "supports", "label": "peaks at"}, {"from": "objection", "to": "cta", "rel": "flows", "label": "turn"}, {"from": "cta", "to": "visual_napkin", "rel": "callback", "label": "returns to"}, {"from": "cta", "to": "hook", "rel": "callback", "label": "answers"}, {"from": "risk_stock", "to": "visual_napkin", "rel": "blocks", "label": "threatens"}, {"from": "note_shoot", "to": "story", "rel": "supports", "label": "enables"}, {"from": "risk_stock", "to": "note_shoot", "rel": "supports", "label": "avoided by"}]}</script>
+<script id="board-data" type="application/json">{"title": "The Napkin Proof", "subtitle": "Instagram Reels · 9:16 · 0:19 — previsualization board", "theme": "light", "source": {"platform": "Instagram Reels", "aspect": "9:16", "duration": "0:19", "estimated": true}, "nodes": [{"id": "core", "label": "Proof of skill beats presentation polish", "type": "core", "time": "0:00–0:19", "function": "Core message", "emotion": "relief", "visual": "One continuous tabletop moment — pen, napkin, coffee ring, no cutaways to faces.", "summary": "Every node in this board either supports this sentence or gets cut. The edit is 19 seconds long, so nothing decorative survives."}, {"id": "hook", "label": "Your first client doesn't come from a perfect portfolio", "type": "hook", "time": "0:00–0:03.5", "function": "Hook / objection broken", "emotion": "provocation", "visual": "Bold caption on a dark frame; the word 'perfect' gets struck through the moment it is spoken."}, {"id": "claim_portfolio", "label": "A portfolio is a presentation, not a proof", "type": "claim", "time": "0:01–0:03.5", "function": "Claim", "emotion": "clarity", "visual": "Caption only. No portfolio mockups — mocking one up makes the video look like the thing it is arguing against."}, {"id": "story", "label": "Mine came from a napkin sketch in a coffee shop", "type": "proof", "time": "0:03.5–0:07.5", "function": "Proof / story", "emotion": "warmth", "visual": "Top-down close-up: pen drawing on a real napkin, coffee cup edge in frame, hand entering from the right."}, {"id": "visual_napkin", "label": "The napkin is the hero object", "type": "visual", "time": "0:03.5–0:19", "function": "Visual motif", "emotion": "honesty", "visual": "One real napkin appears in every scene, in the same light, and is reused for the CTA — a single object holding the whole 19 seconds together."}, {"id": "example_logo", "label": "I drew the logo right in front of her", "type": "example", "time": "0:07.5–0:10.5", "function": "Proof / detail", "emotion": "tension then satisfaction", "visual": "Same shot, tighter: the pen completes the mark; a second pair of hands slides the napkin closer."}, {"id": "objection", "label": "Stop waiting to look professional", "type": "objection", "time": "0:13.5–0:16", "function": "Transformation / objection handled", "emotion": "confrontation", "visual": "Caption takes the whole frame. Cut the music dead for one beat before it lands."}, {"id": "cta", "label": "Start showing people you can solve their problem", "type": "cta", "time": "0:16–0:19", "function": "Call to action / payoff", "emotion": "resolve", "visual": "Return to the napkin, slow push-in; captions land one phrase per beat and hold 1.5s past the voiceover."}, {"id": "risk_stock", "label": "Stock-footage hands would kill the whole argument", "type": "risk", "time": "", "function": "Production risk", "emotion": "—", "visual": "Any b-roll hands that look bought undercut 'real proof'. If filming fails, use a photo of the actual sketch instead.", "summary": "This is the one note the editor must not ignore: the moment the napkin looks stock, the message inverts."}, {"id": "note_shoot", "label": "One 10-minute phone session, hands only", "type": "note", "time": "", "function": "Production constraint", "emotion": "—", "visual": "Table by a window, natural light, phone clamped overhead. No faces, no second location, no new purchases."}, {"id": "contrast_polish", "label": "Polish takes weeks; proof takes one conversation", "type": "emotion", "time": "0:03.5–0:13.5", "function": "Emotional contrast", "emotion": "anxiety → relief", "visual": "The edit stays slow and untouched during the story, then snaps tight at 'She paid me' — the contrast is carried by pacing, not by effects."}], "edges": [{"from": "core", "to": "hook", "rel": "flows", "label": "opens with"}, {"from": "core", "to": "story", "rel": "proves", "label": "proved by"}, {"from": "core", "to": "objection", "rel": "flows", "label": "then"}, {"from": "core", "to": "cta", "rel": "flows", "label": "resolves in"}, {"from": "hook", "to": "claim_portfolio", "rel": "expands", "label": "because"}, {"from": "story", "to": "example_logo", "rel": "expands", "label": "detail"}, {"from": "story", "to": "visual_napkin", "rel": "inspires", "label": "becomes"}, {"from": "contrast_polish", "to": "story", "rel": "supports", "label": "colors"}, {"from": "objection", "to": "cta", "rel": "flows", "label": "turn"}, {"from": "cta", "to": "visual_napkin", "rel": "callback", "label": "returns to"}, {"from": "cta", "to": "hook", "rel": "callback", "label": "answers"}, {"from": "risk_stock", "to": "visual_napkin", "rel": "blocks", "label": "threatens"}, {"from": "note_shoot", "to": "story", "rel": "supports", "label": "enables"}, {"from": "risk_stock", "to": "note_shoot", "rel": "supports", "label": "avoided by"}, {"from": "claim_portfolio", "to": "story", "rel": "proves", "label": "beaten by"}, {"from": "contrast_polish", "to": "objection", "rel": "supports", "label": "sharpens"}]}</script>
 <script>
 (function(){
   "use strict";
@@ -521,6 +535,7 @@
         visual: n.visual || n.visualIdea || "",
         summary: n.summary || n.context || n.note || "",
         anchor: typeof n.anchor === "string" ? n.anchor : "",
+        form: typeof n.form === "string" ? n.form : "",
         stat: (n.stat && typeof n.stat === "object") ? n.stat : null,
         cluster: n.cluster || "",
         x: Number.isFinite(n.x) ? +n.x : null,
@@ -775,8 +790,18 @@
         card.appendChild(meta);
       }
 
+      if (n.form){
+        var formBox = el("div", "node-form");
+        formBox.appendChild(el("b", "", "Form"));
+        formBox.appendChild(document.createTextNode(n.form));
+        card.appendChild(formBox);
+      }
+
       if (n.stat){
-        card.appendChild(vizFor(n.stat, false));
+        var vizWrap = el("div", "node-viz");
+        vizWrap.appendChild(el("div", "schematic-tag", "Schematic \u2014 not the finished look"));
+        vizWrap.appendChild(vizFor(n.stat, false));
+        card.appendChild(vizWrap);
       }
 
       if (n.visual){
@@ -1039,6 +1064,13 @@
 
     var kv = el("dl", "kv");
     if (n.fn){ kv.appendChild(el("dt", "", "Function")); kv.appendChild(el("dd", "", n.fn)); }
+    if (n.form){
+      kv.appendChild(el("dt", "", "Form"));
+      var formDd = el("dd", "", n.form);
+      formDd.style.fontWeight = "600";
+      formDd.style.color = "var(--ink)";
+      kv.appendChild(formDd);
+    }
     if (n.anchor){
       kv.appendChild(el("dt", "", "Anchor"));
       var anchorDd = el("dd", "", n.anchor);
@@ -1072,7 +1104,7 @@
     if (n.stat){
       var box = el("div", "insp-viz");
       box.appendChild(vizFor(n.stat, true));
-      inspectorBody.appendChild(block("Metaphor graphic", box));
+      inspectorBody.appendChild(block("Schematic (optional)", box));
     }
 
     var outgoing = edges.filter(function(e){ return e.from === n.id; });
@@ -1301,7 +1333,7 @@
 
     nodes.forEach(function(n){
       var hidden = !!hiddenTypes[n.type];
-      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary + " " + n.anchor).toLowerCase().indexOf(q) !== -1;
+      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary + " " + n.anchor + " " + n.form).toLowerCase().indexOf(q) !== -1;
       if (q && hit) anyMatch = true;
       var dim = (q && !hit);
       n.hidden = hidden;
@@ -1401,6 +1433,7 @@
           id: n.id, label: n.label, type: n.type, time: n.time, timeEnd: n.timeEnd,
           function: n.fn, emotion: n.emotion, visual: n.visual, summary: n.summary,
           anchor: n.anchor || undefined,
+          form: n.form || undefined,
           stat: n.stat, x: Math.round(n.x), y: Math.round(n.y)
         };
       }),

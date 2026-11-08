@@ -78,7 +78,7 @@ The skill writes that graph to JSON and builds a real board — one self-contain
 - drag nodes, pan and zoom an infinite canvas; click a node to inspect its function, emotion and visual idea
 - connections are colored by relation, so the argument's shape is visible at a glance
 - the timecode track under the canvas puts every beat on the timeline
-- **numbers become shapes, not numerals** — and the shape is chosen from this script, not from a template. A script that counts people can use 100 dots with 10 filled; one that names jars counts jars; one that names mornings shows mornings. Captions, accent color and the reveal timing live in the node.
+- **numbers get a body, not a chart.** Every `stat` node must name the physical thing on screen that carries the figure — a page of tallies, an invoice, seven blank cells, the wall of paintings the sentence describes. Charts are an optional schematic preview, never the default. A number with no body in the script stays as type or as speech; the builder rejects a `stat` node that has only a chart, and `--script` flags any figure the transcript never stated.
 - **abstract lines never borrow imagery.** A line like "consistency compounds" has no picture in it. The node carries an `anchor` quoted from the script — the 6am alarm the speaker actually mentions — and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays visibly **unresolved** instead of being handed a lightbulb or a seedling.
 
 ```bash

@@ -163,6 +163,20 @@
   }
   .node-visual b{font-weight:600;color:var(--ink);font-size:10px;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:2px}
   .node-viz{margin-top:7px}
+  .node-form{
+    margin-top:7px;padding:6px 8px;border-radius:6px;background:var(--chip);
+    font-size:11px;line-height:1.4;color:var(--ink-soft);
+  }
+  .node-form b{
+    display:block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:2px;
+  }
+  .node.viz-only .node-form{background:#b4530914;border:1px dashed #b4530955}
+  body[data-theme="dark"] .node.viz-only .node-form{background:#f59e0b14;border-color:#f59e0b55}
+  .schematic-tag{
+    font-size:8.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-faint);margin:0 0 3px;
+  }
   .node.is-unanchored{border-style:dashed;border-left-style:solid;box-shadow:0 0 0 1px #f59e0b66,var(--shadow)}
   .node-anchor{
     margin-top:7px;padding:5px 7px;border-radius:6px;background:var(--chip);
@@ -521,6 +535,7 @@
         visual: n.visual || n.visualIdea || "",
         summary: n.summary || n.context || n.note || "",
         anchor: typeof n.anchor === "string" ? n.anchor : "",
+        form: typeof n.form === "string" ? n.form : "",
         stat: (n.stat && typeof n.stat === "object") ? n.stat : null,
         cluster: n.cluster || "",
         x: Number.isFinite(n.x) ? +n.x : null,
@@ -775,8 +790,18 @@
         card.appendChild(meta);
       }
 
+      if (n.form){
+        var formBox = el("div", "node-form");
+        formBox.appendChild(el("b", "", "Form"));
+        formBox.appendChild(document.createTextNode(n.form));
+        card.appendChild(formBox);
+      }
+
       if (n.stat){
-        card.appendChild(vizFor(n.stat, false));
+        var vizWrap = el("div", "node-viz");
+        vizWrap.appendChild(el("div", "schematic-tag", "Schematic \u2014 not the finished look"));
+        vizWrap.appendChild(vizFor(n.stat, false));
+        card.appendChild(vizWrap);
       }
 
       if (n.visual){
@@ -1039,6 +1064,13 @@
 
     var kv = el("dl", "kv");
     if (n.fn){ kv.appendChild(el("dt", "", "Function")); kv.appendChild(el("dd", "", n.fn)); }
+    if (n.form){
+      kv.appendChild(el("dt", "", "Form"));
+      var formDd = el("dd", "", n.form);
+      formDd.style.fontWeight = "600";
+      formDd.style.color = "var(--ink)";
+      kv.appendChild(formDd);
+    }
     if (n.anchor){
       kv.appendChild(el("dt", "", "Anchor"));
       var anchorDd = el("dd", "", n.anchor);
@@ -1072,7 +1104,7 @@
     if (n.stat){
       var box = el("div", "insp-viz");
       box.appendChild(vizFor(n.stat, true));
-      inspectorBody.appendChild(block("Metaphor graphic", box));
+      inspectorBody.appendChild(block("Schematic (optional)", box));
     }
 
     var outgoing = edges.filter(function(e){ return e.from === n.id; });
@@ -1301,7 +1333,7 @@
 
     nodes.forEach(function(n){
       var hidden = !!hiddenTypes[n.type];
-      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary + " " + n.anchor).toLowerCase().indexOf(q) !== -1;
+      var hit = !q || (n.label + " " + n.fn + " " + n.emotion + " " + n.visual + " " + n.summary + " " + n.anchor + " " + n.form).toLowerCase().indexOf(q) !== -1;
       if (q && hit) anyMatch = true;
       var dim = (q && !hit);
       n.hidden = hidden;
@@ -1401,6 +1433,7 @@
           id: n.id, label: n.label, type: n.type, time: n.time, timeEnd: n.timeEnd,
           function: n.fn, emotion: n.emotion, visual: n.visual, summary: n.summary,
           anchor: n.anchor || undefined,
+          form: n.form || undefined,
           stat: n.stat, x: Math.round(n.x), y: Math.round(n.y)
         };
       }),

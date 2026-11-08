@@ -130,12 +130,12 @@ python3 scripts/build_mindmap.py previz/mindmap.json --check
 python3 scripts/build_mindmap.py previz/mindmap.json -o previz/mindmap.html
 ```
 
-The output is a single self-contained HTML file — nodes drag, the canvas pans and zooms, connections are drawn as curves, and numbers render as their metaphor graphic (`10 in 100` becomes 100 dots with 10 filled). It has no dependencies and makes no network requests.
+The output is a single self-contained HTML file — nodes drag, the canvas pans and zooms, connections are drawn as curves, and each number shows the body that carries it (`form`), with an optional schematic preview where one genuinely helps. It has no dependencies and makes no network requests.
 
 Node types: `core`, `hook`, `claim`, `proof`, `stat`, `example`, `emotion`, `visual`, `objection`, `cta`, `risk`, `note`, `abstract`.
 Relations: `supports`, `proves`, `expands`, `contrasts`, `callback`, `blocks`, `flows`, `inspires`.
 
-The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must be given a shape an editor can build in twenty minutes — a shape drawn from the script's own world, not a chart template.
+The board is reasoning, not decoration: every node must change an edit decision, and every number in the script must be given a **body** — the physical thing on screen that carries it, drawn from the script's own world. A chart is what you reach for when no such thing exists, never the default. Dot grids in particular are one narrow option, not the house style: if a number becomes a dot grid because it is a number, it has not been visualised yet.
 
 Abstract lines are the test case. A line like "consistency compounds" has no image in it, and the fix is never a lightbulb or a seedling: the node carries an `anchor` quoted from the script (the 6am alarm the speaker mentions, the receipt, the napkin), and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays **unresolved** on the board and section 4 says which option was taken — an image-free beat, the line set in type, or one question to the writer. The builder can check the claim:
 

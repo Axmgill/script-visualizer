@@ -21,13 +21,12 @@ Proof of skill beats presentation polish — your first client wants a solved pr
 
 ### Mind map (node board)
 
-Built as a real board — `examples/mindmap/napkin-proof.html`, generated from `examples/mindmap/napkin-proof.json` — 13 nodes, 18 connections.
+Built as a real board — `examples/mindmap/napkin-proof.html`, generated from `examples/mindmap/napkin-proof.json` — 11 nodes, 16 connections.
 
 ```
 core: Proof of skill beats presentation polish
 ├─ hook: "Your first client doesn't come from a perfect portfolio"     0:00–0:03.5
 │  ├─ claim: a portfolio is a presentation, not a proof
-│  └─ stat: 10 in 100 first clients  →  100 dots, 10 filled
 ├─ proof: "Mine came from a napkin sketch"                             0:03.5–0:07.5
 │  ├─ example: "I drew the logo right in front of her"
 │  └─ visual: the napkin is the hero object
@@ -38,7 +37,7 @@ core: Proof of skill beats presentation polish
 └─ risk: stock hands would kill the argument  ← blocks ← note: one 10-min phone session
 ```
 
-Two numbers got shapes instead of numerals: 10-in-100 as a unit chart (one dot = one person, because the script counts people), and the effort comparison as two plain bars. The napkin shows up in four nodes — that is the board telling us which object has to carry the edit.
+This transcript contains no numbers at all, so the board has no `stat` nodes — the correct outcome. Nothing was charted, and nothing was invented to have something to chart. The napkin shows up in four nodes, which is the board telling us which object has to carry the edit.
 
 The core claim is abstract ("proof beats polish"), but the script supplies its own anchor — the napkin sketch drawn in front of a paying client — so no imported metaphor is needed. A board for a script with no such anchor would leave that node unresolved rather than reach for a lightbulb; the abstract-lines demo is at `examples/mindmap/abstract-to-anchor.html`.
 

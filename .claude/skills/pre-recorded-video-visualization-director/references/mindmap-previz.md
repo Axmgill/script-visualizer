@@ -44,7 +44,7 @@ If the script has no numbers, do not invent any. A board with no `stat` nodes is
 | `hook` | The opening line or first visual promise | "Your first client doesn't come from a perfect portfolio" |
 | `claim` | An assertion the viewer must accept | "A portfolio is a presentation, not a proof" |
 | `proof` | Evidence, story, or demonstration that carries a claim | "Mine came from a napkin sketch" |
-| `stat` | A number, ratio, percentage, price, or duration from the script | "10 in 100 first clients…" |
+| `stat` | A number, ratio, price, or duration from the script — `form` names the body that carries it | "Seven days without a single sign" |
 | `example` | A specific concrete instance inside a proof | "I drew the logo in front of her" |
 | `emotion` | The feeling the beat must produce, or a contrast between feelings | "Polish takes weeks; proof takes one conversation" |
 | `visual` | A motif, object, or device that recurs visually | "The napkin is the hero object" |
@@ -71,36 +71,78 @@ Every node except a deliberate island needs at least one connection. Prefer a fe
 
 `contrasts`, `callback`, and `blocks` are the three that earn their keep: they show the editor where the tension and the loops are. Use them only when the script really does one of those things.
 
-### 4. Turn every number into a shape — taken from this script
+### 4. Give every number a body from this script
 
-Never leave a statistic as a numeral. Give it a physical form the viewer can count, feel, or compare. But the form is not a template: **choose the one this script justifies.** If the script names jars, count jars. If it names receipts, show receipts. If it names mornings, show mornings.
+**A number is not a graphic.** Before anything is drawn, find out what the number is *of*, and let
+the script say what that looks like.
 
-The displays below are a vocabulary, not a default. Dots are one option among many — use them when the script gives a countable mass of identical, undifferentiated things ("a hundred small decisions", "10 of 100 people"), and use something with more of the script's own texture when it gives you one.
+The failure mode this section exists to prevent: see a number → reach for a dot grid. A dot grid is
+one legitimate body for one narrow kind of fact — a counted population of identical things. Everywhere
+else it is decoration, and it tells the viewer the editor had a template instead of a point of view.
 
-| `display` | A reasonable choice when | Fields |
-|-----------|--------------------------|--------|
-| `dotgrid` | The script counts identical units: people, decisions, days, messages | `total`, `filled`, `caption`, `accent` |
-| `bars` | The script compares amounts across named categories or points in time | `values`, `labels`, `highlight`, `caption` |
-| `proportion` | The script states a share of a whole and the whole has no other identity | `percent`, `caption` |
-| `fraction` | A bare ratio, said as a fraction | `part`, `whole`, `caption` |
-| `compare` | Two or three magnitudes set against each other | `values` as `{label, value, accent}` |
-| `steps` | The script describes a sequence or progression | `steps`, `active` |
-| `counter` | A single number with no natural unit, where scale is the point | `value`, `prefix`, `suffix`, `caption` |
+**Dot grids are not the house style.** Neither are bars, rings, or "data-viz" styling. If a graphic is
+reached for because the line contains a number, the number has not been given a body yet.
 
-Choosing well:
+#### The protocol
 
-- **Look for the unit before the chart.** A number is almost always a number of *something* the script named. Render that something.
-- **Real objects beat chart shapes** when the script has them: three of twelve jars, one closed door out of five, a stack of unpaid invoices, a calendar with two marked days.
-- **Keep the scale honest.** If 10 of 100 is highlighted, the other 90 stay visible. Never crop the remainder to make the point louder.
-- **Highlight only what the script stresses.** One accent colour, on the part the voiceover names.
-- **Reveal on the spoken beat.** Note in `metaphor` how the shape builds — units arriving, bars growing, the odd one landing early.
-- **Above ~400 units, change shape.** A 10,000-dot grid is noise; a bar or a proportion carries the same fact.
-- **If under ~3% is highlighted**, a `counter` reads better than an almost-empty grid.
-- **Never fake a dashboard.** No invented axes, no 3D pies, no gauges, no growth arrows the script never claimed.
-- **Label the unit** whenever it is not obvious: "1 dot = 1 person", "1 receipt = 1 client".
-- **State the source when the script states it.** If the script gave no source, do not imply one.
+1. **Quote the number and its unit as spoken.** "Ten out of a hundred", "three weeks", "two thousand
+   years", "eight days".
+2. **Name what is being counted, compared, or elapsed.** Write the noun: clients, weeks, years, days.
+3. **Find that noun's body in the script.** An object it names, a place, a time of day, a document, a
+   body part, an action, a piece of furniture. This is the same search as the anchor search in
+   section 5.
+4. **Choose the carrier and write it in `form`.** The carrier is the physical thing on screen that
+   holds the number. Required on every `stat` node.
+5. **Only now decide whether a schematic helps.** Most numbers do not need one. `stat.display` is
+   optional, and it is a schematic *preview* for the board — never the finished look, and never a
+   substitute for step 3.
 
-If the script names no physical thing at all — no unit, no object, no place — the number is not a stats problem, it is an abstraction problem. Go to the next section rather than defaulting to dots.
+| What the script said | What is being counted | Carrier (`form`) | Schematic? |
+|---|---|---|---|
+| "a hundred small decisions nobody claps for" | decisions a hand made | a sheet of a hundred pencil tallies | no — the tallies are countable on camera |
+| "three weeks polishing vs forty minutes drawing" | elapsed time | two calendars side by side, one crossed out | no |
+| "two thousand years of church history" | centuries of retelling | the wall of paintings the sentence describes | `counter` only as a timestamp |
+| "seven days without a single sign" | empty days | seven blank cells on a page, nothing written in them | `dotgrid` 7/0 — the one fair use |
+| "eight days later" | a sequence | the same page, one entry added | `steps` 8, eighth active |
+| "two thousand dollars" | money | the invoice or the stack of notes | no |
+| "one in three people" | people | three chairs in a room, one occupied | no |
+
+#### Rules
+
+- **The carrier must be in the script.** If it is not, the number is not a visual problem yet — it is
+  an abstraction problem. Go to section 5 and do not invent a chart instead.
+- **Real objects beat schematic shapes** whenever the script gives you one. Counting jars on a bench
+  is better television than counting dots on white.
+- **If the number is the point and has no body**, say it in type. A naked numeral held on screen is
+  honest; a chart that dresses it up is not.
+- **Keep the scale honest.** If 10 of 100 is highlighted, the other 90 stay visible. Never crop the
+  remainder to make the point louder.
+- **Reveal on the spoken beat.** Put the build in `visual`: marks arriving, days blanking out, the
+  page being set down.
+- **Never fake a dashboard.** No invented axes, no 3D pies, no gauges, no growth arrows the script
+  never claimed.
+- **Never invent a number.** Every figure on the board must appear in the transcript. The builder
+  checks this against `--script`.
+- **Vary the bodies.** If two numbers in one script want the same carrier, check whether one of them
+  actually needs a visual at all.
+
+#### Optional schematics
+
+Available `display` values, for the rare case where a schematic communicates faster than anything
+filmable. Each one is a fallback, not a menu to work down:
+
+| `display` | Only when | Fields |
+|---|---|---|
+| `dotgrid` | a counted population of identical things, and nothing more textured is available | `total`, `filled`, `caption` |
+| `steps` | a sequence the script counts in order | `steps`, `active`, `caption` |
+| `bars` | several named quantities the script explicitly compares | `values`, `labels`, `highlight` |
+| `proportion` | a share of a whole, when the whole has no other identity | `percent`, `caption` |
+| `fraction` | a ratio said as a fraction | `part`, `whole` |
+| `compare` | two magnitudes the script sets against each other | `values` |
+| `counter` | a single number where scale is the point and nothing else can carry it | `value`, `prefix`, `suffix` |
+
+If a board ends up with several numbers and every one of them is a schematic, that is the failure
+this phase is meant to catch — say so and rework them.
 
 ### 5. When the script has no picture
 
@@ -178,18 +220,21 @@ Minimal graph:
     { "id": "core", "label": "Proof of skill beats presentation polish", "type": "core",
       "time": "0:00–0:19", "function": "Core message", "emotion": "relief",
       "visual": "One continuous tabletop moment", "summary": "What every node must serve." },
-    { "id": "stat_ten", "label": "10 in 100 first clients trace back to a polished portfolio", "type": "stat",
-      "time": "0:02–0:04", "function": "Data point", "emotion": "surprise",
-      "stat": { "display": "dotgrid", "total": 100, "filled": 10, "caption": "1 dot = 1 person",
-                "metaphor": "Dots arrive in a wave; the 10 fill one at a time on the line." } }
+    { "id": "week", "label": "Seven days without a single sign", "type": "stat",
+      "time": "1:04–1:14", "function": "Data point", "emotion": "silence",
+      "form": "seven blank cells on the page, nothing written in them",
+      "stat": { "display": "dotgrid", "total": 7, "filled": 0, "caption": "seven days, no sign" } }
   ],
   "edges": [
-    { "from": "core", "to": "stat_ten", "rel": "supports", "label": "backed by" }
+    { "from": "core", "to": "week", "rel": "supports", "label": "measured by" }
   ]
 }
 ```
 
-A complete, realistic board — every node type, cross-links, a dot grid and a comparison chart — lives at `examples/mindmap/napkin-proof.json`, with its built board at `examples/mindmap/napkin-proof.html`.
+A complete, realistic board lives at `examples/mindmap/napkin-proof.json` (with its built board
+alongside). It deliberately contains **no `stat` nodes**: that transcript never states a number, so
+there is nothing to carry one. A board with no numbers is a correct board — inventing a figure to
+have something to chart is not.
 
 If Python is unavailable, copy `assets/mindmap-board.template.html` and replace the `__BOARD_DATA_JSON__` marker inside `<script id="board-data">` with the graph JSON by hand.
 
@@ -197,7 +242,9 @@ If Python is unavailable, copy `assets/mindmap-board.template.html` and replace 
 
 - exactly one `core` node, and it is the actual argument
 - no floating nodes unless the isolation is intentional (`risk`, `note`)
-- every number in the script appears as a `stat` node with a shape, or is deliberately left as speech
+- every number in the script appears as a `stat` node whose `form` names a real carrier, or is deliberately
+  left as speech or as type; a schematic is present only where it genuinely helps
+- no `stat` node introduces a figure that is not in the transcript
 - every `abstract` node either quotes an anchor that appears in the script, or is left unresolved on
   purpose — and unresolved ones are called out in section 4, not quietly filled later
 - run the builder with `--script transcript.txt` when you have the text: it flags anchors that do not
@@ -217,8 +264,8 @@ PREVISUALIZATION MIND MAP
 - Argument shape: (how the branches are arranged — linear, two-sided, story-with-callback…)
 - Main branches:
   - Branch name: node ids → what it holds
-- Data points and their shapes:
-  | Spoken number | Node | Shape | Build note |
+- Numbers and the body that carries each one:
+  | Spoken number | Node | What is counted | Carrier (form) | Schematic, if any |
   |---|---|---|---|
 - Abstract lines and their anchors:
   | Spoken line | Node | Anchor from the script | Treatment |
@@ -237,7 +284,7 @@ core: <core message>
 │  └─ claim: <line>
 ├─ proof: <line>
 │  ├─ example: <line>
-│  └─ stat: <number> → <shape this script justifies, e.g. 100 dots if it counts units>
+│  └─ stat: <number> → <the body that carries it: an object / page / place>  (schematic optional)
 ├─ abstract: <line>
 │  └─ anchor: "<words already in the script>"     ⚠ or "unresolved — no picture yet"
 └─ cta: <line>  ↩ callback → hook
@@ -249,6 +296,8 @@ The text sketch matters: some readers never open the HTML. Keep it to one screen
 
 - The board is reasoning, not decoration. If a node does not change an edit decision, cut it.
 - Never fabricate a statistic, source, or quote to fill a `stat` node.
+- A chart is not a visual idea. If the only thing on screen is a dot grid or bars, the number has not
+  been given a body — it has been given a template.
 - Never import imagery, objects, or metaphor vocabulary from outside the script's world. If it is not
   in the script, it is not available — not a lightbulb, not gears, not a seedling, not a stock road.
 - An unresolved abstract line stays unresolved in the output. Later phases must not quietly resolve it
