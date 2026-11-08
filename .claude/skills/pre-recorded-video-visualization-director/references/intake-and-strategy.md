@@ -1,5 +1,8 @@
 # Phases 1–3: Intake and Strategy
 
+> **Reads from Phase 0.** Every fact here comes from the script context card (`previz/context.md`).
+> Cite its IDs — `F1`, `C2`, `B4` — instead of restating the fact. Interpret a fact; never add one.
+
 Read this file before producing output sections 1–3. Follow the output templates exactly. Phase 4 (the previsualization mind map) is in `references/mindmap-previz.md`.
 
 ## Input schema

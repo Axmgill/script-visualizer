@@ -1,5 +1,8 @@
 # Phase 4: Previsualization Mind Map (Node Board)
 
+> **Reads from Phase 0.** Every fact here comes from the script context card (`previz/context.md`).
+> Cite its IDs — `F1`, `C2`, `B4` — instead of restating the fact. Interpret a fact; never add one.
+
 Read this file before producing output section 4.
 
 ## Why this phase exists
@@ -44,7 +47,7 @@ If the script has no numbers, do not invent any. A board with no `stat` nodes is
 | `hook` | The opening line or first visual promise | "Your first client doesn't come from a perfect portfolio" |
 | `claim` | An assertion the viewer must accept | "A portfolio is a presentation, not a proof" |
 | `proof` | Evidence, story, or demonstration that carries a claim | "Mine came from a napkin sketch" |
-| `stat` | A number, ratio, price, or duration from the script — `form` names the body that carries it | "Seven days without a single sign" |
+| `stat` | A number, ratio, price, or duration from the script — carries one of the three carriers from the Phase 0 ledger | "Seven days without a single sign" |
 | `example` | A specific concrete instance inside a proof | "I drew the logo in front of her" |
 | `emotion` | The feeling the beat must produce, or a contrast between feelings | "Polish takes weeks; proof takes one conversation" |
 | `visual` | A motif, object, or device that recurs visually | "The napkin is the hero object" |
@@ -72,6 +75,10 @@ Every node except a deliberate island needs at least one connection. Prefer a fe
 `contrasts`, `callback`, and `blocks` are the three that earn their keep: they show the editor where the tension and the loops are. Use them only when the script really does one of those things.
 
 ### 4. Give every number a carrier — decided by its sentence
+
+**Where this happens:** in the Phase 0 figures ledger (`references/script-context.md`), from the
+words alone, before any visual thinking. This section supplies the questions. The ledger is where
+they are answered and written down. The board records the answer; it does not decide it.
 
 **A number on screen sits on something.** That something is a carrier, and there are three kinds:
 
@@ -289,9 +296,9 @@ PREVISUALIZATION MIND MAP
 - Argument shape: (how the branches are arranged — linear, two-sided, story-with-callback…)
 - Main branches:
   - Branch name: node ids → what it holds
-- Numbers and the body that carries each one:
-  | Spoken number | Node | What is counted | Carrier (form) | Schematic, if any |
-  |---|---|---|---|
+- Numbers and their carriers, as decided in the Phase 0 ledger:
+  | Ledger ID | Spoken number | Node | Carrier (object / chart / type) | The one-line reason | Schematic, if any |
+  |---|---|---|---|---|---|
 - Abstract lines and their anchors:
   | Spoken line | Node | Anchor from the script | Treatment |
   |---|---|---|---|
@@ -309,7 +316,7 @@ core: <core message>
 │  └─ claim: <line>
 ├─ proof: <line>
 │  ├─ example: <line>
-│  └─ stat: <number> → <the body that carries it: an object / page / place>  (schematic optional)
+│  └─ stat: <number> → <carrier: an object / a chart with its reason / type>  (schematic optional)
 ├─ abstract: <line>
 │  └─ anchor: "<words already in the script>"     ⚠ or "unresolved — no picture yet"
 └─ cta: <line>  ↩ callback → hook
@@ -321,8 +328,11 @@ The text sketch matters: some readers never open the HTML. Keep it to one screen
 
 - The board is reasoning, not decoration. If a node does not change an edit decision, cut it.
 - Never fabricate a statistic, source, or quote to fill a `stat` node.
-- A chart is not a visual idea. If the only thing on screen is a dot grid or bars, the number has not
-  been given a body — it has been given a template.
+- A chart can be the visual idea. What fails is a *shape nobody decided on*: the same graphic, for the
+  same kind of fact, in every video. If you cannot say in one clause what relationship the sentence
+  asserts, the chart is not earned — and if you can say it, do not be shy about drawing it.
+- The carrier was decided in Phase 0, before anyone pictured the film. The board records that decision;
+  it does not make it. If the board wants a different answer, change the ledger first, then the board.
 - Never import imagery, objects, or metaphor vocabulary from outside the script's world. If it is not
   in the script, it is not available — not a lightbulb, not gears, not a seedling, not a stock road.
 - An unresolved abstract line stays unresolved in the output. Later phases must not quietly resolve it

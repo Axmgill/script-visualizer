@@ -1,5 +1,8 @@
 # Phases 10–13: Graphics, Text, Rhythm, Sound
 
+> **Reads from Phase 0.** Every fact here comes from the script context card (`previz/context.md`).
+> Cite its IDs — `F1`, `C2`, `B4` — instead of restating the fact. Interpret a fact; never add one.
+
 Read this file before producing output sections 10–13. Follow the output templates exactly. Every graphic, caption, cut, and sound event must tie back to a spoken word, phrase, or beat from the recording.
 
 ## Phase 10 — Motion Graphics Plan

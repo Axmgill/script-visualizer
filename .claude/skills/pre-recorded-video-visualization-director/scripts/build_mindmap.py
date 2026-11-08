@@ -249,6 +249,141 @@ def check_numbers(nodes: List[Dict[str, Any]], script_text: str) -> List[str]:
     return warnings
 
 
+def _norm_figure(token: str) -> str:
+    """'41,000' -> '41000', '4.0' -> '4'. Keeps comparison simple."""
+    t = token.replace(",", "").strip()
+    try:
+        v = float(t)
+    except ValueError:
+        return t.lower()
+    return f"{v:g}"
+
+
+def _figures_from_text(text: str) -> List[str]:
+    """Reuse the Phase 0 extractor so both sides read figures the same way."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from extract_context import NUMBER_WORDS, figures as extract_figures  # noqa: WPS433
+    except Exception:
+        return []
+    sents = [{"text": line, "start": 0.0}
+             for line in re.split(r"(?<=[.!?])\s+|\n", text) if line.strip()]
+    out: List[str] = []
+    for row in extract_figures(sents):
+        out.append(_norm_fig_token(row["figure"], NUMBER_WORDS))
+    return [f for f in out if f]
+
+
+def _norm_fig_token(token: str, number_words: Dict[str, float]) -> str:
+    """'forty' -> '40', 'one in ten' -> '1:10', '400' -> '400'."""
+    tok = token.strip().lower()
+    if not tok:
+        return ""
+    if " in " in tok or " out of " in tok or " per " in tok:
+        parts = re.split(r"\s+(?:in|out of|per)\s+", tok)
+        return ":".join(_norm_fig_token(p, number_words) for p in parts if p)
+    if re.fullmatch(r"\d[\d,]*(?:\.\d+)?", tok):
+        return _norm_figure(tok)
+    if tok in number_words:
+        v = number_words[tok]
+        return f"{int(v)}" if v >= 1 and float(v).is_integer() else f"{v:g}"
+    return tok
+
+
+def spoken_figures(node: Dict[str, Any]) -> List[str]:
+    """The figures a stat node states to the viewer (not its schematic internals)."""
+    out: List[str] = []
+    stat = node.get("stat") or {}
+    if isinstance(stat, dict):
+        for key in ("value", "percent", "part", "whole"):
+            v = stat.get(key)
+            if isinstance(v, (int, float)) and v != 0:
+                out.append(_norm_figure(f"{v:g}"))
+    for key in ("label", "title", "text", "figure", "value"):
+        v = node.get(key)
+        if isinstance(v, str):
+            for tok in _figures_from_text(v):
+                out.append(tok)
+            for tok in re.findall(r"\d[\d,]*(?:\.\d+)?", v):
+                out.append(_norm_figure(tok))
+    seen, unique = set(), []
+    for v in out:
+        if v and v not in seen:
+            seen.add(v)
+            unique.append(v)
+    return unique
+
+
+def ledger_figures(context_text: str) -> List[str]:
+    """Read the Phase 0 figures ledger: the '| F1 | 0:00 | 41 boxes | ... |' rows."""
+    section = context_text
+    for start_marker in ("### 3. The figures ledger", "## 3. The figures ledger",
+                         "Figures ledger", "figures ledger"):
+        if start_marker in context_text:
+            section = context_text.split(start_marker, 1)[1]
+            break
+    section = re.split(r"\n#{2,3} ", section, maxsplit=1)[0]
+    out: List[str] = []
+    for line in section.splitlines():
+        if not re.match(r"\s*\|\s*F\d+\b", line):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 3:
+            continue
+        cell = cells[2]
+        found = _figures_from_text(cell)
+        if not found:
+            found = [_norm_figure(t) for t in re.findall(r"\d[\d,]*(?:\.\d+)?", cell)]
+        out.extend(found)
+    return out
+
+
+def check_context(nodes: List[Dict[str, Any]], context_text: str) -> List[str]:
+    """The board may interpret the context card. It may not add to it."""
+    warnings: List[str] = []
+    ledger = ledger_figures(context_text)
+    if not ledger:
+        warnings.append(
+            "the context file has no readable figures ledger (rows like '| F1 | 0:00 | 41 boxes | ... |') "
+            "\u2014 the context check cannot run"
+        )
+        return warnings
+
+    board: List[str] = []
+    for node in nodes:
+        if isinstance(node, dict) and str(node.get("type", "")).lower() == "stat":
+            for fig in spoken_figures(node):
+                board.append(fig)
+
+    def covered(fig: str, pool: List[str]) -> bool:
+        """A share '1:10' covers its own parts, and its parts cover it."""
+        if fig in pool:
+            return True
+        if ":" in fig:
+            return all(part in pool for part in fig.split(":") if part)
+        return any(fig in tok.split(":") for tok in pool if ":" in tok)
+
+    ledger_set, board_set = set(ledger), set(board)
+    for node in nodes:
+        if not isinstance(node, dict) or str(node.get("type", "")).lower() != "stat":
+            continue
+        for fig in spoken_figures(node):
+            if not covered(fig, ledger):
+                warnings.append(
+                    f"node '{normalize_id(node.get('id'))}': the figure {fig} is on the board but "
+                    "not on the Phase 0 figures ledger \u2014 a number that appears after the context "
+                    "card came from the plan, not from the script"
+                )
+    missing = [f for f in ledger if not covered(f, board)]
+    if missing:
+        warnings.append(
+            "the context ledger records figures the board never shows: "
+            + ", ".join(dict.fromkeys(missing))
+            + " \u2014 either the board is missing a beat, or the ledger has something it cannot carry"
+        )
+    return warnings
+
+
 def check_anchors(nodes: List[Dict[str, Any]], script_text: str) -> List[str]:
     warnings: List[str] = []
     words = set(re.findall(r"[a-z0-9']+", script_text.lower()))
@@ -560,6 +695,9 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
     parser.add_argument("-s", "--script", type=Path, default=None,
                         help="transcript the graph was built from; checks that every abstract "
                              "node's anchor actually comes from it")
+    parser.add_argument("--context", type=Path, default=None,
+                        help="path to the Phase 0 context card (previz/context.md): checks every "
+                             "figure on the board against the figures ledger")
     parser.add_argument("--check", action="store_true", help="validate only, write nothing")
     parser.add_argument("--strict", action="store_true", help="treat warnings as errors")
     parser.add_argument("--quiet", action="store_true", help="only print errors")
@@ -584,6 +722,15 @@ def main(argv: Sequence[str] | None = None) -> int:
                 raise ValidationError(f"script {args.script} is empty")
             warnings.extend(check_anchors(data["nodes"], script_text))
             warnings.extend(check_numbers(data["nodes"], script_text))
+
+        if args.context:
+            try:
+                context_text = args.context.read_text(encoding="utf-8", errors="replace")
+            except OSError as exc:
+                raise ValidationError(f"cannot read context {args.context}: {exc}") from exc
+            if not context_text.strip():
+                raise ValidationError(f"context {args.context} is empty")
+            warnings.extend(check_context(data["nodes"], context_text))
 
         if errors:
             print("Invalid node graph:", file=sys.stderr)
