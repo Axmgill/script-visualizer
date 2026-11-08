@@ -42,7 +42,8 @@ Input format
       "emotion": "relief",
       "visual": "One continuous real-world tabletop moment",
       "summary": "What the whole edit has to prove.",
-      "stat": null,
+      "form": "",     # type "stat" only: the physical thing on screen that carries the number
+      "stat": null,   # type "stat" only: OPTIONAL schematic preview for the board
       "x": 0, "y": 0
     }
   ],
@@ -167,6 +168,77 @@ def anchor_in_script(anchor: str, script_words: set, script_text: str) -> bool:
     return False
 
 
+ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+        "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+        "eighteen", "nineteen"]
+TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+
+def number_words(value: float) -> str:
+    """Spell a whole number the way a script might say it (up to 9,999)."""
+    n = int(value)
+    if n < 20:
+        return ONES[n]
+    if n < 100:
+        tens, ones = divmod(n, 10)
+        return TENS[tens] + (("-" + ONES[ones]) if ones else "")
+    if n < 1000:
+        hundreds, rest = divmod(n, 100)
+        return ONES[hundreds] + " hundred" + ((" and " + number_words(rest)) if rest else "")
+    if n < 10000:
+        thousands, rest = divmod(n, 1000)
+        return number_words(thousands) + " thousand" + ((" " + number_words(rest)) if rest else "")
+    return str(n)
+
+
+def number_in_script(value: float, script_text: str, digits: set) -> bool:
+    if isinstance(value, float) and not value.is_integer():
+        return str(value) in script_text
+    n = int(value)
+    if str(n) in digits:
+        return True
+    if n == 0:
+        return True
+    words = number_words(n)
+    spellings = {words}
+    if words.startswith("one "):
+        spellings.add(words[4:])          # "hundred" for "one hundred"
+        spellings.add("a " + words[4:])   # "a hundred"
+    return any(re.search(r"\b" + re.escape(w) + r"\b", script_text) for w in spellings)
+
+
+def stat_numbers(node: Dict[str, Any]) -> List[float]:
+    """Every figure a stat node puts on screen."""
+    stat = node.get("stat") or {}
+    out: List[float] = []
+    for key in ("value", "total", "filled", "percent", "part", "whole"):
+        v = stat.get(key)
+        if isinstance(v, (int, float)) and v != 0:
+            out.append(v)
+    # `values` are relative bar heights on a schematic, not spoken claims — skip them.
+    seen, unique = set(), []
+    for v in out:
+        if v not in seen:
+            seen.add(v)
+            unique.append(v)
+    return unique
+
+
+def check_numbers(nodes: List[Dict[str, Any]], script_text: str) -> List[str]:
+    warnings: List[str] = []
+    digits = set(re.findall(r"\d+(?:\.\d+)?", script_text))
+    for node in nodes:
+        if not isinstance(node, dict) or str(node.get("type", "")).lower() != "stat":
+            continue
+        for value in stat_numbers(node):
+            if not number_in_script(value, script_text.lower(), digits):
+                warnings.append(
+                    f"node '{normalize_id(node.get('id'))}': the figure {value:g} does not appear in the "
+                    "script \u2014 an invented number is the same failure as an invented anchor"
+                )
+    return warnings
+
+
 def check_anchors(nodes: List[Dict[str, Any]], script_text: str) -> List[str]:
     warnings: List[str] = []
     words = set(re.findall(r"[a-z0-9']+", script_text.lower()))
@@ -251,7 +323,7 @@ def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
                     elif total > 400:
                         warnings.append(
                             f"node '{node_id}': dotgrid total {total} exceeds 400 — "
-                            "use bars or a proportion instead"
+                            "a grid that size reads as texture; find a real carrier or say the number in type"
                         )
                     if not isinstance(filled, int):
                         warnings.append(f"node '{node_id}': dotgrid 'filled' should be an integer")
@@ -260,11 +332,24 @@ def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
                         if 0 < ratio < 0.03:
                             warnings.append(
                                 f"node '{node_id}': only {filled}/{total} dots are highlighted — "
-                                "at card size that reads as empty; consider a counter instead"
+                                "at card size that reads as empty; say the figure in type instead"
                             )
 
         if "anchor" in node and node["anchor"] is not None and not isinstance(node["anchor"], str):
             errors.append(f"node '{node_id}': 'anchor' must be a string")
+
+        if node_type == "stat":
+            form = str(node.get("form") or "").strip()
+            if not form:
+                errors.append(
+                    f"node '{node_id}': a stat node needs a 'form' \u2014 the physical thing on screen "
+                    "that carries the number (a page of tallies, an invoice, seven blank cells). "
+                    "A chart alone is not a body"
+                )
+            if node.get("stat") is not None and not isinstance(node.get("stat"), dict):
+                errors.append(f"node '{node_id}': 'stat' is an optional schematic and must be an object")
+            if node.get("form") is not None and not isinstance(node.get("form"), str):
+                errors.append(f"node '{node_id}': 'form' must be a string")
 
         if node_type == "abstract":
             anchor = str(node.get("anchor") or "").strip()
@@ -284,6 +369,24 @@ def validate(data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
         for key in ("visual", "summary", "emotion", "function"):
             if key in node and node[key] is not None and not isinstance(node[key], str):
                 errors.append(f"node '{node_id}': '{key}' must be a string")
+
+    stat_nodes = [n for n in nodes if isinstance(n, dict) and str(n.get("type", "")).lower() == "stat"]
+    displays: Dict[str, List[str]] = {}
+    for node in stat_nodes:
+        display = (node.get("stat") or {}).get("display") if isinstance(node.get("stat"), dict) else None
+        if display:
+            displays.setdefault(str(display).lower(), []).append(normalize_id(node.get("id")))
+    for display, display_ids in displays.items():
+        if len(display_ids) > 1:
+            warnings.append(
+                f"nodes {', '.join(display_ids)} all use the '{display}' schematic \u2014 two different "
+                "facts should not share one body unless the script repeats the same kind of count"
+            )
+    if len(stat_nodes) >= 2 and len(displays) and sum(len(v) for v in displays.values()) == len(stat_nodes):
+        warnings.append(
+            "every number in this board is a schematic. Charts are a fallback, not the house style: "
+            "check whether each number has a real carrier in the script (section 4 of mindmap-previz.md)"
+        )
 
     core_nodes = [n for n in nodes if isinstance(n, dict) and str(n.get("type", "")).lower() == "core"]
     if not core_nodes:
@@ -379,7 +482,7 @@ def summarize(data: Dict[str, Any]) -> str:
     lines = [
         f"{len(nodes)} nodes ({by_type})",
         f"{len(edges)} connections",
-        f"{timed} nodes with timecodes · {stats} data points with metaphor graphics",
+        f"{timed} nodes with timecodes · {stats} numbers given a carrier",
     ]
     if abstract:
         lines.append(
@@ -434,6 +537,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             if not script_text.strip():
                 raise ValidationError(f"script {args.script} is empty")
             warnings.extend(check_anchors(data["nodes"], script_text))
+            warnings.extend(check_numbers(data["nodes"], script_text))
 
         if errors:
             print("Invalid node graph:", file=sys.stderr)

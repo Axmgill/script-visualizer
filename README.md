@@ -41,7 +41,8 @@ For a single project, copy into that project's `.claude/skills/` instead. For cl
 ├── references/
 │   ├── intake-and-strategy.md            # Phases 1–3: intake, brief, narrative spine
 │   ├── mindmap-previz.md                 # Phase 4: previsualization mind map (node board)
-│   ├── visual-plan.md                    # Phases 5–9: concept, emotional arc, scenes, shots, storyboard
+│   ├── design-craft.md                   # Studio process, craft standards, critique rubric
+│   ├── visual-plan.md                    # Phases 5–9: art direction, arc, scenes, shots, storyboard
 │   ├── graphics-text-rhythm-sound.md     # Phases 10–13: graphics, captions, rhythm, sound
 │   ├── production-and-delivery.md        # Phases 14–17: assets, software notes, review, delivery
 │   ├── modules.md                        # Branding, vertical, documentary, fast-cut, AI footage
@@ -69,6 +70,19 @@ Give it a voiceover, talking-head video, screen recording, interview, podcast cl
 
 Every visual is anchored to timecodes or speech beats. Existing footage comes first; new assets are suggested only when needed, always with a fallback.
 
+## How it designs (Phase 5)
+
+It doesn't hand you a mood board and a look. It runs the process strong motion designers actually run:
+
+1. **Tension** — what the viewer believes now, and what the video must make them feel.
+2. **Named references** — 6–10 specific pieces across composition, colour, type and motion, plus one anti-reference. "Clean, modern, premium" is rejected as non-specific.
+3. **Three territories** — mutually exclusive directions, each argued as *"it looks like X because the script says Y"*, each with a named risk. Swap test: if a direction still works in another video, it was a house style.
+4. **One visual system** — grid and ratio, palette *roles* rather than a mood, a type scale with a fixed ratio, shape language, texture rules, motion grammar.
+5. **4–6 style frames** — composition, hierarchy, negative space, light, type and texture, specified precisely enough to rebuild. They must read as a series, and must include the hardest frame, not just the showcase one.
+6. **Critique** — mute, squint, stranger, delete and swap tests, scored against a rubric where *Truth* and *Idea* below 4 means rework.
+
+The standards come from how the craft is taught and practised — School of Motion's Design Kickstart, Design Bootcamp and Illustration for Motion, plus the documentary-graphics and retention work taught at AevyTV — encoded as gates and pass/fail tests, not as visual trends to copy.
+
 ## Mind map board (Phase 4)
 
 Before any shot is chosen, the script is mapped the way an editor would map it on a Miro or FigJam board: the central argument in the middle, claims, proofs, examples, motifs, risks and data points hanging off it, connected by relations like *proves*, *contrasts*, *callback* and *blocks*.
@@ -78,7 +92,7 @@ The skill writes that graph to JSON and builds a real board — one self-contain
 - drag nodes, pan and zoom an infinite canvas; click a node to inspect its function, emotion and visual idea
 - connections are colored by relation, so the argument's shape is visible at a glance
 - the timecode track under the canvas puts every beat on the timeline
-- **numbers become shapes, not numerals** — and the shape is chosen from this script, not from a template. A script that counts people can use 100 dots with 10 filled; one that names jars counts jars; one that names mornings shows mornings. Captions, accent color and the reveal timing live in the node.
+- **numbers get a body, not a chart.** Every `stat` node must name the physical thing on screen that carries the figure — a page of tallies, an invoice, seven blank cells, the wall of paintings the sentence describes. Charts are an optional schematic preview, never the default. A number with no body in the script stays as type or as speech; the builder rejects a `stat` node that has only a chart, and `--script` flags any figure the transcript never stated.
 - **abstract lines never borrow imagery.** A line like "consistency compounds" has no picture in it. The node carries an `anchor` quoted from the script — the 6am alarm the speaker actually mentions — and the visual is a treatment of that anchor. If the script contains nothing concrete, the node stays visibly **unresolved** instead of being handed a lightbulb or a seedling.
 
 ```bash

@@ -140,7 +140,40 @@ Pass / Needs Attention / Missing
 - Authenticity:
 - Platform fit:
 - Pre-recorded edit readiness:
+- Mute test:
+- Squint test:
+- Stranger test:
+- Delete test:
+- Swap test:
+- Truth (script fidelity) / 5:
+- Idea (is the concept doing work) / 5:
+- Focal clarity / 5:
+- Craft / 5:
+- Motion logic / 5:
+- Restraint / 5:
+- Series consistency / 5:
+- Execution / 5:
 ```
+
+### The design critique (do this before the checklist above)
+
+Run Phase 16 in three passes, in this order, because fixing polish before structure wastes the polish.
+
+1. **Structure (throw-away pass).** Does every beat still belong? Delete any frame whose removal costs nothing. If a whole territory collapses here, return to Phase 5 rather than defending it.
+2. **Craft pass.** One focal point per frame, one accent, two type families at most, movement with a stated reason, nothing touching the frame edge that should breathe. Compare the style frames side by side as a series: same ground, same accent, same grid.
+3. **Polish pass.** Kerning, hairline weights, optical centring, caption timing, transitions landing on phrase ends.
+
+Then apply the five tests to the finished cut:
+
+| Test | How | Failure means |
+|---|---|---|
+| Mute | Watch with sound off | The visuals are decoration, not argument |
+| Squint | View at 25% size | No focal point, or two competing for it |
+| Stranger | Show it to someone who has not read the script | They cannot state the claim back — the labels/type are too quiet |
+| Delete | Remove each graphic in turn | Anything removable was never needed |
+| Swap | Ask whether this system would carry a different script in the same niche | It is house style, not a direction — return to the territories |
+
+Score the work on the eight dimensions in `references/design-craft.md` (Truth, Idea, Focal clarity, Craft, Motion logic, Restraint, Series, Execution). **Truth or Idea below 4 means rework, not revision.** Say so plainly and name what has to change.
 
 If any item is "Needs Attention" or "Missing", fix the plan or state exactly what input would resolve it.
 
